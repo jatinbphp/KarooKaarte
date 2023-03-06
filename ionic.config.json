@@ -1,0 +1,7 @@
+{
+  "name": "KarooKaarte",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
