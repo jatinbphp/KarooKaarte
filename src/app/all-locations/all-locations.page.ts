@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { SendReceiveRequestsService } from '../providers/send-receive-requests.service';
+import { Platform } from '@ionic/angular';
+import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
+import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@awesome-cordova-plugins/native-geocoder/ngx';
+import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx';
+import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 
 declare var google: any;
 @Component({
@@ -24,12 +29,17 @@ export class AllLocationsPage implements OnInit
   ];
   public IDSelected:any=null;
   public WhatToSee:any=null;
-  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private zone: NgZone)
+  public LocationCordinates: any = [];
+  public LocationCordinatesWatch: any = [];
+  public Timestamp: any;  
+  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private zone: NgZone, private AndroidPermissions: AndroidPermissions, private Geolocation: Geolocation, private NativeGeocoder: NativeGeocoder, private Platform: Platform, private LocationAccuracy: LocationAccuracy)
   { }  
 
   ngOnInit()
   { 
     this.ShowAllLocations();
+    this.LocationCordinates = {latitude: "",longitude: "",accuracy: "",timestamp: ""};
+    this.LocationCordinatesWatch = {latitude: "",longitude: "",accuracy: "",timestamp: ""};
   }
   
   ionViewWillEnter()
@@ -306,11 +316,91 @@ export class AllLocationsPage implements OnInit
     */ 
   }
 
-  ShowLiveLocations()
+  CheckPermission() 
   {
+    this.AndroidPermissions.checkPermission(this.AndroidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(result => 
+    {
+      if(result.hasPermission) 
+      {
+        this.EnableGPS();
+      } 
+      else 
+      {
+        this.LocationAccPermission();
+      }
+    },error => 
+    {
+      alert("1"+error);
+    });
+  }
+
+  LocationAccPermission() 
+  {
+    this.LocationAccuracy.canRequest().then((canRequest: boolean) => 
+    {
+      if (canRequest) 
+      {} 
+      else 
+      {
+        this.AndroidPermissions.requestPermission(this.AndroidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(() => 
+        {
+          this.EnableGPS();
+        },
+        error => 
+        {
+          alert("2"+error)
+        });
+      }
+    });
+  }
+
+  EnableGPS() 
+  {
+    this.LocationAccuracy.request(this.LocationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(async () => 
+    {
+      await this.CurrentLocPosition();
+    },
+    error => 
+    {
+      alert("3"+JSON.stringify(error));
+    });
+  }
+
+  async CurrentLocPosition() 
+  {
+    await this.Geolocation.getCurrentPosition().then((response) => 
+    {
+      this.LocationCordinates.latitude = response.coords.latitude;
+      this.LocationCordinates.longitude = response.coords.longitude;
+      this.LocationCordinates.accuracy = response.coords.accuracy;
+      this.LocationCordinates.timestamp = response.timestamp;
+    }).catch((error) => 
+    {
+      alert('4-Error: ' + error);
+    });
+    
+    
+  }
+
+  async ShowLiveLocations()
+  {
+    this.Timestamp = Date.now();
+    await this.Platform.ready().then(async () => 
+    {
+      if(this.Platform.is("android") == true)
+      {
+        this.CheckPermission();
+      }
+      else 
+      {
+        await this.CurrentLocPosition();
+      }
+    });
+    //console.log(this.LocationCordinates);    
     var map = new google.maps.Map(document.getElementById('MAP'), {
       zoom: 12,
-      center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
+      //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
+      center: new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
       mapTypeControl: false,
@@ -328,6 +418,30 @@ export class AllLocationsPage implements OnInit
         position: google.maps.ControlPosition.LEFT_TOP,
       },
       fullscreenControl: false,
+    });
+    /*
+    CUSTOME IMAGE
+    let image = 
+    {
+      url: '../assets/images/mike-marker-icon-50-by-50.png', // image is 512 x 512
+      scaledSize: new google.maps.Size(50, 50),
+    };
+    CUSTOME IMAGE
+    */
+    var LatLng = new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude);
+    let MarkerCenter = new google.maps.Marker({
+      position: LatLng,
+      map: map,
+      title: 'Drag Me!',
+      draggable: false,
+      //icon: image//CUSTOME IMAGE
+    });
+    google.maps.event.addListener(MarkerCenter, 'dragend', function(MarkerCenter:any)
+    {
+      let latLng = MarkerCenter.latLng;
+      let Latitude = latLng.lat();
+      let Longitude = latLng.lng();
+      console.log(Latitude,Longitude);
     });
   }
 
