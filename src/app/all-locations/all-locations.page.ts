@@ -77,11 +77,18 @@ export class AllLocationsPage implements OnInit
     let infowindow = new google.maps.InfoWindow();
     var marker, i;
     let ClassObj = this;
+    let image = 
+    {
+      url: './assets/images/marker-50by50.png', // image is 512 x 512
+      scaledSize: new google.maps.Size(50, 50),
+    };
     for (i = 0; i < this.LocationsJSON.length; i++) 
     {  
+      
       marker = new google.maps.Marker({
         position: new google.maps.LatLng(this.LocationsJSON[i]['lat'], this.LocationsJSON[i]['lon']),
-        map: map
+        map: map,
+        icon: image
       });
 
       bounds.extend(marker.position);
@@ -90,7 +97,7 @@ export class AllLocationsPage implements OnInit
       InfoWindowContent += '<ion-grid>';
       InfoWindowContent += '<ion-row>';
         InfoWindowContent += '<ion-col size="12">';
-          InfoWindowContent += this.LocationsJSON[i]['name'];
+          InfoWindowContent += '<ion-label class="location-name">'+this.LocationsJSON[i]['name']+'</ion-label>';
         InfoWindowContent += '</ion-col>';        
       InfoWindowContent += '</ion-row>';
       InfoWindowContent += '<ion-row>';
@@ -419,22 +426,20 @@ export class AllLocationsPage implements OnInit
       },
       fullscreenControl: false,
     });
-    /*
-    CUSTOME IMAGE
+    
     let image = 
     {
-      url: '../assets/images/mike-marker-icon-50-by-50.png', // image is 512 x 512
+      url: './assets/images/marker-50by50.png', // image is 512 x 512
       scaledSize: new google.maps.Size(50, 50),
     };
-    CUSTOME IMAGE
-    */
+    
     var LatLng = new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude);
     let MarkerCenter = new google.maps.Marker({
       position: LatLng,
       map: map,
       title: 'Drag Me!',
       draggable: false,
-      //icon: image//CUSTOME IMAGE
+      icon: image
     });
     google.maps.event.addListener(MarkerCenter, 'dragend', function(MarkerCenter:any)
     {
