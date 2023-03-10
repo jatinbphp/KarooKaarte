@@ -15,6 +15,23 @@ export class SendReceiveRequestsService
   constructor(private http: HttpClient, private alertCtrl: AlertController, public router: Router, private toastController: ToastController)
   { }
 
+  GetWelcomeText()
+  {
+    return new Promise((resolve, reject) => 
+    {
+      this.http.get(this.ApiUrl + "welcome-screen", {}).subscribe((res: any) =>       
+      {
+        resolve(res);					
+      },
+      err => 
+      {
+        console.log(err);
+        let errorMessage=this.getErrorMessage(err);
+        reject(errorMessage);
+      });
+    });
+  }
+
   GetLocationsAll(Data:any)
   {
     return new Promise((resolve, reject) => 

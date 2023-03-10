@@ -17,9 +17,7 @@
     <div class="titleMain">
       <h2>WELCOME</h2>
     </div>
-    <div class="contentBox">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi at velit at nisl sodales faucibus. Praesent non diam faucibus, laoreet elit ac, blandit nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Morbi pretium finibus dictum. Maecenas sodales ligula vitae consectetur scelerisque. Pellentesque volutpat lorem libero, quis iaculis erat placerat ac. Etiam hendrerit diam nec ante auctor tempus.</p>
-    </div>
+    <div class="contentBox" [innerHTML]="ResultData.content"></div>
     <ion-slides #WelcomeSlider pager="false" [options]="WelcomeSliderOptions">
       <ion-slide>
         <img src="https://ionicframework.com/docs/img/demos/card-media.png" alt="" />

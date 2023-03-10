@@ -85,9 +85,9 @@ export class AllLocationsPage implements OnInit
             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
             position: google.maps.ControlPosition.TOP_CENTER,
           },
-          zoomControl: false,//THIS WILL REMOVE THE ZOOM OPTION +/-
+          zoomControl: true,//THIS WILL REMOVE THE ZOOM OPTION +/-
           zoomControlOptions: {
-            position: google.maps.ControlPosition.LEFT_CENTER,
+            position: google.maps.ControlPosition.RIGHT_BOTTOM,
           },
           scaleControl: false,
           streetViewControl: false,
