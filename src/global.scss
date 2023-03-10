@@ -93,7 +93,9 @@ ion-label {
     margin: 0px;
     border: none;
     &.location-name{
+        padding:10px;
         font-size: 17px;
+        color: var(--black);
     }
 }
 

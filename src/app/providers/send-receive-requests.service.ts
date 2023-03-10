@@ -10,12 +10,44 @@ import { Subject } from 'rxjs';
 
 export class SendReceiveRequestsService 
 {
-  //public ApiUrl: string = "https://xana.ecnet.dev/api/";//DEVELOPMENT SERVER
-  //public SiteUrl: string = "https://xana.ecnet.dev/";//DEVELOPMENT SERVER
-  public ApiUrl: string = "https://cpm.xanagroup.ca/api/";//LIVE SERVER
-  public SiteUrl: string = "https://cpm.xanagroup.ca/";//LIVE SERVER
+  public ApiUrl: string = "https://karookaarte.co.za/app/public/api/";//LIVE SERVER
+  public SiteUrl: string = "https://karookaarte.co.za/";//LIVE SERVER
   constructor(private http: HttpClient, private alertCtrl: AlertController, public router: Router, private toastController: ToastController)
   { }
+
+  GetLocationsAll(Data:any)
+  {
+    return new Promise((resolve, reject) => 
+    {
+      let DataToPost = new HttpParams().set("category_id",Data.CategoryID);
+      this.http.post(this.ApiUrl + "location",  DataToPost , {}).subscribe((res: any) =>       
+      {
+        resolve(res);					
+      },
+      err => 
+      {
+        console.log(err);
+        let errorMessage=this.getErrorMessage(err);
+        reject(errorMessage);
+      });
+    });
+  }
+
+  getErrorMessage(err:any)
+	{	
+		if(err.error == null)
+		{
+			return err.message;
+		}
+		else if(err.error.message)
+		{
+			return err.error.message;
+		} 
+		else 
+		{
+			return err.error.status;
+		}
+	}
 
   async showMessageToast(message:any) 
   {
