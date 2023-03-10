@@ -1,0 +1,95 @@
+ion-content {
+	--background: transparent;
+	.mainContent {
+		padding: 8px 24px 0;
+		.titleMain {
+			justify-content: space-between;
+			h2 {
+				display: inline-block;
+			}
+			ion-button {
+				margin: 0;
+			    border: 1px solid var(--white);
+			    border-radius: 5px;
+			    --border-radius: 5px;
+			    font-size: 10px;
+			    font-family: var(--font-RobotoB);
+    			background: #7ca358;
+    			letter-spacing: 1px;
+			}
+		}
+		h5 {
+			width: 100%;
+			text-align: left;
+			margin: 0 0 4px;
+			font-size: 16px;
+	        line-height: 18px;
+	        color: var(--white);
+	        font-family: var(--font-RobotoM);
+	        text-transform: uppercase;
+		}
+		ion-card {
+			&.detailBox {
+				margin: 0 0 20px;
+				padding: 14px 10px;
+			    --background: var(--black);
+			    border: 1px solid var(--borderClr1);
+			    border-radius: 0;
+				ion-card-header {
+					padding: 0;
+					ion-card-title {
+						font-size: 14px;
+					    line-height: 16px;
+					    text-transform: uppercase;
+					    color: var(--white);
+					    font-family: var(--font-RobotoR);
+					    margin: 0 0 12px;
+					}
+					ion-card-subtitle {
+						margin: 0;
+						font-size: 14px;
+					    line-height: 16px;
+					    text-transform: capitalize;
+					    color: var(--white);
+					    font-family: var(--font-RobotoM);
+					}
+				}
+				ion-card-content {
+					padding: 0;
+					font-size: 12px;
+				    line-height: 16px;
+				    color: var(--white);
+				    font-family: var(--font-RobotoL);
+				}
+				ion-button {
+					margin: 0 0 0 auto;
+					--padding-top: 0;
+					--padding-bottom: 0;
+					--padding-start: 0;
+					--padding-end: 0;
+					height: 16px;
+					font-size: 12px;
+					line-height: 16px;
+					color: var(--white);
+					font-family: var(--font-RobotoL);
+					text-transform: uppercase;
+				}
+			}
+		}
+		ion-slides {
+			margin-right: -24px;
+			ion-slide {
+				padding: 0 4px 0 0;
+				img {
+					width: 100%;
+					height: auto;
+					aspect-ratio: 16 / 9;
+					object-fit: cover;
+				}
+			}
+		}
+		.gallery, .video, .audio {
+			margin: 0 0 20px;
+		}
+	}
+}

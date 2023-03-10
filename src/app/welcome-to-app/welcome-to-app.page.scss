@@ -1,3 +1,36 @@
 ion-content {
 	--background: transparent;
+	.mainContent {
+		padding: 8px 24px 0px;
+		.contentBox {
+			width: 100%;
+			display: flex;
+			flex-flow: column;
+			gap: 10px;
+			background-color: var(--black);
+			padding: 20px 16px;
+			margin: 0 0 40px;
+			p {
+				width: 100%;
+				text-align: center;
+				font-size: 18px;
+				line-height: 22px;
+		        color: var(--white);
+		        font-family: var(--font-RobotoR);
+		        margin: 0;
+			}
+		}
+		ion-slides {
+			margin-right: -24px;
+			ion-slide {
+				padding: 0 4px 0 0;
+				img {
+					width: 100%;
+					height: auto;
+					aspect-ratio: 16 / 9;
+					object-fit: cover;
+				}
+			}
+		}
+	}
 }

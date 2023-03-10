@@ -1,0 +1,20 @@
+ion-content {
+	--background: transparent;
+	.mainContent {
+		padding: 8px 24px 0px;
+		#MAP {
+			width:100%;
+			height: calc(100vh - 150px);
+		}
+		ion-grid {
+			ion-row {
+				ion-col {
+					font-size: 20px;
+			        line-height: 20px;
+			        color: var(--black);
+			        font-family: var(--font-RobotoR);
+				}
+			}
+		}
+	}
+}

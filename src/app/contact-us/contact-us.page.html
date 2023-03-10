@@ -1,51 +1,55 @@
-<ion-header>
+<ion-header no-border class="ion-no-border most-use-header">
   <ion-toolbar>
-    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <img src="../../assets/images/menu-icon.png">
+      </ion-menu-button>      
+    </ion-buttons>
+    <ion-chip class="logo">
+      <img src="../../assets/images/Karoo-Kaarte-LOGO-WHITE-04.png">
+    </ion-chip>
+    <ion-chip slot="end"></ion-chip>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <h1>Contact Us</h1>
-  <ion-grid>
-    <ion-row>
-      <ion-col col="12">
-        <ion-label>Email</ion-label>
-      </ion-col>      
-    </ion-row>
-    <ion-row>
-      <ion-col col="12">
-        <ion-label>testermail@mail.com</ion-label>
-      </ion-col>      
-    </ion-row>
-    <ion-row>
-      <ion-col col="12">
-        <ion-label>Phone</ion-label>
-      </ion-col>      
-    </ion-row>
-    <ion-row>
-      <ion-col col="12">
-        <ion-label>+27 87 123 4567</ion-label>
-      </ion-col>      
-    </ion-row>
-    <ion-row>
-      <ion-col col="12">
-        <ion-label>APP VERSION</ion-label>
-      </ion-col>      
-    </ion-row>
-    <ion-row>
-      <ion-col col="12">
-        <ion-label>{{AppVersion}}({{AppVersionCode}})</ion-label>
-      </ion-col>      
-    </ion-row>
-    <ion-row>
-      <ion-col col="12">
-        <ion-label>RATE OUR APP</ion-label>
-      </ion-col>      
-    </ion-row>
-    <ion-row>
-      <ion-col col="12">
-        <ion-label>IMAGE</ion-label>
-      </ion-col>      
-    </ion-row>
-  </ion-grid>
+  <div class="mainContent">
+    <div class="titleMain">
+      <h2>Contact Us</h2>
+    </div>
+    <ion-grid class="cntctInfoBox">
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>Email</ion-label>
+        </ion-col>      
+        <ion-col size="12">
+          <h6>testermail@mail.com</h6>
+        </ion-col>      
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>Phone</ion-label>
+        </ion-col>      
+        <ion-col size="12">
+          <h6>+27 87 123 4567</h6>
+        </ion-col>      
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>APP VERSION</ion-label>
+        </ion-col>      
+        <ion-col size="12">
+          <ion-label>{{AppVersion}}({{AppVersionCode}})</ion-label>
+        </ion-col>      
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label>RATE OUR APP</ion-label>
+        </ion-col>      
+        <ion-col size="12">
+          <img src="../../assets/images/rating.png">
+        </ion-col>      
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>

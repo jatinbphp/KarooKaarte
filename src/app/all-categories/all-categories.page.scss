@@ -1,0 +1,35 @@
+ion-content {
+	--background: transparent;
+	.mainContent {
+		padding: 8px 24px 0px;
+		.categoryList {
+			margin: 0 0 20px;
+			padding: 14px 10px;
+		    background: var(--black);
+		    border: 1px solid var(--borderClr1);
+		    border-radius: 0;
+		    ul {
+		    	padding: 0 16px;
+		    	margin: 0 0 20px;
+		    	&:last-child {
+		    		margin: 0;
+		    	}
+		    	&.mainCate {
+		    		li {
+		    			list-style-type: none;
+		    			font-size: 14px;
+						line-height: 16px;
+						text-transform: uppercase;
+						color: var(--white);
+						font-family: var(--font-RobotoR);
+						padding: 0 0 0 8px;
+						margin: 0 0 2px;
+		    			&.title {
+		    				padding: 0;
+		    			}
+		    		}
+		    	}
+		    }
+		}
+	}
+}

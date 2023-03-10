@@ -1,0 +1,45 @@
+ion-content {
+	--background: transparent;
+	.mainContent {
+		padding: 8px 24px 0px;
+		ion-grid {
+			&.cntctInfoBox {
+				margin: 0 0 20px;
+				padding: 14px 10px;
+			    background: var(--black);
+			    border: 1px solid var(--borderClr1);
+			    border-radius: 0;
+				ion-row {
+					margin: 0 0 20px;
+					ion-col {
+						ion-label {
+							display: block;
+							font-size: 16px;
+							line-height: 18px;
+							text-transform: uppercase;
+							color: var(--white);
+							font-family: var(--font-RobotoM);
+							margin: 0 0 2px;
+							&:last-child {
+								margin: 0;
+							}
+						}
+						h6 {
+							font-size: 16px;
+							line-height: 18px;
+							text-transform: unset;
+							color: var(--white);
+							font-family: var(--font-RobotoL);
+							margin: 0;
+						}
+						img {
+							width: auto;
+							height: auto;
+							object-fit: contain;
+						}
+					}
+				}
+			}
+		}
+	}
+}
