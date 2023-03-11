@@ -199,7 +199,7 @@ export class AllLocationsPage implements OnInit
         {
           ClassObj.DraggedLatitude = map.getCenter().lat();
           ClassObj.DraggedLongitude = map.getCenter().lng();
-          console.log(ClassObj.DraggedLatitude,ClassObj.DraggedLongitude);
+          //console.log(ClassObj.DraggedLatitude,ClassObj.DraggedLongitude);
           map.set('dragging',false);
           google.maps.event.trigger(map,'idle',{});
         });
@@ -217,7 +217,7 @@ export class AllLocationsPage implements OnInit
       loading.dismiss();//DISMISS LOADER
       this.SendReceiveRequestsService.showMessageToast(error);
     });
-    console.log("ALL",this.ResultDataAllLocations);
+    //console.log("ALL",this.ResultDataAllLocations);
     /*
     THIS WILL PUT A MARKER ON DEFAULT CENTER AND GET LAT,LON AS WE MOVE IT
     */
@@ -248,17 +248,19 @@ export class AllLocationsPage implements OnInit
     */ 
   }
 
-  CheckPermission() 
+  async CheckPermission() 
   {
-    this.AndroidPermissions.checkPermission(this.AndroidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(result => 
+    await this.AndroidPermissions.checkPermission(this.AndroidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(async (result) => 
     {
       if(result.hasPermission) 
       {
-        this.EnableGPS();
+        console.log("CheckPermission-has permission");
+        await this.EnableGPS();
       } 
       else 
       {
-        this.LocationAccPermission();
+        console.log("CheckPermission-has no permission");
+        await this.LocationAccPermission();
       }
     },error => 
     {
@@ -266,17 +268,21 @@ export class AllLocationsPage implements OnInit
     });
   }
 
-  LocationAccPermission() 
+  async LocationAccPermission() 
   {
-    this.LocationAccuracy.canRequest().then((canRequest: boolean) => 
+    await this.LocationAccuracy.canRequest().then(async (canRequest: boolean) => 
     {
       if (canRequest) 
-      {} 
+      {
+        console.log("LocationAccPermission can request -1");
+        await this.CurrentLocPosition();
+      } 
       else 
       {
-        this.AndroidPermissions.requestPermission(this.AndroidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(() => 
+        console.log("LocationAccPermission can request -2");
+        await this.AndroidPermissions.requestPermission(this.AndroidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(async () => 
         {
-          this.EnableGPS();
+          await this.EnableGPS();
         },
         error => 
         {
@@ -286,21 +292,25 @@ export class AllLocationsPage implements OnInit
     });
   }
 
-  EnableGPS() 
+  async EnableGPS() 
   {
-    this.LocationAccuracy.request(this.LocationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(async () => 
+    await this.LocationAccuracy.request(this.LocationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(async () => 
     {
+      console.log("EnableGPS - allowed");
       await this.CurrentLocPosition();
     },
     error => 
     {
-      alert("3"+JSON.stringify(error));
+      console.log("EnableGPS - dis allowed");
+      this.SendReceiveRequestsService.showMessageToast("You have disallowed location service.");
+      this.ShowAllLocations();
+      //alert("3"+JSON.stringify(error));
     });
   }
 
   async CurrentLocPosition() 
   {
-    await this.Geolocation.getCurrentPosition().then((response) => 
+    await this.Geolocation.getCurrentPosition().then(async (response) => 
     {
       this.LocationCordinates.latitude = response.coords.latitude;
       this.LocationCordinates.longitude = response.coords.longitude;
@@ -308,7 +318,9 @@ export class AllLocationsPage implements OnInit
       this.LocationCordinates.timestamp = response.timestamp;
     }).catch((error) => 
     {
-      alert('4-Error: ' + error);
+      this.SendReceiveRequestsService.showMessageToast("You have disallowed location service.");
+      this.ShowAllLocations();
+      //alert('4-Error: ' + error);
     });    
   }
 
@@ -319,14 +331,14 @@ export class AllLocationsPage implements OnInit
     {
       if(this.Platform.is("android") == true)
       {
-        this.CheckPermission();
+        await this.CheckPermission();
       }
       else 
       {
         await this.CurrentLocPosition();
       }
-    });
-    //console.log(this.LocationCordinates);    
+    });    
+    
     var map = new google.maps.Map(document.getElementById('MAP'), {
       zoom: 12,
       //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
@@ -369,8 +381,9 @@ export class AllLocationsPage implements OnInit
       let latLng = MarkerCenter.latLng;
       let Latitude = latLng.lat();
       let Longitude = latLng.lng();
-      console.log(Latitude,Longitude);
+      //console.log(Latitude,Longitude);
     });
+    
   }
 
   RedirectTo(IDSelected:any,WhatToSee:any)
