@@ -16,8 +16,8 @@ declare var google: any;
 export class AllLocationsPage implements OnInit 
 {
   @ViewChild('MAP', { static: false }) mapElement?: ElementRef;  
-  public DefaultLatitude: number = -33.92;
-  public DefaultLongitude: number = 151.25;  
+  public DefaultLatitude: number = -33.6229684;//DEFAULT LOCATION OF Oudtshoorn
+  public DefaultLongitude: number = 22.1545885;//DEFAULT LOCATION OF Oudtshoorn
   public DraggedLatitude: number = 0;
   public DraggedLongitude: number = 0;
   public LocationsJSON = [

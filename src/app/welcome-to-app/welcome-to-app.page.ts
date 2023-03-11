@@ -40,6 +40,8 @@ export class WelcomeToAppPage implements OnInit
       if(this.ResultDataResponse['status']=="true")
       {
         this.ResultData = this.ResultDataResponse['data'];
+        let ObjectContact = {phone:this.ResultData['phone_number'],email:this.ResultData['email']}
+        localStorage.setItem('contact_information',JSON.stringify(ObjectContact));
       }
       console.log(this.ResultData);
     },
@@ -49,6 +51,6 @@ export class WelcomeToAppPage implements OnInit
       this.SendReceiveRequestsService.showMessageToast(error);
     });
     let ObjectWelcome = {introduced:1};
-    localStorage.setItem("app_welcome",JSON.stringify(ObjectWelcome));    
+    //localStorage.setItem("app_welcome",JSON.stringify(ObjectWelcome));ENABLE THIS LINE IF WELCOME SCREEN NEEDED TO BE SHOW ONLY ONCE
   }
 }
