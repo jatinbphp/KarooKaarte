@@ -17,8 +17,18 @@
     <div class="titleMain">
       <h2>BROWSE CATEGORIES</h2>
     </div>
-    <div class="categoryList">
-      <ul class="mainCate">
+    <div class="categoryList" *ngIf="ResultData.length > 0">
+      <ul class="mainCate" *ngFor="let Categories of ResultData; let m = index;">
+        <li class="title">
+          <span (click)="SelectedOption('maincategory',Categories.id)">{{Categories.category_name}}</span>
+          <ul *ngIf="Categories.sub_category.length > 0">
+            <li *ngFor="let SubCategories of Categories.sub_category; let s = index;">
+              <span (click)="SelectedOption('subcategory',SubCategories.id)">&nbsp;>&nbsp;{{SubCategories.subcategory_name}}</span>
+            </li>
+          </ul>
+        </li>        
+      </ul>
+      <!--<ul class="mainCate">
         <li class="title">Main Category</li>
         <li> > Sub Category</li>
         <li> > Sub Category</li>
@@ -31,14 +41,7 @@
         <li> > Sub Category</li>
         <li> > Sub Category</li>
         <li> > Sub Category</li>
-      </ul>
-      <ul class="mainCate">
-        <li class="title">Main Category</li>
-        <li> > Sub Category</li>
-        <li> > Sub Category</li>
-        <li> > Sub Category</li>
-        <li> > Sub Category</li>
-      </ul>
+      </ul>-->
     </div>
   </div>
 </ion-content>

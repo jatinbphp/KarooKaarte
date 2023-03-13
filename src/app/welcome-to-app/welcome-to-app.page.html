@@ -17,20 +17,11 @@
     <div class="titleMain">
       <h2>WELCOME</h2>
     </div>
-    <div class="contentBox" [innerHTML]="ResultData.content"></div>
-    <ion-slides #WelcomeSlider pager="false" [options]="WelcomeSliderOptions">
-      <ion-slide>
-        <img src="https://ionicframework.com/docs/img/demos/card-media.png" alt="" />
-      </ion-slide>
-      <ion-slide>
-        <img src="https://code.recuweb.com/c/u/3a09f4cf991c32bd735fa06db67889e5/2018/08/wordpress-photo-gallery-plugins1.png" alt="" />
-      </ion-slide>
-      <ion-slide>
-        <img src="https://ionicframework.com/docs/img/demos/card-media.png" alt="" />
-      </ion-slide>
-      <ion-slide>
-        <img src="https://code.recuweb.com/c/u/3a09f4cf991c32bd735fa06db67889e5/2018/08/wordpress-photo-gallery-plugins1.png" alt="" />
-      </ion-slide>
+    <div class="contentBox" [innerHTML]="ResultData.content"></div>    
+    <ion-slides #WelcomeSlider pager="false" [options]="WelcomeSliderOptions" *ngIf="ResultDataImages.length > 0">
+      <ion-slide *ngFor="let Images of ResultDataImages; let i=index;">
+        <img src="{{Images.image_name}}"/>
+      </ion-slide>      
     </ion-slides>
   </div>
 </ion-content>

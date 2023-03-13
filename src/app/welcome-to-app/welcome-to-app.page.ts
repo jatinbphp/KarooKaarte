@@ -19,6 +19,7 @@ export class WelcomeToAppPage implements OnInit
   };
   public ResultDataResponse:any=[];
   public ResultData:any=[];
+  public ResultDataImages:any=[];
   constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl : LoadingController)
   { }
 
@@ -40,6 +41,7 @@ export class WelcomeToAppPage implements OnInit
       if(this.ResultDataResponse['status']=="true")
       {
         this.ResultData = this.ResultDataResponse['data'];
+        this.ResultDataImages = this.ResultData['images'];
         let ObjectContact = {phone:this.ResultData['phone_number'],email:this.ResultData['email']}
         localStorage.setItem('contact_information',JSON.stringify(ObjectContact));
       }

@@ -50,6 +50,59 @@ export class SendReceiveRequestsService
     });
   }
 
+  GetLocationsLive(Data:any)
+  {
+    return new Promise((resolve, reject) => 
+    {
+      let DataToPost = new HttpParams().set("latitude",Data.latitude).set("longitude",Data.longitude).set("category_id",Data.category_id).set("category_type",Data.category_type);
+      this.http.post(this.ApiUrl + "getLivePOIData",  DataToPost , {}).subscribe((res: any) =>       
+      {
+        resolve(res);					
+      },
+      err => 
+      {
+        console.log(err);
+        let errorMessage=this.getErrorMessage(err);
+        reject(errorMessage);
+      });
+    });
+  }
+
+  GetLocationDetail(Data:any)
+  {
+    return new Promise((resolve, reject) => 
+    {
+      let DataToPost = new HttpParams().set("id",Data.id);
+      this.http.get(this.ApiUrl + "poiDetails/"+Data.id, {}).subscribe((res: any) =>       
+      {
+        resolve(res);					
+      },
+      err => 
+      {
+        console.log(err);
+        let errorMessage=this.getErrorMessage(err);
+        reject(errorMessage);
+      });
+    });
+  }
+
+  GetAllCategories()
+  {
+    return new Promise((resolve, reject) => 
+    {
+      this.http.get(this.ApiUrl + "allCategory", {}).subscribe((res: any) =>       
+      {
+        resolve(res);					
+      },
+      err => 
+      {
+        console.log(err);
+        let errorMessage=this.getErrorMessage(err);
+        reject(errorMessage);
+      });
+    });
+  }
+
   getErrorMessage(err:any)
 	{	
 		if(err.error == null)

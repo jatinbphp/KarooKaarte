@@ -17,19 +17,21 @@
 <ion-content>
   <div class="mainContent">
     <div class="titleMain">
-      <h2>LISTING NAME</h2>
+      <h2 *ngIf="Language == 'english'">{{ResultDataForEnglish.name}}</h2>
+      <h2 *ngIf="Language == 'afrikaans'">{{ResultDataForAfrikaans.name}}</h2>
+      <h2 *ngIf="Language == 'xhosa'">{{ResultDataForXhosa.name}}</h2>
       <ion-button color="primary" id="Trigger-Lang">CHOOSE LANGUAGE</ion-button>
       <ion-popover trigger="Trigger-Lang" triggerAction="click" [dismissOnSelect]="true">
         <ng-template>
           <ion-content class="ion-padding">
             <ion-list no-padding>
-              <ion-item lines="none">
+              <ion-item lines="none" (click)="SelectedLanguage('english')">
                 <ion-label>English</ion-label>
               </ion-item>
-              <ion-item lines="none">
+              <ion-item lines="none" (click)="SelectedLanguage('afrikaans')">
                 <ion-label>Afrikaans</ion-label>
               </ion-item>
-              <ion-item lines="none">
+              <ion-item lines="none" (click)="SelectedLanguage('xhosa')">
                 <ion-label>Xhosa</ion-label>
               </ion-item>
             </ion-list>
@@ -39,32 +41,29 @@
     </div>
     <ion-card class="detailBox">
       <ion-card-header>
-        <ion-card-title>MAIN CATEGORY >> SUB CATEGORY</ion-card-title>
+        <ion-card-title>{{CategoryNM}} >> {{CategorySNM}}</ion-card-title>
         <ion-card-subtitle>Summary</ion-card-subtitle>
       </ion-card-header>  
-      <ion-card-content>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id venenatis mauris, at interdum est. Sed scelerisque metus non semper efficitur. Suspendisse ut suscipit dolor. Maecenas id maximus sem, nec lacinia lacus. Nullam tincidunt odio vitae justo aliquet, et tempor leo lacinia.
-      </ion-card-content>
+      <ion-card-content *ngIf="Language == 'english'" [innerHTML]="ResultDataForEnglish.summary"></ion-card-content>
+      <ion-card-content *ngIf="Language == 'afrikaans'" [innerHTML]="ResultDataForAfrikaans.summary"></ion-card-content>
+      <ion-card-content *ngIf="Language == 'xhosa'" [innerHTML]="ResultDataForXhosa.summary"></ion-card-content>
       <div class="text-right">
         <ion-button fill="clear">READ MORE >></ion-button>
       </div>
     </ion-card>
     <div class="gallery">
       <h5>GALLERY</h5>
-      <ion-slides #PhotoSlider pager="false" [options]="PhotoSliderOptions">
-        <ion-slide>
-          <img src="https://ionicframework.com/docs/img/demos/card-media.png" alt="" />
-        </ion-slide>
-        <ion-slide>
-          <img src="https://code.recuweb.com/c/u/3a09f4cf991c32bd735fa06db67889e5/2018/08/wordpress-photo-gallery-plugins1.png" alt="" />
-        </ion-slide>
+      <ion-slides #PhotoSlider pager="false" [options]="PhotoSliderOptions" *ngIf="ResultDataImages.length > 0">
+        <ion-slide *ngFor="let Images of ResultDataImages; let i = index;">
+          <img src="{{Images.image_name}}"/>
+        </ion-slide>        
       </ion-slides>
     </div>
     <div class="video">
       <h5>VIDEO</h5>
-      <ion-slides #VideoSlider pager="false" [options]="VideoSliderOptions">
-        <ion-slide>
-          <img src="https://code.recuweb.com/c/u/3a09f4cf991c32bd735fa06db67889e5/2018/08/wordpress-photo-gallery-plugins1.png" alt="" />
+      <ion-slides #VideoSlider pager="false" [options]="VideoSliderOptions" *ngIf="ResultDataVideos.length > 0">
+        <ion-slide *ngFor="let Videos of ResultDataVideos; let i = index;">
+          <img src="https://ionicframework.com/docs/img/demos/card-media.png" alt="" />
         </ion-slide>
         <ion-slide>
           <img src="https://ionicframework.com/docs/img/demos/card-media.png" alt="" />
