@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonSlides, LoadingController } from '@ionic/angular';
 import { SendReceiveRequestsService } from '../providers/send-receive-requests.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Media, MediaObject } from '@awesome-cordova-plugins/media/ngx';
 
 @Component({  
   selector: 'app-location-in-detail',
@@ -14,6 +15,9 @@ export class LocationInDetailPage implements OnInit
   @ViewChild('PhotoSlider', { static: false }) PhotoSlider ?  : IonSlides;
   @ViewChild('VideoSlider', { static: false }) VideoSlider ?  : IonSlides;
   @ViewChild('AudioSlider', { static: false }) AudioSlider ?  : IonSlides;
+  private mediaFile: MediaObject | undefined;
+  public IsAudioPlayed: boolean = false;
+  public AudioIDPlaying: any = null;
   public Language:any="english";
   public CategoryNM:any=null;
   public CategorySNM:any=null;
@@ -44,7 +48,7 @@ export class LocationInDetailPage implements OnInit
     autoplay: false,
     speed: 1000
   };
-  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl : LoadingController, public  sanitizer:DomSanitizer)
+  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl : LoadingController, public  sanitizer:DomSanitizer, private media: Media)
   { }
 
   ngOnInit()
@@ -101,4 +105,17 @@ export class LocationInDetailPage implements OnInit
     console.log(this.Language);
   }
   
+  PlayAudio(AudioID:any,AudioURL:any)
+  {
+    this.AudioIDPlaying=AudioID;
+    this.IsAudioPlayed = true;
+    this.mediaFile = this.media.create(AudioURL);
+    this.mediaFile.play();
+  }
+
+  StopAudio()
+  {
+    this.IsAudioPlayed = false;
+    this.mediaFile?.release();
+  }
 }

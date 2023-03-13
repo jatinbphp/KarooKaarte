@@ -586,8 +586,8 @@ export class AllLocationsPage implements OnInit
       localStorage.setItem('map_to_watch',JSON.stringify(MapToWatch));
       this.mapLive = new google.maps.Map(document.getElementById('MAP'), {
         zoom: 12,
-        //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
         center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
+        //center: new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude),
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
         mapTypeControl: false,

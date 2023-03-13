@@ -70,14 +70,21 @@
     </div>
     <div class="audio">
       <h5>AUDIO</h5>
-      <ion-slides #AudioSlider pager="false" [options]="AudioSliderOptions">
-        <ion-slide>
+      <ion-list lines="none" *ngIf="ResultDataAudios.length > 0">
+        <ion-item *ngFor="let Audios of ResultDataAudios; let i = index;">
+          <ion-button class="play-btn" *ngIf="IsAudioPlayed == true" (click)="StopAudio()">
+            <ion-icon name="pause-outline"></ion-icon>
+          </ion-button>
+          <ion-button class="play-btn" *ngIf="IsAudioPlayed == false" (click)="PlayAudio(Audios.id,Audios.mp3_name)">
+            <ion-icon name="play-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-list>
+      <!--<ion-slides #AudioSlider pager="false" [options]="AudioSliderOptions" *ngIf="ResultDataAudios.length > 0">
+        <ion-slide *ngFor="let Audios of ResultDataAudios; let i = index;" (click)="PlayAudio(Audios.mp3_name)">
           <img src="https://ionicframework.com/docs/img/demos/card-media.png" alt="" />
-        </ion-slide>
-        <ion-slide>
-          <img src="https://code.recuweb.com/c/u/3a09f4cf991c32bd735fa06db67889e5/2018/08/wordpress-photo-gallery-plugins1.png" alt="" />
-        </ion-slide>
-      </ion-slides>
+        </ion-slide>        
+      </ion-slides>-->
     </div>
   </div>
 </ion-content>

@@ -24,6 +24,7 @@
     "@awesome-cordova-plugins/core": "^6.3.0",
     "@awesome-cordova-plugins/geolocation": "^6.3.0",
     "@awesome-cordova-plugins/location-accuracy": "^6.3.0",
+    "@awesome-cordova-plugins/media": "^6.3.0",
     "@awesome-cordova-plugins/native-geocoder": "^6.3.0",
     "@awesome-cordova-plugins/network": "^6.3.0",
     "@ionic/angular": "^6.1.9",
@@ -53,9 +54,11 @@
     "cordova-plugin-android-permissions": "^1.1.5",
     "cordova-plugin-app-version": "^0.1.14",
     "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-file": "^7.0.0",
     "cordova-plugin-geolocation": "^4.1.0",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^5.0.0",
+    "cordova-plugin-media": "^6.1.0",
     "cordova-plugin-nativegeocoder": "^3.5.0",
     "cordova-plugin-network-information": "^3.0.0",
     "cordova-plugin-request-location-accuracy": "^2.3.0",
@@ -91,7 +94,8 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-ionic-keyboard": {}
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-media": {}
     },
     "platforms": [
       "android"
