@@ -7,7 +7,6 @@ import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, Router } from "@angular/router";
-
 declare var google: any;
 @Component({
   selector: 'app-all-locations',

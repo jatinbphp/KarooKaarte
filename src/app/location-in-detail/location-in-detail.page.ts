@@ -34,7 +34,7 @@ export class LocationInDetailPage implements OnInit
   };
   public VideoSliderOptions = 
 	{
-    slidesPerView: 1.5,
+    slidesPerView: 1,
     autoplay: false,
     speed: 1000
   };
@@ -100,4 +100,5 @@ export class LocationInDetailPage implements OnInit
     this.Language = Language.toLowerCase();
     console.log(this.Language);
   }
+  
 }

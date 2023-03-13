@@ -63,11 +63,9 @@
       <h5>VIDEO</h5>
       <ion-slides #VideoSlider pager="false" [options]="VideoSliderOptions" *ngIf="ResultDataVideos.length > 0">
         <ion-slide *ngFor="let Videos of ResultDataVideos; let i = index;">
-          <img src="https://ionicframework.com/docs/img/demos/card-media.png" alt="" />
-        </ion-slide>
-        <ion-slide>
-          <img src="https://ionicframework.com/docs/img/demos/card-media.png" alt="" />
-        </ion-slide>
+          <!--<img src="https://ionicframework.com/docs/img/demos/card-media.png" alt="" (click)="PlayVideo(Videos)"/>-->
+          <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(Videos)" frameborder="0" allow="encrypted-media; gyroscope; picture-in-picture;"></iframe>
+        </ion-slide>        
       </ion-slides>
     </div>
     <div class="audio">
