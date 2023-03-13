@@ -63,6 +63,13 @@
     --borderClr1: #3a3a3c;
 }
 
+@media (any-hover: hover) {
+    :host(.ion-activatable:not(.ion-focused):hover) .item-native, 
+    a:hover {
+        color: var(--theme-primary) !important;
+    }
+}
+
 ion-grid, ion-col {
     padding: 0px;
 }
@@ -427,7 +434,7 @@ ion-header {
     margin: 0 0 8px;
     h2 {
         font-size: 22px;
-        line-height: 18px;
+        line-height: 22px;
         color: var(--white);
         font-family: var(--font-RobotoB);
         text-transform: uppercase;
