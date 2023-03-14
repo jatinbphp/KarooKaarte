@@ -115,6 +115,13 @@ ion-app {
     background: url(./assets/images/bck-img1.svg) 0 0/cover no-repeat;
 }
 
+ion-modal {
+    background: url(./assets/images/bck-img1.svg) 0 0/100% 100% no-repeat;
+    background: url(./assets/images/bck-img1.svg) 0 0/cover no-repeat;
+    --background: url(./assets/images/bck-img1.svg) 0 0/100% 100% no-repeat;
+    --background: url(./assets/images/bck-img1.svg) 0 0/cover no-repeat;
+}
+
 ion-accordion-group {
     ion-accordion {
         ion-item {
@@ -257,6 +264,10 @@ ion-header {
                     font-size: 16px;
                     text-transform: uppercase;
                     font-family: var(--font-RobotoM);
+                }
+                ion-icon{
+                    color: var(--theme-primary);
+                    font-size: 30px;
                 }
             }
             ion-back-button {

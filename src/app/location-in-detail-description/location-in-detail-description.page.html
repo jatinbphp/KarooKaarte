@@ -1,0 +1,23 @@
+<ion-header no-border class="ion-no-border most-use-header">
+  <ion-toolbar>    
+    <ion-chip class="logo">
+      <img src="../../assets/images/Karoo-Kaarte-LOGO-WHITE-04.png">
+    </ion-chip>
+    <ion-buttons slot="end" (click)="DismissModal()">
+			<ion-icon name="close" icon-only></ion-icon>
+		</ion-buttons>    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="mainContent">
+    <ion-card class="detailBox">
+      <ion-card-header>
+        <ion-card-subtitle>Description</ion-card-subtitle>
+      </ion-card-header>  
+      <ion-card-content *ngIf="Language == 'english'" [innerHTML]="ResultDataForEnglish.description"></ion-card-content>
+      <ion-card-content *ngIf="Language == 'afrikaans'" [innerHTML]="ResultDataForAfrikaans.description"></ion-card-content>
+      <ion-card-content *ngIf="Language == 'xhosa'" [innerHTML]="ResultDataForXhosa.description"></ion-card-content>      
+    </ion-card>
+  </div>
+</ion-content>

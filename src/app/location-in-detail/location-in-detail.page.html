@@ -48,7 +48,7 @@
       <ion-card-content *ngIf="Language == 'afrikaans'" [innerHTML]="ResultDataForAfrikaans.summary"></ion-card-content>
       <ion-card-content *ngIf="Language == 'xhosa'" [innerHTML]="ResultDataForXhosa.summary"></ion-card-content>
       <div class="text-right">
-        <ion-button fill="clear">READ MORE >></ion-button>
+        <ion-button fill="clear" (click)="ReadMore()">READ MORE >></ion-button>
       </div>
     </ion-card>
     <div class="gallery">
@@ -62,30 +62,24 @@
     <div class="video">
       <h5>VIDEO</h5>
       <ion-slides #VideoSlider pager="false" [options]="VideoSliderOptions" *ngIf="ResultDataVideos.length > 0">
-        <ion-slide *ngFor="let Videos of ResultDataVideos; let i = index;">
-          <!--<img src="https://ionicframework.com/docs/img/demos/card-media.png" alt="" (click)="PlayVideo(Videos)"/>-->
-          <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(Videos)" frameborder="0" allow="encrypted-media; gyroscope; picture-in-picture;"></iframe>
+        <ion-slide>
+          <iframe [src]="trustedVideoUrl" frameborder="0" allow="encrypted-media; gyroscope; picture-in-picture;"></iframe>
         </ion-slide>        
       </ion-slides>
     </div>
-    <div class="audio">
+    <div class="audio" *ngIf="ResultDataAudios.length > 0">
       <h5>AUDIO</h5>
-      <ion-list lines="none" *ngIf="ResultDataAudios.length > 0">
-        <ion-item *ngFor="let Audios of ResultDataAudios; let i = index;">
+      <ion-list lines="none">
+        <ion-item *ngFor="let Audios of ResultDataAudios; let i = index;" [disabled]="Audios.disabled">
           <ion-label>Listen to audio clip</ion-label>
           <ion-button color="light" class="play-btn" *ngIf="IsAudioPlayed == true" (click)="StopAudio()">
             <ion-icon name="pause-sharp"></ion-icon>
           </ion-button>
-          <ion-button color="light" class="play-btn" *ngIf="IsAudioPlayed == false" (click)="PlayAudio(Audios.id,Audios.mp3_name)">
+          <ion-button color="light" class="play-btn" *ngIf="IsAudioPlayed == false" (click)="PlayAudio(Audios.mp3_name)">
             <ion-icon name="play-sharp"></ion-icon>
           </ion-button>
         </ion-item>
-      </ion-list>
-      <!--<ion-slides #AudioSlider pager="false" [options]="AudioSliderOptions" *ngIf="ResultDataAudios.length > 0">
-        <ion-slide *ngFor="let Audios of ResultDataAudios; let i = index;" (click)="PlayAudio(Audios.mp3_name)">
-          <img src="https://ionicframework.com/docs/img/demos/card-media.png" alt="" />
-        </ion-slide>        
-      </ion-slides>-->
+      </ion-list>      
     </div>
   </div>
 </ion-content>

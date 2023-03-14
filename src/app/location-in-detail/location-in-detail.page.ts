@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, LoadingController } from '@ionic/angular';
+import { IonSlides, LoadingController, ModalController } from '@ionic/angular';
 import { SendReceiveRequestsService } from '../providers/send-receive-requests.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Media, MediaObject } from '@awesome-cordova-plugins/media/ngx';
-
+import { LocationInDetailDescriptionPage } from '../location-in-detail-description/location-in-detail-description.page';
 @Component({  
   selector: 'app-location-in-detail',
   templateUrl: './location-in-detail.page.html',
@@ -15,9 +15,9 @@ export class LocationInDetailPage implements OnInit
   @ViewChild('PhotoSlider', { static: false }) PhotoSlider ?  : IonSlides;
   @ViewChild('VideoSlider', { static: false }) VideoSlider ?  : IonSlides;
   @ViewChild('AudioSlider', { static: false }) AudioSlider ?  : IonSlides;
-  private mediaFile: MediaObject | undefined;
-  public IsAudioPlayed: boolean = false;
-  public AudioIDPlaying: any = null;
+  public trustedVideoUrl?: SafeResourceUrl;
+  private MediaFile: MediaObject | undefined;
+  public IsAudioPlayed:boolean=false;
   public Language:any="english";
   public CategoryNM:any=null;
   public CategorySNM:any=null;
@@ -28,6 +28,7 @@ export class LocationInDetailPage implements OnInit
   public ResultDataForAfrikaans:any=[];
   public ResultDataForXhosa:any=[];
   public ResultDataImages:any=[];
+  public VideoURL:any=null;
   public ResultDataVideos:any=[];
   public ResultDataAudios:any=[];
   public PhotoSliderOptions = 
@@ -48,7 +49,7 @@ export class LocationInDetailPage implements OnInit
     autoplay: false,
     speed: 1000
   };
-  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl : LoadingController, public  sanitizer:DomSanitizer, private media: Media)
+  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl : LoadingController, public  sanitizer:DomSanitizer, private media: Media, public ModalCtrl: ModalController)
   { }
 
   ngOnInit()
@@ -87,8 +88,10 @@ export class LocationInDetailPage implements OnInit
         this.ResultDataForXhosa = this.ResultData['xhosa']; 
         
         this.ResultDataImages = this.ResultData['images']; 
-        this.ResultDataVideos = this.ResultData['videos']; 
-        this.ResultDataAudios = this.ResultData['mp3']; 
+        this.ResultDataVideos = this.ResultData['videos'];
+        this.VideoURL = this.ResultDataVideos[0];
+        this.trustedVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.VideoURL);
+        this.ResultDataAudios = this.ResultData['mp3'];         
       }
       console.log(this.ResultData);
     },
@@ -105,17 +108,36 @@ export class LocationInDetailPage implements OnInit
     console.log(this.Language);
   }
   
-  PlayAudio(AudioID:any,AudioURL:any)
+  async ReadMore()
   {
-    this.AudioIDPlaying=AudioID;
+    const modal = await this.ModalCtrl.create({
+      component: LocationInDetailDescriptionPage,
+      showBackdrop: false,
+			componentProps: 
+			{ 
+        language: this.Language,
+        id:this.StorageData['id']
+			}
+    });
+    return await modal.present();
+  }
+
+  PlayAudio(AudioURL:any)
+  {
+    this.MediaFile = this.media.create(AudioURL);
+    this.MediaFile.play();
     this.IsAudioPlayed = true;
-    this.mediaFile = this.media.create(AudioURL);
-    this.mediaFile.play();
   }
 
   StopAudio()
   {
+    this.MediaFile?.release();
     this.IsAudioPlayed = false;
-    this.mediaFile?.release();
+  }
+
+  ionViewDidLeave()
+  {
+    this.MediaFile?.release();
+    this.IsAudioPlayed = false;
   }
 }
