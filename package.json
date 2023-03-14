@@ -22,6 +22,7 @@
     "@awesome-cordova-plugins/android-permissions": "^6.3.0",
     "@awesome-cordova-plugins/app-version": "^6.3.0",
     "@awesome-cordova-plugins/core": "^6.3.0",
+    "@awesome-cordova-plugins/deeplinks": "^6.3.0",
     "@awesome-cordova-plugins/geolocation": "^6.3.0",
     "@awesome-cordova-plugins/location-accuracy": "^6.3.0",
     "@awesome-cordova-plugins/media": "^6.3.0",
@@ -68,6 +69,7 @@
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "30.7.6",
     "eslint-plugin-prefer-arrow": "1.2.2",
+    "ionic-plugin-deeplinks": "^1.0.24",
     "jasmine-core": "~4.3.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.4.0",
@@ -95,7 +97,25 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-media": {}
+      "cordova-plugin-media": {},
+      "ionic-plugin-deeplinks": {
+        "URL_SCHEME": "karookaarte",
+        "DEEPLINK_SCHEME": "https",
+        "DEEPLINK_HOST": "karookaarte.co.za",
+        "ANDROID_PATH_PREFIX": "/",
+        "ANDROID_2_PATH_PREFIX": "/",
+        "ANDROID_3_PATH_PREFIX": "/",
+        "ANDROID_4_PATH_PREFIX": "/",
+        "ANDROID_5_PATH_PREFIX": "/",
+        "DEEPLINK_2_SCHEME": " ",
+        "DEEPLINK_2_HOST": " ",
+        "DEEPLINK_3_SCHEME": " ",
+        "DEEPLINK_3_HOST": " ",
+        "DEEPLINK_4_SCHEME": " ",
+        "DEEPLINK_4_HOST": " ",
+        "DEEPLINK_5_SCHEME": " ",
+        "DEEPLINK_5_HOST": " "
+      }
     },
     "platforms": [
       "android"

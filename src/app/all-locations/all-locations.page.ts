@@ -74,7 +74,7 @@ export class AllLocationsPage implements OnInit
       {
         this.CategoryTP = params['category_type'];//THIS WILL ONLY USED FOR LIVE OPTION
       }
-    });
+    });    
     this.MapToWatch = (localStorage.getItem('map_to_watch')) ? localStorage.getItem('map_to_watch') : [];
     if(this.MapToWatch.length > 0)
     {
@@ -105,7 +105,7 @@ export class AllLocationsPage implements OnInit
 
   async ShowAllLocations()
   {
-    let DataAllLocations = {CategoryID:this.CategoryID}
+    let DataAllLocations = {CategoryID:this.CategoryID,categoryTP:this.CategoryTP}
     //LOADER
 		const loading = await this.LoadingCtrl.create({
 			spinner: null,

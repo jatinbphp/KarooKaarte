@@ -24,6 +24,10 @@ const routes: Routes = [
     loadChildren: () => import('./location-in-detail/location-in-detail.module').then( m => m.LocationInDetailPageModule)
   },
   {
+    path: 'location-in-detail/:id',
+    loadChildren: () => import('./location-in-detail/location-in-detail.module').then( m => m.LocationInDetailPageModule)
+  },
+  {
     path: 'all-categories',
     loadChildren: () => import('./all-categories/all-categories.module').then( m => m.AllCategoriesPageModule)
   },

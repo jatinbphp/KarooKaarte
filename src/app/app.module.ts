@@ -12,6 +12,7 @@ import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx
 import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@awesome-cordova-plugins/native-geocoder/ngx';
 import { Media } from '@awesome-cordova-plugins/media/ngx';
+import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +31,7 @@ import { Media } from '@awesome-cordova-plugins/media/ngx';
     Geolocation,
     NativeGeocoder,
     Media,
+    Deeplinks,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

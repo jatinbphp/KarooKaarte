@@ -36,7 +36,7 @@ export class SendReceiveRequestsService
   {
     return new Promise((resolve, reject) => 
     {
-      let DataToPost = new HttpParams().set("category_id",Data.CategoryID);
+      let DataToPost = new HttpParams().set("category_id",Data.CategoryID).set("category_type",Data.categoryTP);
       this.http.post(this.ApiUrl + "location",  DataToPost , {}).subscribe((res: any) =>       
       {
         resolve(res);					

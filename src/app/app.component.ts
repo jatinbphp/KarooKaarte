@@ -3,6 +3,7 @@ import { Platform, AlertController } from '@ionic/angular';
 import { Network } from '@awesome-cordova-plugins/network/ngx';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SendReceiveRequestsService } from './providers/send-receive-requests.service';
+import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
 
 export enum ConnectionStatus 
 {
@@ -25,7 +26,7 @@ export class AppComponent {
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
   private status = new BehaviorSubject(ConnectionStatus.Offline);//CHECKING ONLINE/OFFLINE NETWORK AVAILIBILITY
   public AppWelcome : any = [];
-  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private network: Network, private platform: Platform, private alertController: AlertController) 
+  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private network: Network, private platform: Platform, private alertController: AlertController, private Deeplink: Deeplinks) 
   {
     this.platform.ready().then(async () => 
     {
@@ -98,6 +99,21 @@ export class AppComponent {
       {
         this.SendReceiveRequestsService.router.navigate(['/welcome-to-app']);
       }
+
+      //DEEP LINK
+      this.Deeplink.route({'/location-in-detail/:id':'LocationInDetailPage'}).subscribe(async (match) =>       
+      {
+        let id = match.$args.id;
+        let ObjOptionSelected = { id : id, what_to_see : "Details" }
+        localStorage.setItem('selected_options',JSON.stringify(ObjOptionSelected));
+        this.SendReceiveRequestsService.router.navigate(['/location-in-detail']);
+        console.log("Match = ", match);
+      },nomatch => 
+      {
+        // nomatch.$link - the full link data
+        console.log("NoMatch = ", nomatch);
+      });
+      //DEEP LINK
     });
   }
 }
