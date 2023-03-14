@@ -88,8 +88,51 @@ ion-content {
 				}
 			}
 		}
+		ion-list {
+			padding: 0;
+			ion-item {
+				margin: 0 0 6px;
+				&:last-child {
+					margin: 0;
+				}
+				ion-label {
+					font-size: 12px;
+			        line-height: 14px;
+			        color: var(--white);
+			        font-family: var(--font-RobotoL);
+			        text-transform: capitalize;
+				}
+				ion-button {
+					aspect-ratio: 1/1;
+					margin: 0 0 0 6px;
+					border-radius: 100%;
+					--border-radius: 100%;
+					font-size: 11px;
+				    --padding-end: 0;
+				    --padding-start: 0;
+				    --padding-bottom: 0;
+				    --padding-top: 0;
+				    width: 26px;
+				    height: 26px;
+				    line-height: 26px;
+				}
+			}
+		}
 		.gallery, .video, .audio {
 			margin: 0 0 20px;
+		}
+		.video, .audio {
+			ion-slides {
+				margin-right: 0;
+				iframe {
+					width: 100%;
+				    height: auto;
+				    aspect-ratio: 16/9;
+				    object-fit: cover;
+				    border-radius: 15px;
+				    overflow: hidden;
+				}
+			}
 		}
 	}
 }

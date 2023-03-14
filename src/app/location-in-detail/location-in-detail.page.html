@@ -72,11 +72,12 @@
       <h5>AUDIO</h5>
       <ion-list lines="none" *ngIf="ResultDataAudios.length > 0">
         <ion-item *ngFor="let Audios of ResultDataAudios; let i = index;">
-          <ion-button class="play-btn" *ngIf="IsAudioPlayed == true" (click)="StopAudio()">
-            <ion-icon name="pause-outline"></ion-icon>
+          <ion-label>Listen to audio clip</ion-label>
+          <ion-button color="light" class="play-btn" *ngIf="IsAudioPlayed == true" (click)="StopAudio()">
+            <ion-icon name="pause-sharp"></ion-icon>
           </ion-button>
-          <ion-button class="play-btn" *ngIf="IsAudioPlayed == false" (click)="PlayAudio(Audios.id,Audios.mp3_name)">
-            <ion-icon name="play-outline"></ion-icon>
+          <ion-button color="light" class="play-btn" *ngIf="IsAudioPlayed == false" (click)="PlayAudio(Audios.id,Audios.mp3_name)">
+            <ion-icon name="play-sharp"></ion-icon>
           </ion-button>
         </ion-item>
       </ion-list>
