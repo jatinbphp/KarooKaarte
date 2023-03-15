@@ -63,7 +63,8 @@
       <h5>VIDEO</h5>
       <ion-slides #VideoSlider pager="false" [options]="VideoSliderOptions" *ngIf="ResultDataVideos.length > 0">
         <ion-slide>
-          <iframe [src]="trustedVideoUrl" frameborder="0" allow="encrypted-media; gyroscope; picture-in-picture;"></iframe>
+          <iframe [src]="trustedVideoUrl" frameborder="0" allowfullscreen="true"></iframe>
+          <!--<iframe [src]="trustedVideoUrl" frameborder="0" allow="encrypted-media; gyroscope; picture-in-picture;"></iframe>-->
         </ion-slide>        
       </ion-slides>
     </div>

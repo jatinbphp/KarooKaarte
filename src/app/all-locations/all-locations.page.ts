@@ -16,7 +16,8 @@ declare var google: any;
 
 export class AllLocationsPage implements OnInit 
 {
-  @ViewChild('MAP', { static: false }) mapElement?: ElementRef;  
+  @ViewChild('MAP', { static: false }) mapElement?: ElementRef; 
+  public LocationSubscription:any=null; 
   public DefaultLatitude: number = -33.6229684;//DEFAULT LOCATION OF Oudtshoorn
   public DefaultLongitude: number = 22.1545885;//DEFAULT LOCATION OF Oudtshoorn
   public DraggedLatitude: number = 0;
@@ -386,6 +387,18 @@ export class AllLocationsPage implements OnInit
 
   async WatchContinuesPosition(map:any)
   {
+    this.LocationSubscription = this.Geolocation.watchPosition();
+    this.LocationSubscription.subscribe(<GeolocationPosition>(position:any) => 
+    {
+      this._Location.next(position);
+      this.LocationCordinates.latitude = position.coords.latitude;
+      this.LocationCordinates.longitude = position.coords.longitude;
+      this.LocationCordinates.accuracy = position.coords.accuracy;
+      this.LocationCordinates.timestamp = position.timestamp;
+      this.AddDynamicMarkers(map);
+      //console.log("Watch",this.LocationCordinates);      
+    });
+    /*
     this.Geolocation.watchPosition().subscribe(<GeolocationPosition>(position:any) => 
     {
       this._Location.next(position);
@@ -399,6 +412,7 @@ export class AllLocationsPage implements OnInit
     {
       console.log(err);
     });
+    */
   }
 
   async ShowLiveLocations(map:any)
@@ -419,7 +433,7 @@ export class AllLocationsPage implements OnInit
 
   async AddDynamicMarkers(map:any)
   {
-    this.SendReceiveRequestsService.showMessageToast(this.LocationCordinates.latitude+"@"+this.LocationCordinates.longitude);
+    //this.SendReceiveRequestsService.showMessageToast(this.LocationCordinates.latitude+"@"+this.LocationCordinates.longitude);
     var marker, i;
     let image = 
     {
@@ -427,10 +441,11 @@ export class AllLocationsPage implements OnInit
       scaledSize: new google.maps.Size(50, 50),
     };
     //-33.6229684,22.1545885[DUMMY]
-    var LatLng = new google.maps.LatLng(-33.6229684,22.1545885);
+    //var LatLng = new google.maps.LatLng(-33.6229684,22.1545885);
+    var LatLng = new google.maps.LatLng(this.LocationCordinates.latitude,this.LocationCordinates.longitude);
     let MarkerCenter = new google.maps.Marker({
       position: LatLng,
-      map: map,
+      map: this.mapLive,
       title: 'Drag Me!',
       draggable: false,
       icon: image
@@ -444,13 +459,15 @@ export class AllLocationsPage implements OnInit
     });
     //DYNAMIC MARKER SOUROUNING LOCATION STARTS
     //LOADER
-		const loading = await this.LoadingCtrl.create({
+		/*
+    const loading = await this.LoadingCtrl.create({
 			spinner: null,
 			message: 'Just a moment please...',
 			translucent: true,
 			cssClass: 'custom-class custom-loading'
 		});
 		await loading.present();
+    */
 		//LOADER
     let DataLiveLocations = 
     {
@@ -461,9 +478,9 @@ export class AllLocationsPage implements OnInit
     }
     await this.SendReceiveRequestsService.GetLocationsLive(DataLiveLocations).then((result:any) => 
     {
-		  loading.dismiss();//DISMISS LOADER
+		  //loading.dismiss();//DISMISS LOADER
       this.ResultDataLiveLocationsResponse = result;   
-      console.log("Hello",this.ResultDataLiveLocationsResponse);   
+      
 
       if(this.ResultDataLiveLocationsResponse['status'] == true)
       {
@@ -486,12 +503,13 @@ export class AllLocationsPage implements OnInit
           };
           for (i = 0; i < this.LocationsJSONLive.length; i++) 
           {  
+            console.log("HERE");
             marker = new google.maps.Marker({
               position: new google.maps.LatLng(this.LocationsJSONLive[i]['lat'], this.LocationsJSONLive[i]['lon']),
-              map: map,
+              map: this.mapLive,
               icon: image
             });
-
+            
             bounds.extend(marker.position);
             
             let InfoWindowContent = '';
@@ -514,32 +532,32 @@ export class AllLocationsPage implements OnInit
               {
                 //infowindow.setContent(ClassObj.LocationsJSONLive[i]['name']);
                 infowindow.setContent(InfoWindowContent);
-                infowindow.open(map, marker);
+                infowindow.open(ClassObj.mapLive, marker);
               }
             })(marker, i));
-
+            
             google.maps.event.addListener(infowindow, 'domready', (function (i) 
             {
               return function() 
               {
                 const EVPhotos = document.querySelector('#Photos-'+i);
-                EVPhotos?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONAll[i]['id'],"Photos"));
+                EVPhotos?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Photos"));
 
                 const EVVideos = document.querySelector('#Videos-'+i);
-                EVVideos?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONAll[i]['id'],"Videos"));
+                EVVideos?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Videos"));
 
                 const EVVoices = document.querySelector('#Voices-'+i);
-                EVVoices?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONAll[i]['id'],"Voices"));
+                EVVoices?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Voices"));
 
                 const EVTexts = document.querySelector('#Texts-'+i);
-                EVTexts?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONAll[i]['id'],"Texts"));
+                EVTexts?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Texts"));
 
                 const EVDetails = document.querySelector('#Details-'+i);
-                EVDetails?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONAll[i]['id'],"Details"));
+                EVDetails?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Details"));
               }
             })(i));
           }
-          map.fitBounds(bounds);
+          this.mapLive.fitBounds(bounds);
         }
         else 
         {
@@ -556,7 +574,7 @@ export class AllLocationsPage implements OnInit
     },
     (error:any) => 
     {
-      loading.dismiss();//DISMISS LOADER
+      //loading.dismiss();//DISMISS LOADER
       this.SendReceiveRequestsService.showMessageToast(error);
     });
     //DYNAMIC MARKER SOUROUNING LOCATION ENDS
@@ -572,22 +590,23 @@ export class AllLocationsPage implements OnInit
     this.SendReceiveRequestsService.router.navigate(['/location-in-detail']);    
   }
 
-  SelectedOption(SelectedOption:any)
+  async SelectedOption(SelectedOption:any)
   {
     if(SelectedOption == "all")
     {
       let MapToWatch = {'selected_type':'all'}
-      localStorage.setItem('map_to_watch',JSON.stringify(MapToWatch));
-      this.ShowAllLocations();       
+      localStorage.setItem('map_to_watch',JSON.stringify(MapToWatch));      
+      this.ShowAllLocations();
     }
     if(SelectedOption == "live")
     {
+      await this.ShowLiveLocations(this.mapLive);
       let MapToWatch = {'selected_type':'live'}
       localStorage.setItem('map_to_watch',JSON.stringify(MapToWatch));
       this.mapLive = new google.maps.Map(document.getElementById('MAP'), {
         zoom: 12,
-        center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
-        //center: new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude),
+        //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
+        center: new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude),
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
         mapTypeControl: false,
@@ -630,8 +649,12 @@ export class AllLocationsPage implements OnInit
         fullscreenControl: false,
       });
       */
-      this.ShowLiveLocations(this.mapLive);
+      
     }
   }  
   
+  ionViewDidLeave()
+  {
+    this._Location.unsubscribe();
+  }
 }

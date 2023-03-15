@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="karookaarte.co.za" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>KarooKaarte</name>
+    <name>Karoo Kaarte</name>
     <description>Find places near you.</description>
     <author email="info@karookaarte.co.za" href="https://karookaarte.co.za/">Team KarooKaarte</author>
     <content src="index.html" />
