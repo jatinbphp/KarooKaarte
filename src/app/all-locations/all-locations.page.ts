@@ -88,30 +88,7 @@ export class AllLocationsPage implements OnInit
         }
         if(this.MapToWatch['selected_type'] == "live")
         {          
-          //this.SelectedOption("live");
-          this.mapLive = new google.maps.Map(document.getElementById('MAP'), {
-            zoom: 12,
-            //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
-            center: new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude),
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
-            mapTypeControl: false,
-            mapTypeControlOptions: {
-              style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-              position: google.maps.ControlPosition.TOP_CENTER,
-            },
-            zoomControl: false,//THIS WILL REMOVE THE ZOOM OPTION +/-
-            zoomControlOptions: {
-              position: google.maps.ControlPosition.LEFT_CENTER,
-            },
-            scaleControl: false,
-            streetViewControl: false,
-            streetViewControlOptions: {
-              position: google.maps.ControlPosition.LEFT_TOP,
-            },
-            fullscreenControl: false,
-          });
-          await this.CurrentLocPosition(this.mapLive);
+          this.SelectedOption("live");          
         }
       }
       else 
@@ -410,14 +387,19 @@ export class AllLocationsPage implements OnInit
 
   async WatchContinuesPosition(map:any)
   {
-    this.LocationSubscription = this.Geolocation.watchPosition();
+    let WatchOptions = {
+      frequency : 30000,
+      timeout : 30000,
+      enableHighAccuracy: false // may cause errors if true
+    };
+    this.LocationSubscription = this.Geolocation.watchPosition(WatchOptions);
     this.LocationSubscription.subscribe(<GeolocationPosition>(position:any) => 
     {
       this._Location.next(position);
       this.LocationCordinates.latitude = position.coords.latitude;
       this.LocationCordinates.longitude = position.coords.longitude;
       this.LocationCordinates.accuracy = position.coords.accuracy;
-      this.LocationCordinates.timestamp = position.timestamp;
+      this.LocationCordinates.timestamp = position.timestamp;      
       this.AddDynamicMarkers(map);
       //console.log("Watch",this.LocationCordinates);      
     });
@@ -457,10 +439,11 @@ export class AllLocationsPage implements OnInit
   async AddDynamicMarkers(map:any)
   {
     //this.SendReceiveRequestsService.showMessageToast(this.LocationCordinates.latitude+"@"+this.LocationCordinates.longitude);
+    /*
     var marker, i;
     let image = 
     {
-      url: './assets/images/marker-50by50.png', // image is 512 x 512
+      url: './assets/images/logoIcon-marker-50by50.png', // image is 512 x 512
       scaledSize: new google.maps.Size(50, 50),
     };
     //-33.6229684,22.1545885[DUMMY]
@@ -480,6 +463,7 @@ export class AllLocationsPage implements OnInit
       let Longitude = latLng.lng();
       //console.log(Latitude,Longitude);
     });
+    */
     //DYNAMIC MARKER SOUROUNING LOCATION STARTS
     //LOADER
 		/*
@@ -502,9 +486,7 @@ export class AllLocationsPage implements OnInit
     await this.SendReceiveRequestsService.GetLocationsLive(DataLiveLocations).then((result:any) => 
     {
 		  //loading.dismiss();//DISMISS LOADER
-      this.ResultDataLiveLocationsResponse = result;   
-      
-
+      this.ResultDataLiveLocationsResponse = result;
       if(this.ResultDataLiveLocationsResponse['status'] == true)
       {
         this.ResultDataLiveLocations = this.ResultDataLiveLocationsResponse['data'];
@@ -584,7 +566,7 @@ export class AllLocationsPage implements OnInit
         }
         else 
         {
-          this.SendReceiveRequestsService.showMessageToast("No PIN's available.");
+          //this.SendReceiveRequestsService.showMessageToast("No PIN's available.");
         }
         /*
         SELF CENTER ENDS
