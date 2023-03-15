@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { IonSlides, LoadingController } from '@ionic/angular';
 import { SendReceiveRequestsService } from '../providers/send-receive-requests.service';
+import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer';
 @Component({
   selector: 'app-welcome-to-app',
   encapsulation: ViewEncapsulation.None,
@@ -54,5 +55,18 @@ export class WelcomeToAppPage implements OnInit
     });
     let ObjectWelcome = {introduced:1};
     //localStorage.setItem("app_welcome",JSON.stringify(ObjectWelcome));ENABLE THIS LINE IF WELCOME SCREEN NEEDED TO BE SHOW ONLY ONCE
+  }
+
+  EnlargePhoto(URL:any)
+  {
+    let options = 
+    {
+      share:false,
+      closeButton:true,
+      copyToReference:false,
+      headers:"",
+      piccasoOptions:{}
+    }
+    PhotoViewer.show(URL,"",options);
   }
 }

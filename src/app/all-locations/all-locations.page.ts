@@ -63,7 +63,7 @@ export class AllLocationsPage implements OnInit
   ngOnInit()
   { }
   
-  ionViewWillEnter()
+  async ionViewWillEnter()
   {
     this.route.queryParams.subscribe(params => 
     {      
@@ -87,8 +87,31 @@ export class AllLocationsPage implements OnInit
           this.SelectedOption("all");  
         }
         if(this.MapToWatch['selected_type'] == "live")
-        {
-          this.SelectedOption("live");  
+        {          
+          //this.SelectedOption("live");
+          this.mapLive = new google.maps.Map(document.getElementById('MAP'), {
+            zoom: 12,
+            //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
+            center: new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude),
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
+            mapTypeControl: false,
+            mapTypeControlOptions: {
+              style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+              position: google.maps.ControlPosition.TOP_CENTER,
+            },
+            zoomControl: false,//THIS WILL REMOVE THE ZOOM OPTION +/-
+            zoomControlOptions: {
+              position: google.maps.ControlPosition.LEFT_CENTER,
+            },
+            scaleControl: false,
+            streetViewControl: false,
+            streetViewControlOptions: {
+              position: google.maps.ControlPosition.LEFT_TOP,
+            },
+            fullscreenControl: false,
+          });
+          await this.CurrentLocPosition(this.mapLive);
         }
       }
       else 
@@ -655,6 +678,6 @@ export class AllLocationsPage implements OnInit
   
   ionViewDidLeave()
   {
-    this._Location.unsubscribe();
+    //this._Location.unsubscribe();
   }
 }

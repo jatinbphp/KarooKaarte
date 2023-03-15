@@ -54,7 +54,7 @@
     <div class="gallery">
       <h5>GALLERY</h5>
       <ion-slides #PhotoSlider pager="false" [options]="PhotoSliderOptions" *ngIf="ResultDataImages.length > 0">
-        <ion-slide *ngFor="let Images of ResultDataImages; let i = index;">
+        <ion-slide *ngFor="let Images of ResultDataImages; let i = index;" (click)="EnlargePhoto(Images.image_name)">
           <img src="{{Images.image_name}}"/>
         </ion-slide>        
       </ion-slides>

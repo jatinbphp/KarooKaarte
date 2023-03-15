@@ -28,6 +28,7 @@
     "@awesome-cordova-plugins/media": "^6.3.0",
     "@awesome-cordova-plugins/native-geocoder": "^6.3.0",
     "@awesome-cordova-plugins/network": "^6.3.0",
+    "@awesome-cordova-plugins/photo-viewer": "^6.3.0",
     "@ionic/angular": "^6.1.9",
     "@ionic/cordova-builders": "^8.0.0",
     "ionicons": "^6.0.3",
@@ -51,6 +52,7 @@
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "5.3.0",
     "@typescript-eslint/parser": "5.3.0",
+    "com-sarriaroman-photoviewer": "^1.2.5",
     "cordova-android": "^11.0.0",
     "cordova-plugin-android-permissions": "^1.1.5",
     "cordova-plugin-app-version": "^0.1.14",
@@ -115,7 +117,8 @@
         "DEEPLINK_4_HOST": " ",
         "DEEPLINK_5_SCHEME": " ",
         "DEEPLINK_5_HOST": " "
-      }
+      },
+      "com-sarriaroman-photoviewer": {}
     },
     "platforms": [
       "android"

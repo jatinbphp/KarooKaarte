@@ -4,6 +4,7 @@ import { SendReceiveRequestsService } from '../providers/send-receive-requests.s
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Media, MediaObject } from '@awesome-cordova-plugins/media/ngx';
 import { LocationInDetailDescriptionPage } from '../location-in-detail-description/location-in-detail-description.page';
+import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer';
 @Component({  
   selector: 'app-location-in-detail',
   templateUrl: './location-in-detail.page.html',
@@ -135,6 +136,19 @@ export class LocationInDetailPage implements OnInit
     this.IsAudioPlayed = false;
   }
 
+  EnlargePhoto(URL:any)
+  {
+    let options = 
+    {
+      share:false,
+      closeButton:true,
+      copyToReference:false,
+      headers:"",
+      piccasoOptions:{}
+    }
+    PhotoViewer.show(URL,"",options);
+  }
+  
   ionViewDidLeave()
   {
     this.MediaFile?.release();

@@ -31,7 +31,7 @@ import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
     Geolocation,
     NativeGeocoder,
     Media,
-    Deeplinks,
+    Deeplinks,    
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
