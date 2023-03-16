@@ -660,6 +660,16 @@ export class AllLocationsPage implements OnInit
     }
   }  
   
+  ResetSearch()
+  {
+    this.CategoryID = 0;
+    this.CategoryTP = null;    
+    this.SendReceiveRequestsService.router.navigate(['/all-locations']).then(result => 
+    {
+      this.ionViewWillEnter();
+    });
+  }
+
   ionViewDidLeave()
   {
     //this._Location.unsubscribe();
