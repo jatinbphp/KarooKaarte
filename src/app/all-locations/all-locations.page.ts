@@ -88,7 +88,9 @@ export class AllLocationsPage implements OnInit
         }
         if(this.MapToWatch['selected_type'] == "live")
         {          
-          this.SelectedOption("live");          
+          //this.SelectedOption("live");          
+          console.log("ionViewWillEnter");
+          await this.ShowLiveLocations();
         }
       }
       else 
@@ -129,7 +131,7 @@ export class AllLocationsPage implements OnInit
         SELF CENTER STARTS
         */    
         let map = new google.maps.Map(document.getElementById('MAP'), {
-          zoom: 12,
+          zoom: 8,
           center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
@@ -308,19 +310,19 @@ export class AllLocationsPage implements OnInit
     */ 
   }
 
-  async CheckPermission(map:any) 
+  async CheckPermission() 
   {
     await this.AndroidPermissions.checkPermission(this.AndroidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(async (result) => 
     {
       if(result.hasPermission) 
       {
         console.log("CheckPermission-has permission");
-        await this.EnableGPS(map);
+        await this.EnableGPS();
       } 
       else 
       {
         console.log("CheckPermission-has no permission");
-        await this.LocationAccPermission(map);
+        await this.LocationAccPermission();
       }
     },error => 
     {
@@ -328,21 +330,21 @@ export class AllLocationsPage implements OnInit
     });
   }
 
-  async LocationAccPermission(map:any) 
+  async LocationAccPermission() 
   {
     await this.LocationAccuracy.canRequest().then(async (canRequest: boolean) => 
     {
       if (canRequest) 
       {
         console.log("LocationAccPermission can request -1");
-        await this.CurrentLocPosition(map);
+        await this.CurrentLocPosition();
       } 
       else 
       {
         console.log("LocationAccPermission can request -2");
         await this.AndroidPermissions.requestPermission(this.AndroidPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(async () => 
         {
-          await this.EnableGPS(map);
+          await this.EnableGPS();
         },
         error => 
         {
@@ -352,12 +354,12 @@ export class AllLocationsPage implements OnInit
     });
   }
 
-  async EnableGPS(map:any) 
+  async EnableGPS() 
   {
     await this.LocationAccuracy.request(this.LocationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(async () => 
     {
       console.log("EnableGPS - allowed");
-      await this.CurrentLocPosition(map);
+      await this.CurrentLocPosition();
     },
     error => 
     {
@@ -368,7 +370,7 @@ export class AllLocationsPage implements OnInit
     });
   }
 
-  async CurrentLocPosition(map:any) 
+  async CurrentLocPosition() 
   {
     await this.Geolocation.getCurrentPosition().then(async (response) => 
     {
@@ -376,7 +378,7 @@ export class AllLocationsPage implements OnInit
       this.LocationCordinates.longitude = response.coords.longitude;
       this.LocationCordinates.accuracy = response.coords.accuracy;
       this.LocationCordinates.timestamp = response.timestamp;
-      this.WatchContinuesPosition(map);
+      this.WatchContinuesPosition();
     }).catch((error) => 
     {
       this.SendReceiveRequestsService.showMessageToast("You have disallowed location service.");
@@ -385,7 +387,7 @@ export class AllLocationsPage implements OnInit
     });    
   }
 
-  async WatchContinuesPosition(map:any)
+  async WatchContinuesPosition()
   {
     let WatchOptions = {
       frequency : 30000,
@@ -400,7 +402,7 @@ export class AllLocationsPage implements OnInit
       this.LocationCordinates.longitude = position.coords.longitude;
       this.LocationCordinates.accuracy = position.coords.accuracy;
       this.LocationCordinates.timestamp = position.timestamp;      
-      this.AddDynamicMarkers(map);
+      this.AddDynamicMarkers();
       //console.log("Watch",this.LocationCordinates);      
     });
     /*
@@ -420,23 +422,72 @@ export class AllLocationsPage implements OnInit
     */
   }
 
-  async ShowLiveLocations(map:any)
+  async ShowLiveLocations()
   {
     this.Timestamp = Date.now();
     await this.Platform.ready().then(async () => 
     {
       if(this.Platform.is("android") == true)
       {
-        await this.CheckPermission(map);
+        await this.CheckPermission();
       }
       else 
       {
-        await this.CurrentLocPosition(map);
+        await this.CurrentLocPosition();
       }
     });
+    let MapToWatch = {'selected_type':'live'}
+    localStorage.setItem('map_to_watch',JSON.stringify(MapToWatch));
+    console.log("ShowLiveLocations");
+    this.mapLive = new google.maps.Map(document.getElementById('MAP'), {
+      zoom: 8,
+      //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
+      center: new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
+      mapTypeControl: false,
+      mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: google.maps.ControlPosition.TOP_CENTER,
+      },
+      zoomControl: false,//THIS WILL REMOVE THE ZOOM OPTION +/-
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.LEFT_CENTER,
+      },
+      scaleControl: false,
+      streetViewControl: false,
+      streetViewControlOptions: {
+        position: google.maps.ControlPosition.LEFT_TOP,
+      },
+      fullscreenControl: false,
+    });
+    /* 
+    var map = new google.maps.Map(document.getElementById('MAP'), {
+      zoom: 8,
+      //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
+      center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
+      mapTypeControl: false,
+      mapTypeControlOptions: {
+        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        position: google.maps.ControlPosition.TOP_CENTER,
+      },
+      zoomControl: false,//THIS WILL REMOVE THE ZOOM OPTION +/-
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.LEFT_CENTER,
+      },
+      scaleControl: false,
+      streetViewControl: false,
+      streetViewControlOptions: {
+        position: google.maps.ControlPosition.LEFT_TOP,
+      },
+      fullscreenControl: false,
+    });
+    */
   }
 
-  async AddDynamicMarkers(map:any)
+  async AddDynamicMarkers()
   {
     //this.SendReceiveRequestsService.showMessageToast(this.LocationCordinates.latitude+"@"+this.LocationCordinates.longitude);
     /*
@@ -605,56 +656,7 @@ export class AllLocationsPage implements OnInit
     }
     if(SelectedOption == "live")
     {
-      await this.ShowLiveLocations(this.mapLive);
-      let MapToWatch = {'selected_type':'live'}
-      localStorage.setItem('map_to_watch',JSON.stringify(MapToWatch));
-      this.mapLive = new google.maps.Map(document.getElementById('MAP'), {
-        zoom: 12,
-        //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
-        center: new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude),
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
-        mapTypeControl: false,
-        mapTypeControlOptions: {
-          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-          position: google.maps.ControlPosition.TOP_CENTER,
-        },
-        zoomControl: false,//THIS WILL REMOVE THE ZOOM OPTION +/-
-        zoomControlOptions: {
-          position: google.maps.ControlPosition.LEFT_CENTER,
-        },
-        scaleControl: false,
-        streetViewControl: false,
-        streetViewControlOptions: {
-          position: google.maps.ControlPosition.LEFT_TOP,
-        },
-        fullscreenControl: false,
-      });
-      /* 
-      var map = new google.maps.Map(document.getElementById('MAP'), {
-        zoom: 12,
-        //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
-        center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
-        mapTypeControl: false,
-        mapTypeControlOptions: {
-          style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-          position: google.maps.ControlPosition.TOP_CENTER,
-        },
-        zoomControl: false,//THIS WILL REMOVE THE ZOOM OPTION +/-
-        zoomControlOptions: {
-          position: google.maps.ControlPosition.LEFT_CENTER,
-        },
-        scaleControl: false,
-        streetViewControl: false,
-        streetViewControlOptions: {
-          position: google.maps.ControlPosition.LEFT_TOP,
-        },
-        fullscreenControl: false,
-      });
-      */
-      
+      await this.ShowLiveLocations();
     }
   }  
   
