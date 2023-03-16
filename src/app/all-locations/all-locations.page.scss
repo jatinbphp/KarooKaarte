@@ -2,6 +2,23 @@ ion-content {
 	--background: transparent;
 	.mainContent {
 		padding: 8px 24px 0px;
+		.titleMain {
+			justify-content: space-between;
+			h2 {
+				display: inline-block;
+			}
+			ion-button {
+				--padding-start: 0;
+			    --padding-end: 0;
+			    margin: 0;
+			    border-radius: 5px;
+			    --border-radius: 5px;
+			    font-size: 25px;
+			    height: 35px;
+			    font-family: var(--font-RobotoB);
+			    letter-spacing: 1px;
+			}
+		}
 		#MAP {
 			width:100%;
 			height: calc(100vh - 150px);
