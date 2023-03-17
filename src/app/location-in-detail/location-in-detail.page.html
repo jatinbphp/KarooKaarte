@@ -51,17 +51,17 @@
         <ion-button fill="clear" (click)="ReadMore()">READ MORE >></ion-button>
       </div>
     </ion-card>
-    <div class="gallery">
+    <div class="gallery" *ngIf="ResultDataImages.length > 0">
       <h5>GALLERY</h5>
-      <ion-slides #PhotoSlider pager="false" [options]="PhotoSliderOptions" *ngIf="ResultDataImages.length > 0">
+      <ion-slides #PhotoSlider pager="false" [options]="PhotoSliderOptions">
         <ion-slide *ngFor="let Images of ResultDataImages; let i = index;" (click)="EnlargePhoto(Images.image_name)">
           <img src="{{Images.image_name}}"/>
         </ion-slide>        
       </ion-slides>
     </div>
-    <div class="video">
+    <div class="video" *ngIf="ResultDataVideos.length > 0">
       <h5>VIDEO</h5>
-      <ion-slides #VideoSlider pager="false" [options]="VideoSliderOptions" *ngIf="ResultDataVideos.length > 0">
+      <ion-slides #VideoSlider pager="false" [options]="VideoSliderOptions">
         <ion-slide>
           <iframe [src]="trustedVideoUrl" frameborder="0" allowfullscreen="true"></iframe>
           <!--<iframe [src]="trustedVideoUrl" frameborder="0" allow="encrypted-media; gyroscope; picture-in-picture;"></iframe>-->

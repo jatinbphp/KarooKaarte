@@ -91,6 +91,14 @@ export class LocationInDetailPage implements OnInit
         this.ResultDataImages = this.ResultData['images']; 
         this.ResultDataVideos = this.ResultData['videos'];
         this.VideoURL = this.ResultDataVideos[0];
+        /*CHECKING URL SHOULD INCLUDE EMBED*/
+        let SplitURL = this.VideoURL.split("/");
+        if(!SplitURL.includes("embed"))
+        {
+          this.ResultDataVideos = [];
+          this.VideoURL = null;
+        }        
+        /*CHECKING URL SHOULD INCLUDE EMBED*/
         this.trustedVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.VideoURL);
         this.ResultDataAudios = this.ResultData['mp3'];         
       }
