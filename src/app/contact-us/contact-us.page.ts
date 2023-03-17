@@ -38,10 +38,8 @@ export class ContactUsPage implements OnInit
         displayAppName:"Karoo Kaarte",
         promptAgainForEachNewVersion: false,
         storeAppURL:{
-          //ios:"karookaarte.co.za",
-          //android:"market://details?id=karookaarte.co.za"
-          ios:"com.dernafies.app",
-          android:"market://details?id=com.dernafies.app"
+          ios:"karookaarte.co.za",
+          android:"market://details?id=karookaarte.co.za"
         },
         customLocale: {
           title: "Would you mind rating %@?",
