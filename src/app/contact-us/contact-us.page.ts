@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
-
+import { Platform } from '@ionic/angular';
+import { AppRate } from '@awesome-cordova-plugins/app-rate';
+import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser';
 @Component({
   selector: 'app-contact-us',
   templateUrl: './contact-us.page.html',
@@ -12,7 +14,7 @@ export class ContactUsPage implements OnInit
   public AppVersion : any = null;
   public AppVersionCode : any = null;
   public ContactInformation: any = [];
-  constructor(private AppInfo: AppVersion)
+  constructor(private AppInfo: AppVersion, private Platform: Platform)
   { }
 
   async ngOnInit() 
@@ -27,4 +29,56 @@ export class ContactUsPage implements OnInit
     });
   }
 
+  RateUs()
+  {
+    this.Platform.ready().then(async () => 
+    {
+      AppRate.setPreferences({
+        useLanguage:"en",
+        displayAppName:"Karoo Kaarte",
+        promptAgainForEachNewVersion: false,
+        storeAppURL:{
+          //ios:"karookaarte.co.za",
+          //android:"market://details?id=karookaarte.co.za"
+          ios:"com.dernafies.app",
+          android:"market://details?id=com.dernafies.app"
+        },
+        customLocale: {
+          title: "Would you mind rating %@?",
+          message: "It won't take more than a minute and helps to promote our app. Thanks for your support!",
+          cancelButtonLabel: "No, Thanks",
+          laterButtonLabel: "Remind Me Later",
+          rateButtonLabel: "Rate It Now",
+          yesButtonLabel: "Yes!",
+          noButtonLabel: "Not really",
+          appRatePromptTitle: 'Do you like using %@',
+          feedbackPromptTitle: 'Mind giving us some feedback?',
+        },
+        openUrl: function(url) 
+        {
+          const options : InAppBrowserOptions = 
+          {
+            location : 'no',//Or 'no' 
+            hidden : 'no', //Or  'yes'
+            clearcache : 'yes',
+            clearsessioncache : 'yes',
+            zoom : 'no',//Android only ,shows browser zoom controls 
+            hardwareback : 'no',
+            mediaPlaybackRequiresUserAction : 'no',
+            shouldPauseOnSuspend : 'no', //Android only 
+            closebuttoncaption : 'Close', //iOS only
+            disallowoverscroll : 'no', //iOS only 
+            toolbar : 'yes', //iOS only 
+            enableViewportScale : 'no', //iOS only 
+            allowInlineMediaPlayback : 'no',//iOS only 
+            presentationstyle : 'pagesheet',//iOS only 
+            fullscreen : 'yes',//Windows only    
+          };
+          let target = "_system";
+          const browser = InAppBrowser.create(url,target,options);          
+        }
+      });
+    });
+    AppRate.promptForRating();
+  }
 }

@@ -20,10 +20,12 @@
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
     "@awesome-cordova-plugins/android-permissions": "^6.3.0",
+    "@awesome-cordova-plugins/app-rate": "^6.3.0",
     "@awesome-cordova-plugins/app-version": "^6.3.0",
     "@awesome-cordova-plugins/core": "^6.3.0",
     "@awesome-cordova-plugins/deeplinks": "^6.3.0",
     "@awesome-cordova-plugins/geolocation": "^6.3.0",
+    "@awesome-cordova-plugins/in-app-browser": "^6.3.0",
     "@awesome-cordova-plugins/location-accuracy": "^6.3.0",
     "@awesome-cordova-plugins/media": "^6.3.0",
     "@awesome-cordova-plugins/native-geocoder": "^6.3.0",
@@ -56,13 +58,17 @@
     "cordova-android": "^11.0.0",
     "cordova-plugin-android-permissions": "^1.1.5",
     "cordova-plugin-app-version": "^0.1.14",
+    "cordova-plugin-apprate": "^1.7.2",
     "cordova-plugin-device": "2.0.2",
+    "cordova-plugin-dialogs": "^2.0.2",
     "cordova-plugin-file": "^7.0.0",
     "cordova-plugin-geolocation": "^4.1.0",
+    "cordova-plugin-inappbrowser": "^5.0.0",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^5.0.0",
     "cordova-plugin-media": "^6.1.0",
     "cordova-plugin-nativegeocoder": "^3.5.0",
+    "cordova-plugin-nativestorage": "^2.3.2",
     "cordova-plugin-network-information": "^3.0.0",
     "cordova-plugin-request-location-accuracy": "^2.3.0",
     "cordova-plugin-splashscreen": "5.0.2",
@@ -106,7 +112,11 @@
         "DEEPLINK_HOST": "karookaarte.co.za",
         "ANDROID_PATH_PREFIX": "/"
       },
-      "com-sarriaroman-photoviewer": {}
+      "com-sarriaroman-photoviewer": {},
+      "cordova-plugin-apprate": {
+        "PLAY_CORE_VERSION": "1.+"
+      },
+      "cordova-plugin-inappbrowser": {}
     },
     "platforms": [
       "android"
