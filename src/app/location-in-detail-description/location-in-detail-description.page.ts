@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LoadingController, ModalController, NavParams } from '@ionic/angular';
 import { SendReceiveRequestsService } from '../providers/send-receive-requests.service';
 
 @Component({
   selector: 'app-location-in-detail-description',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './location-in-detail-description.page.html',
   styleUrls: ['./location-in-detail-description.page.scss'],
 })

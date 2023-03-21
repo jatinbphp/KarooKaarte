@@ -38,6 +38,14 @@ const routes: Routes = [
   {
     path: 'location-in-detail-description',
     loadChildren: () => import('./location-in-detail-description/location-in-detail-description.module').then( m => m.LocationInDetailDescriptionPageModule)
+  },
+  {
+    path: 'about-us',
+    loadChildren: () => import('./about-us/about-us.module').then( m => m.AboutUsPageModule)
+  },
+  {
+    path: 'programme-any',
+    loadChildren: () => import('./programme-any/programme-any.module').then( m => m.ProgrammeAnyPageModule)
   }
 ];
 

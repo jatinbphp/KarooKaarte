@@ -129,7 +129,185 @@ export class AllLocationsPage implements OnInit
         this.NumberOfLocations = this.LocationsJSONAll.length;
         /*
         SELF CENTER STARTS
-        */    
+        */
+        var stylers = [
+          {
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#212121"
+              }
+            ]
+          },
+          {
+            "elementType": "labels.icon",
+            "stylers": [
+              {
+                "visibility": "off"
+              }
+            ]
+          },
+          {
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#757575"
+              }
+            ]
+          },
+          {
+            "elementType": "labels.text.stroke",
+            "stylers": [
+              {
+                "color": "#212121"
+              }
+            ]
+          },
+          {
+            "featureType": "administrative",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#757575"
+              }
+            ]
+          },
+          {
+            "featureType": "administrative.country",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#9e9e9e"
+              }
+            ]
+          },
+          {
+            "featureType": "administrative.locality",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#bdbdbd"
+              }
+            ]
+          },
+          {
+            "featureType": "poi",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#757575"
+              }
+            ]
+          },
+          {
+            "featureType": "poi.park",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#181818"
+              }
+            ]
+          },
+          {
+            "featureType": "poi.park",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#616161"
+              }
+            ]
+          },
+          {
+            "featureType": "poi.park",
+            "elementType": "labels.text.stroke",
+            "stylers": [
+              {
+                "color": "#1b1b1b"
+              }
+            ]
+          },
+          {
+            "featureType": "road",
+            "elementType": "geometry.fill",
+            "stylers": [
+              {
+                "color": "#2c2c2c"
+              }
+            ]
+          },
+          {
+            "featureType": "road",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#8a8a8a"
+              }
+            ]
+          },
+          {
+            "featureType": "road.arterial",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#373737"
+              }
+            ]
+          },
+          {
+            "featureType": "road.highway",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#3c3c3c"
+              }
+            ]
+          },
+          {
+            "featureType": "road.highway.controlled_access",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#4e4e4e"
+              }
+            ]
+          },
+          {
+            "featureType": "road.local",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#616161"
+              }
+            ]
+          },
+          {
+            "featureType": "transit",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#757575"
+              }
+            ]
+          },
+          {
+            "featureType": "water",
+            "elementType": "geometry",
+            "stylers": [
+              {
+                "color": "#000000"
+              }
+            ]
+          },
+          {
+            "featureType": "water",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#3d3d3d"
+              }
+            ]
+          }
+        ];    
         let map = new google.maps.Map(document.getElementById('MAP'), {
           zoom: 8,
           center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
@@ -150,6 +328,7 @@ export class AllLocationsPage implements OnInit
             position: google.maps.ControlPosition.LEFT_TOP,
           },
           fullscreenControl: false,
+          styles: stylers
         });
         if(this.LocationsJSONAll.length > 0)
         {
@@ -159,7 +338,7 @@ export class AllLocationsPage implements OnInit
           let ClassObj = this;
           let image = 
           {
-            url: './assets/images/marker-50by50.png', // image is 512 x 512
+            url: './assets/images/app-pin.png', // image is 512 x 512
             scaledSize: new google.maps.Size(50, 50),
           };
           for (i = 0; i < this.LocationsJSONAll.length; i++) 
@@ -554,7 +733,7 @@ export class AllLocationsPage implements OnInit
           let ClassObj = this;
           let image = 
           {
-            url: './assets/images/marker-50by50.png', // image is 512 x 512
+            url: './assets/images/app-pin.png', // image is 512 x 512
             scaledSize: new google.maps.Size(50, 50),
           };
           for (i = 0; i < this.LocationsJSONLive.length; i++) 

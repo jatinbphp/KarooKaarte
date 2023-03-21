@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { IonSlides, LoadingController, ModalController } from '@ionic/angular';
 import { SendReceiveRequestsService } from '../providers/send-receive-requests.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -7,6 +7,7 @@ import { LocationInDetailDescriptionPage } from '../location-in-detail-descripti
 import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer';
 @Component({  
   selector: 'app-location-in-detail',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './location-in-detail.page.html',
   styleUrls: ['./location-in-detail.page.scss'],
 })
@@ -90,15 +91,19 @@ export class LocationInDetailPage implements OnInit
         
         this.ResultDataImages = this.ResultData['images']; 
         this.ResultDataVideos = this.ResultData['videos'];
-        this.VideoURL = this.ResultDataVideos[0];
-        /*CHECKING URL SHOULD INCLUDE EMBED*/
-        let SplitURL = this.VideoURL.split("/");
-        if(!SplitURL.includes("embed"))
+        if(this.ResultDataVideos!=null && this.ResultDataVideos!=undefined && this.ResultDataVideos!="")
         {
-          this.ResultDataVideos = [];
-          this.VideoURL = null;
-        }        
-        /*CHECKING URL SHOULD INCLUDE EMBED*/
+          console.log("Video",this.ResultDataVideos);
+          this.VideoURL = this.ResultDataVideos[0];
+          /*CHECKING URL SHOULD INCLUDE EMBED*/
+          let SplitURL = this.VideoURL.split("/");
+          if(!SplitURL.includes("embed"))
+          {
+            this.ResultDataVideos = [];
+            this.VideoURL = null;
+          }        
+          /*CHECKING URL SHOULD INCLUDE EMBED*/
+        }
         this.trustedVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.VideoURL);
         this.ResultDataAudios = this.ResultData['mp3'];         
       }
@@ -136,6 +141,7 @@ export class LocationInDetailPage implements OnInit
     this.MediaFile = this.media.create(AudioURL);
     this.MediaFile.play();
     this.IsAudioPlayed = true;
+    this.ReadMore();
   }
 
   StopAudio()

@@ -20,6 +20,7 @@
       <h2 *ngIf="Language == 'english'">{{ResultDataForEnglish.name}}</h2>
       <h2 *ngIf="Language == 'afrikaans'">{{ResultDataForAfrikaans.name}}</h2>
       <h2 *ngIf="Language == 'xhosa'">{{ResultDataForXhosa.name}}</h2>
+      <!--WORKING CODE JUST COMMENTED FOR NOW WILL OPEN WHEN ASKED
       <ion-button color="primary" id="Trigger-Lang">CHOOSE LANGUAGE</ion-button>
       <ion-popover trigger="Trigger-Lang" triggerAction="click" [dismissOnSelect]="true">
         <ng-template>
@@ -38,6 +39,7 @@
           </ion-content>
         </ng-template>
       </ion-popover>
+      WORKING CODE JUST COMMENTED FOR NOW WILL OPEN WHEN ASKED-->
     </div>
     <ion-card class="detailBox">
       <ion-card-header>
@@ -59,7 +61,7 @@
         </ion-slide>        
       </ion-slides>
     </div>
-    <div class="video" *ngIf="ResultDataVideos.length > 0">
+    <div class="video" *ngIf="ResultDataVideos != null && ResultDataVideos != undefined && ResultDataVideos != '' && ResultDataVideos.length > 0">
       <h5>VIDEO</h5>
       <ion-slides #VideoSlider pager="false" [options]="VideoSliderOptions">
         <ion-slide>

@@ -4,6 +4,7 @@ import { Network } from '@awesome-cordova-plugins/network/ngx';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SendReceiveRequestsService } from './providers/send-receive-requests.service';
 import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
+import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser';
 
 export enum ConnectionStatus 
 {
@@ -19,8 +20,10 @@ export enum ConnectionStatus
 export class AppComponent {
   public appPages = [
     { title: 'HOME', url: '/welcome-to-app', icon: 'mail' },
+    { title: 'ABOUT', url: '/about-us', icon: 'mail' },
+    { title: 'PROGRAMME 2023', url: '/programme-any', icon: 'mail' },
     { title: 'VIEW POI\'s', url: '/all-locations', icon: 'mail' },
-    { title: 'BROWS CATEGORIES', url: '/all-categories', icon: 'paper-plane' },
+    { title: 'BROWSE CATEGORIES', url: '/all-categories', icon: 'paper-plane' },
     { title: 'CONTACT US', url: '/contact-us', icon: 'heart' },    
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
@@ -115,5 +118,29 @@ export class AppComponent {
       });
       //DEEP LINK
     });
+  }
+
+  OpenURL(URLToOpen:any)
+  {
+    const options : InAppBrowserOptions = 
+    {
+      location : 'no',//Or 'no' 
+      hidden : 'no', //Or  'yes'
+      clearcache : 'yes',
+      clearsessioncache : 'yes',
+      zoom : 'no',//Android only ,shows browser zoom controls 
+      hardwareback : 'no',
+      mediaPlaybackRequiresUserAction : 'no',
+      shouldPauseOnSuspend : 'no', //Android only 
+      closebuttoncaption : 'Close', //iOS only
+      disallowoverscroll : 'no', //iOS only 
+      toolbar : 'yes', //iOS only 
+      enableViewportScale : 'no', //iOS only 
+      allowInlineMediaPlayback : 'no',//iOS only 
+      presentationstyle : 'pagesheet',//iOS only 
+      fullscreen : 'yes',//Windows only    
+    };
+    let target = "_blank";
+    const browser = InAppBrowser.create(URLToOpen,target,options);
   }
 }

@@ -9,6 +9,23 @@
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+        </ion-list>
+        <ion-list id="labels-list">
+          <ion-item lines="none">
+            <ion-button (click)="OpenURL('https://www.facebook.com/KKNKfees/')">
+              <ion-icon icon-only name="logo-facebook"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-button (click)="OpenURL('https://www.instagram.com/karookaarte/')">
+              <ion-icon name="logo-instagram"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-button (click)="OpenURL('https://kknk.co.za/en/')">
+              <ion-icon name="earth"></ion-icon>
+            </ion-button>
+          </ion-item>
         </ion-list>        
       </ion-content>
     </ion-menu>
