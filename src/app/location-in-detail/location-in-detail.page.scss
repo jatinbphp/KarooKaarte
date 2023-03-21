@@ -97,11 +97,11 @@ ion-content {
 					margin: 0;
 				}
 				ion-label {
-					font-size: 12px;
-			        line-height: 14px;
-			        color: var(--white);
-			        font-family: var(--font-RobotoL);
-			        text-transform: capitalize;
+					font-size: 12px !important;
+			        line-height: 14px !important;
+			        color: var(--white) !important;
+			        font-family: var(--font-RobotoL) !important;
+			        text-transform: capitalize !important;
 				}
 				ion-button {
 					aspect-ratio: 1/1;
