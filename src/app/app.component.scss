@@ -217,6 +217,31 @@ ion-menu {
           ion-label {}
         }
       }
+      &.socialIconBtn {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        align-items: center;
+        padding-bottom: 10px;
+        ion-item {
+          border-color: transparent;
+          border-width: 0;
+          padding: 0 0 0 20px;
+          --min-height: 30px;
+          ion-button {
+            margin: 0;
+            width: 30px;
+            height: 30px;
+            ion-icon {
+              margin: 0;
+              aspect-ratio: 1/1;
+              height: 22px;
+              min-width: 22px;
+              color: var(--theme-light);
+            }
+          }
+        }
+      }
     }
   }
 }

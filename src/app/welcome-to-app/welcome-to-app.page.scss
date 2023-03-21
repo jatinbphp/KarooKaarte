@@ -13,10 +13,13 @@ ion-content {
 			p {
 				width: 100%;
 				text-align: center;
-				font-size: 18px;
-				line-height: 22px;
+				// font-size: 18px;
+				// line-height: 22px;
+		        // font-family: var(--font-RobotoR);
+		        font-size: 16px;
+				line-height: 20px;
+		        font-family: var(--font-RobotoL);
 		        color: var(--white);
-		        font-family: var(--font-RobotoR);
 		        margin: 0;
 			}
 		}
@@ -29,6 +32,22 @@ ion-content {
 					height: auto;
 					aspect-ratio: 16 / 9;
 					object-fit: cover;
+				}
+			}
+		}
+		.sponsors {
+			padding: 35px 0;
+			ion-grid {
+				&.sponsorsLogo {
+					ion-row {
+						ion-col {
+							padding: 0 15px 0 0;
+							img {
+								max-width: 100%;
+								object-fit: contain;
+							}
+						}
+					}
 				}
 			}
 		}

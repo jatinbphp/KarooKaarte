@@ -113,9 +113,7 @@
         "ANDROID_PATH_PREFIX": "/"
       },
       "com-sarriaroman-photoviewer": {},
-      "cordova-plugin-apprate": {
-        "PLAY_CORE_VERSION": "1.+"
-      },
+      "cordova-plugin-apprate": {},
       "cordova-plugin-inappbrowser": {}
     },
     "platforms": [

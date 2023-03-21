@@ -284,3 +284,16 @@
     font-style: normal;
     font-display: swap;
 }
+
+@font-face {
+    font-family: 'Sora-SemiBold';
+    src: url('../assets/fonts/Sora-SemiBold.eot');
+    src: url('../assets/fonts/Sora-SemiBold.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/Sora-SemiBold.woff2') format('woff2'),
+        url('../assets/fonts/Sora-SemiBold.woff') format('woff'),
+        url('../assets/fonts/Sora-SemiBold.ttf') format('truetype'),
+        url('../assets/fonts/Sora-SemiBold.svg#Sora-SemiBold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}

@@ -53,6 +53,7 @@
 }
 
 :root {
+    --font-SoraSB: 'Sora-SemiBold';
     --font-RobotoR: 'Roboto-Regular';
     --font-RobotoM: 'Roboto-Medium';
     --font-RobotoL: 'Roboto-Light';
@@ -60,6 +61,7 @@
     --white: #ffffff;
     --black: #000000;
     --theme-primary: #7ca358;
+    --theme-light: #ededed;
     --borderClr1: #3a3a3c;
 }
 
@@ -444,10 +446,10 @@ ion-header {
     flex-wrap: wrap;
     margin: 0 0 8px;
     h2 {
-        font-size: 20px;/*BEFORE IT WAS 22PX*/
-        line-height: 22px;
+        font-size: 18px;
+        line-height: 20px;
         color: var(--white);
-        font-family: var(--font-RobotoB);
+        font-family: var(--font-SoraSB);
         text-transform: uppercase;
         padding: 0px 0px 14px;
         margin: 0px 0px 16px;
