@@ -20,7 +20,7 @@ export enum ConnectionStatus
 export class AppComponent {
   public appPages = [
     { title: 'HOME', url: '/welcome-to-app', icon: 'mail' },
-    { title: 'ABOUT', url: '/about-us', icon: 'mail' },
+    { title: 'ABOUT US', url: '/about-us', icon: 'mail' },
     { title: 'PROGRAMME 2023', url: '/programme-any', icon: 'mail' },
     { title: 'VIEW POI\'s', url: '/all-locations', icon: 'mail' },
     { title: 'BROWSE CATEGORIES', url: '/all-categories', icon: 'paper-plane' },

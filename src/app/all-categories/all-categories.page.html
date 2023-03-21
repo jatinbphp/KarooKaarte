@@ -24,6 +24,11 @@
           <ul *ngIf="Categories.sub_category.length > 0">
             <li *ngFor="let SubCategories of Categories.sub_category; let s = index;">
               <span (click)="SelectedOption('subcategory',SubCategories.id)">&nbsp;>&nbsp;{{SubCategories.subcategory_name}}</span>
+              <ul>
+                <li>
+                  <span>&nbsp;>&nbsp;Third Level</span>
+                </li>
+              </ul>
             </li>
           </ul>
         </li>        
