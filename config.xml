@@ -53,10 +53,10 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <config-file parent="NSLocationWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
-            <string>To show near by locations from current position.</string>
+            <string>The location is requested to show the user of listings near them for an arts festival. When they use the App in South Africa, Oudtshoorn , they will be able to get a live update on locations that is near them as they walk through the streets. The App is used for a festival in South Africa and will be used by festival participants to interact in town with the various locations/listings and see details near them.</string>
         </config-file>
         <config-file parent="NSLocationAlwaysAndWhenInUseUsageDescription" platform="ios" target="*-Info.plist">
-            <string>To show near by locations from current position.</string>
+            <string>The location is requested to show the user of listings near them for an arts festival. When they use the App in South Africa, Oudtshoorn , they will be able to get a live update on locations that is near them as they walk through the streets. The App is used for a festival in South Africa and will be used by festival participants to interact in town with the various locations/listings and see details near them.</string>
         </config-file>
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
         <icon height="114" src="resources/ios/icon/icon@2x.png" width="114" />
