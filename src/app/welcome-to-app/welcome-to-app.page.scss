@@ -75,6 +75,7 @@ ion-content {
 							    height: auto;
 							    aspect-ratio: 1/1;
 								object-fit: contain;
+								filter: brightness(0) invert(1);
 							}
 						}
 					}
