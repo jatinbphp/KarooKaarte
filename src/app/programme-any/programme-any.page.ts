@@ -4,6 +4,7 @@ import { SendReceiveRequestsService } from '../providers/send-receive-requests.s
 
 @Component({
   selector: 'app-programme-any',
+  encapsulation: ViewEncapsulation.None,
   templateUrl: './programme-any.page.html',
   styleUrls: ['./programme-any.page.scss'],
 })
