@@ -1,4 +1,4 @@
-ion-header {
+/*ion-header {
 	&.most-use-header {
 		ion-toolbar {
 			ion-buttons {
@@ -17,37 +17,36 @@ ion-header {
 			}
 		}
 	}
-}
+}*/
 ion-content {
 	--background: transparent;
 	.mainContent {
 		padding: 8px 24px 0px;
-		.titleMain {
+		/*.titleMain {
             h2 {
                 color: var(--black);
             }
             p {
                 color: var(--black);
             }
-        }
+        }*/
 		.contentBox {
 			width: 100%;
 			display: flex;
 			flex-flow: column;
 			gap: 10px;
-			background-color: rgba(255,255,255,0.7);
+			//background-color: rgba(255,255,255,0.7);
+			background-color: var(--black);
 			padding: 20px 16px;
 			margin: 0 0 40px;
 			p {
 				width: 100%;
 				text-align: center;
-				// font-size: 18px;
-				// line-height: 22px;
-		        // font-family: var(--font-RobotoR);
 		        font-size: 16px;
 				line-height: 20px;
 		        font-family: var(--font-RobotoL);
-		        color: var(--black);
+		        //color: var(--black);
+		        color: var(--white);
 		        margin: 0;
 			}
 		}
