@@ -124,7 +124,7 @@ app-contact-us, app-location-in-detail, app-location-in-detail-description {
 }
 
 app-welcome-to-app {
-    background: url(./assets/images/bck-img2.png) 0 0/cover no-repeat;
+    // background: url(./assets/images/bck-img2.png) 0 0/cover no-repeat;
 }
 
 ion-modal {
@@ -489,5 +489,47 @@ ion-header {
         padding: 0px;
         margin: 0px 0px 16px;
         position: relative;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    app-welcome-to-app {
+        background: url(./assets/images/bck-img2-light.png) 0 0/cover no-repeat;
+        ion-header.most-use-header ion-toolbar ion-chip.logo img, 
+        ion-header.most-use-header ion-toolbar ion-buttons ion-menu-button img {
+            filter: brightness(0) invert(0);
+        }
+        .titleMain {
+            h2, p {
+                color: var(--black);
+            }
+        }
+        .contentBox {
+            background-color: rgba(0,0,0,0.7);
+        }
+        .sponsors ion-grid.sponsorsLogo ion-row ion-col img {
+            filter: unset;
+        }
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    app-welcome-to-app {
+        background: url(./assets/images/bck-img2-dark.png) 0 0/cover no-repeat;
+        ion-header.most-use-header ion-toolbar ion-chip.logo img, 
+        ion-header.most-use-header ion-toolbar ion-buttons ion-menu-button img {
+            filter: unset;
+        }
+        .titleMain {
+            h2, p {
+                color: var(--white);
+            }
+        }
+        .contentBox {
+            background-color: var(--black);
+        }
+        .sponsors ion-grid.sponsorsLogo ion-row ion-col img {
+            filter: brightness(0) invert(1);
+        }
     }
 }

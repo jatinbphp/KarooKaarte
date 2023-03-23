@@ -20,6 +20,11 @@ ion-content {
 			    // font-family: var(--font-RobotoB);
 			    font-family: var(--font-SoraSB);
 			    letter-spacing: 1px;
+			    &[fill="clear"] {
+			    	background: transparent;
+			    	border-color: transparent;
+			    	border-width: 0;
+			    }
 			}
 		}
 		#MAP {
