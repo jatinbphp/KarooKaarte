@@ -57,6 +57,7 @@ export class AllLocationsPage implements OnInit
   public CategoryID:any=0;
   public CategoryTP:any=null;
   public queryStringData: any=[];
+  public CurrentMayTypeSelected: any = 'all';
   constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private zone: NgZone, private AndroidPermissions: AndroidPermissions, private Geolocation: Geolocation, private NativeGeocoder: NativeGeocoder, private Platform: Platform, private LocationAccuracy: LocationAccuracy, private LoadingCtrl : LoadingController, private route: ActivatedRoute, private router: Router)
   { }  
 
@@ -84,11 +85,13 @@ export class AllLocationsPage implements OnInit
       {
         if(this.MapToWatch['selected_type'] == "all")
         {
+          this.CurrentMayTypeSelected='all';
           this.SelectedOption("all");  
         }
         if(this.MapToWatch['selected_type'] == "live")
         {          
           //this.SelectedOption("live");          
+          this.CurrentMayTypeSelected='live';
           console.log("ionViewWillEnter");
           await this.ShowLiveLocations();
         }
@@ -617,6 +620,7 @@ export class AllLocationsPage implements OnInit
     });
     let MapToWatch = {'selected_type':'live'}
     localStorage.setItem('map_to_watch',JSON.stringify(MapToWatch));
+    this.CurrentMayTypeSelected='live';
     console.log("ShowLiveLocations");
     var stylers = [
       {
@@ -1009,7 +1013,8 @@ export class AllLocationsPage implements OnInit
     if(SelectedOption == "all")
     {
       let MapToWatch = {'selected_type':'all'}
-      localStorage.setItem('map_to_watch',JSON.stringify(MapToWatch));      
+      localStorage.setItem('map_to_watch',JSON.stringify(MapToWatch)); 
+      this.CurrentMayTypeSelected='all';     
       this.ShowAllLocations();
     }
     if(SelectedOption == "live")

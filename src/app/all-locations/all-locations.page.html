@@ -16,10 +16,10 @@
         <ion-content class="ion-padding">
           <ion-list no-padding>
             <ion-item lines="none" (click)="SelectedOption('all')">
-              <ion-label>View all locations</ion-label>
+              <ion-label [ngClass]="{'active' : CurrentMayTypeSelected=='all'}">View all locations</ion-label>
             </ion-item>
             <ion-item lines="none" (click)="SelectedOption('live')">
-              <ion-label>Live map view</ion-label>
+              <ion-label [ngClass]="{'active' : CurrentMayTypeSelected=='live'}">Live map view</ion-label>
             </ion-item>            
           </ion-list>
         </ion-content>

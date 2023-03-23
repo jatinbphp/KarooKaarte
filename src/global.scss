@@ -176,6 +176,12 @@ ion-popover {
                 &:last-child {
                     margin: 0;
                 }
+                ion-label{
+                    &.active{
+                        color:var(--theme-primary) !important;
+                        font-weight: 600;
+                    }
+                }
             }
         }
     }
