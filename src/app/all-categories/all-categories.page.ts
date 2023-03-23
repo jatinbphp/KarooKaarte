@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SendReceiveRequestsService } from '../providers/send-receive-requests.service';
 import { LoadingController } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
+
 @Component({
   selector: 'app-all-categories',
   templateUrl: './all-categories.page.html',
@@ -12,7 +14,7 @@ export class AllCategoriesPage implements OnInit
 {
   public ResultData:any = [];
   public queryString: any=[];
-  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl : LoadingController)
+  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl : LoadingController, private StatusBar: StatusBar)
   { }
 
   ngOnInit()
@@ -20,6 +22,7 @@ export class AllCategoriesPage implements OnInit
 
   async ionViewWillEnter()
   { 
+    this.StatusBar.backgroundColorByHexString('#000000');
     //LOADER
 		const loading = await this.LoadingCtrl.create({
 			spinner: null,

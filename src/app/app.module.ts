@@ -13,6 +13,7 @@ import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@awesome-cordova-plugins/native-geocoder/ngx';
 import { Media } from '@awesome-cordova-plugins/media/ngx';
 import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,7 @@ import { Deeplinks } from '@awesome-cordova-plugins/deeplinks/ngx';
     NativeGeocoder,
     Media,
     Deeplinks,    
+    StatusBar,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

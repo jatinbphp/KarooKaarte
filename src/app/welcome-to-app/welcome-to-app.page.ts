@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { IonSlides, LoadingController } from '@ionic/angular';
 import { SendReceiveRequestsService } from '../providers/send-receive-requests.service';
 import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
+
 @Component({
   selector: 'app-welcome-to-app',
   encapsulation: ViewEncapsulation.None,
@@ -21,7 +23,7 @@ export class WelcomeToAppPage implements OnInit
   public ResultDataResponse:any=[];
   public ResultData:any=[];
   public ResultDataImages:any=[];
-  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl : LoadingController)
+  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl : LoadingController, private StatusBar: StatusBar)
   { }
 
   async ngOnInit()
@@ -55,6 +57,11 @@ export class WelcomeToAppPage implements OnInit
     });
     let ObjectWelcome = {introduced:1};
     //localStorage.setItem("app_welcome",JSON.stringify(ObjectWelcome));ENABLE THIS LINE IF WELCOME SCREEN NEEDED TO BE SHOW ONLY ONCE
+  }
+
+  ionViewWillEnter()
+  {
+    this.StatusBar.backgroundColorByHexString('#F6F4F8');
   }
 
   EnlargePhoto(URL:any)

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { SendReceiveRequestsService } from '../providers/send-receive-requests.service';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 
 @Component({
   selector: 'app-about-us',
@@ -12,7 +13,7 @@ export class AboutUsPage implements OnInit
 {
   public ResultDataResponse:any=[];
   public ResultData:any=[];
-  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl: LoadingController)
+  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl: LoadingController, private StatusBar: StatusBar)
   { }
 
   async ngOnInit()
@@ -43,4 +44,8 @@ export class AboutUsPage implements OnInit
     });
   }
 
+  ionViewWillEnter()
+  {
+    this.StatusBar.backgroundColorByHexString('#000000');
+  }
 }

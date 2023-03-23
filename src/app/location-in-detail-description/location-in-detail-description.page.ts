@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LoadingController, ModalController, NavParams } from '@ionic/angular';
 import { SendReceiveRequestsService } from '../providers/send-receive-requests.service';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 
 @Component({
   selector: 'app-location-in-detail-description',
@@ -20,7 +21,7 @@ export class LocationInDetailDescriptionPage implements OnInit
   public ResultDataForXhosa:any=[];
   public CategoryNM:any=null;
   public CategorySNM:any=null;
-  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl: LoadingController, private ModalCtrl: ModalController, private NavParams: NavParams)
+  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl: LoadingController, private ModalCtrl: ModalController, private NavParams: NavParams, private StatusBar: StatusBar)
   { }
 
   ngOnInit()
@@ -28,6 +29,7 @@ export class LocationInDetailDescriptionPage implements OnInit
 
   async ionViewWillEnter()
   {
+    this.StatusBar.backgroundColorByHexString('#000000');
     this.Language=this.NavParams.get('language');
     this.ID=this.NavParams.get('id');
     //LOADER

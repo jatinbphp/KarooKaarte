@@ -5,6 +5,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Media, MediaObject } from '@awesome-cordova-plugins/media/ngx';
 import { LocationInDetailDescriptionPage } from '../location-in-detail-description/location-in-detail-description.page';
 import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
+
 @Component({  
   selector: 'app-location-in-detail',
   encapsulation: ViewEncapsulation.None,
@@ -51,7 +53,7 @@ export class LocationInDetailPage implements OnInit
     autoplay: false,
     speed: 1000
   };
-  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl : LoadingController, public  sanitizer:DomSanitizer, private media: Media, public ModalCtrl: ModalController)
+  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl : LoadingController, public  sanitizer:DomSanitizer, private media: Media, public ModalCtrl: ModalController, private StatusBar: StatusBar)
   { }
 
   ngOnInit()
@@ -59,6 +61,7 @@ export class LocationInDetailPage implements OnInit
 
   async ionViewWillEnter()
   {
+    this.StatusBar.backgroundColorByHexString('#000000');
     this.StorageData = (localStorage.getItem('selected_options')) ? localStorage.getItem('selected_options') : [];
     if(this.StorageData.length > 0)
     {

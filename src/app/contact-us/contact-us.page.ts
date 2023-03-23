@@ -3,6 +3,8 @@ import { AppVersion } from '@awesome-cordova-plugins/app-version/ngx';
 import { Platform } from '@ionic/angular';
 import { AppRate } from '@awesome-cordova-plugins/app-rate';
 import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser';
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
+
 @Component({
   selector: 'app-contact-us',
   templateUrl: './contact-us.page.html',
@@ -14,7 +16,7 @@ export class ContactUsPage implements OnInit
   public AppVersion : any = null;
   public AppVersionCode : any = null;
   public ContactInformation: any = [];
-  constructor(private AppInfo: AppVersion, private Platform: Platform)
+  constructor(private AppInfo: AppVersion, private Platform: Platform, private StatusBar: StatusBar)
   { }
 
   async ngOnInit() 
@@ -27,6 +29,11 @@ export class ContactUsPage implements OnInit
     await this.AppInfo.getVersionCode().then( Info => {
       this.AppVersionCode = Info;
     });
+  }
+
+  ionViewWillEnter()
+  {
+    this.StatusBar.backgroundColorByHexString('#000000');
   }
 
   RateUs()

@@ -7,6 +7,8 @@ import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
 import { Subject } from 'rxjs';
 import { ActivatedRoute, Router } from "@angular/router";
+import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
+
 declare var google: any;
 @Component({
   selector: 'app-all-locations',
@@ -58,7 +60,7 @@ export class AllLocationsPage implements OnInit
   public CategoryTP:any=null;
   public queryStringData: any=[];
   public CurrentMayTypeSelected: any = 'all';
-  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private zone: NgZone, private AndroidPermissions: AndroidPermissions, private Geolocation: Geolocation, private NativeGeocoder: NativeGeocoder, private Platform: Platform, private LocationAccuracy: LocationAccuracy, private LoadingCtrl : LoadingController, private route: ActivatedRoute, private router: Router)
+  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private zone: NgZone, private AndroidPermissions: AndroidPermissions, private Geolocation: Geolocation, private NativeGeocoder: NativeGeocoder, private Platform: Platform, private LocationAccuracy: LocationAccuracy, private LoadingCtrl : LoadingController, private route: ActivatedRoute, private router: Router, private StatusBar: StatusBar)
   { }  
 
   ngOnInit()
@@ -66,6 +68,7 @@ export class AllLocationsPage implements OnInit
   
   async ionViewWillEnter()
   {
+    this.StatusBar.backgroundColorByHexString('#000000');
     this.route.queryParams.subscribe(params => 
     {      
       if(params.hasOwnProperty('category_id'))
