@@ -113,8 +113,18 @@ ion-button {
 }
 
 ion-app {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+// ion-app, 
+app-about-us, app-programme-any, app-all-categories, app-all-locations, 
+app-contact-us, app-location-in-detail, app-location-in-detail-description {
     background: url(./assets/images/bck-img1.svg) 0 0/100% 100% no-repeat;
     background: url(./assets/images/bck-img1.svg) 0 0/cover no-repeat;
+}
+
+app-welcome-to-app {
+    background: url(./assets/images/bck-img2.png) 0 0/cover no-repeat;
 }
 
 ion-modal {
@@ -469,5 +479,15 @@ ion-header {
             height: 2px;
             background-color: var(--theme-primary);
         }
+    }
+    p {
+        width: 100%;
+        font-size: 14px;
+        line-height: 18px;
+        color: var(--white);
+        font-family: var(--font-RobotoL);
+        padding: 0px;
+        margin: 0px 0px 16px;
+        position: relative;
     }
 }
