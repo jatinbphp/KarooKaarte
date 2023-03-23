@@ -22,7 +22,7 @@ export class AppComponent {
     { title: 'HOME', url: '/welcome-to-app', icon: 'mail' },
     { title: 'ABOUT US', url: '/about-us', icon: 'mail' },
     { title: 'PROGRAMME 2023', url: '/programme-any', icon: 'mail' },
-    { title: 'VIEW POI\'s', url: '/all-locations', icon: 'mail' },
+    { title: 'SITES OF SIGNIFICANCE', url: '/all-locations', icon: 'mail' },
     { title: 'BROWSE CATEGORIES', url: '/all-categories', icon: 'paper-plane' },
     { title: 'CONTACT US', url: '/contact-us', icon: 'heart' },    
   ];
@@ -140,7 +140,7 @@ export class AppComponent {
       presentationstyle : 'pagesheet',//iOS only 
       fullscreen : 'yes',//Windows only    
     };
-    let target = "_blank";
+    let target = "_system";
     const browser = InAppBrowser.create(URLToOpen,target,options);
   }
 }
