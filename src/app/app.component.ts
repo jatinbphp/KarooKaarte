@@ -20,10 +20,10 @@ export enum ConnectionStatus
 export class AppComponent {
   public appPages = [
     { title: 'HOME', url: '/welcome-to-app', icon: 'mail' },
-    { title: 'ABOUT US', url: '/about-us', icon: 'mail' },
-    { title: 'PROGRAMME 2023', url: '/programme-any', icon: 'mail' },
     { title: 'SITES OF SIGNIFICANCE', url: '/all-locations', icon: 'mail' },
     { title: 'BROWSE CATEGORIES', url: '/all-categories', icon: 'paper-plane' },
+    { title: 'Karoo Kaarte PROGRAMME 2023', url: '/programme-any', icon: 'mail' },
+    { title: 'ABOUT US', url: '/about-us', icon: 'mail' },
     { title: 'CONTACT US', url: '/contact-us', icon: 'heart' },    
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];

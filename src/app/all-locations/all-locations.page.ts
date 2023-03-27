@@ -854,16 +854,13 @@ export class AllLocationsPage implements OnInit
 
   async AddDynamicMarkers()
   {
-    //this.SendReceiveRequestsService.showMessageToast(this.LocationCordinates.latitude+"@"+this.LocationCordinates.longitude);
-    /*
+    /*THIS IS THE LIVE LOCATION MARKER*/
     var marker, i;
     let image = 
     {
-      url: './assets/images/logoIcon-marker-50by50.png', // image is 512 x 512
+      url: './assets/images/app-pin-live.png', // image is 512 x 512
       scaledSize: new google.maps.Size(50, 50),
-    };
-    //-33.6229684,22.1545885[DUMMY]
-    //var LatLng = new google.maps.LatLng(-33.6229684,22.1545885);
+    };    
     var LatLng = new google.maps.LatLng(this.LocationCordinates.latitude,this.LocationCordinates.longitude);
     let MarkerCenter = new google.maps.Marker({
       position: LatLng,
@@ -879,7 +876,7 @@ export class AllLocationsPage implements OnInit
       let Longitude = latLng.lng();
       //console.log(Latitude,Longitude);
     });
-    */
+    /*THIS IS THE LIVE LOCATION MARKER*/
     //DYNAMIC MARKER SOUROUNING LOCATION STARTS
     //LOADER
 		/*
