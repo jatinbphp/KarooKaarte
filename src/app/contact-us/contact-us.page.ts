@@ -45,7 +45,7 @@ export class ContactUsPage implements OnInit
         displayAppName:"Karoo Kaarte",
         promptAgainForEachNewVersion: false,
         storeAppURL:{
-          ios:"karookaarte.co.za",
+          ios:"6446354762",
           android:"market://details?id=karookaarte.co.za"
         },
         customLocale: {
