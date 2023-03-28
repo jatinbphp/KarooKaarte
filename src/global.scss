@@ -65,6 +65,11 @@
     --borderClr1: #3a3a3c;
 }
 
+b, strong {
+    font-weight: normal !important;
+    font-family: var(--font-SoraSB) !important;
+}
+
 @media (any-hover: hover) {
     :host(.ion-activatable:not(.ion-focused):hover) .item-native, 
     a:hover {
@@ -243,6 +248,7 @@ ion-header {
                         max-width: 100%;
                         height: 22px;
                         object-fit: contain;
+                        filter: unset;
                         @media(max-width:374px) {
                             height: 18px;
                         }
@@ -420,6 +426,9 @@ ion-header {
                 &.logo {
                     padding-inline: 20px 0;
                     justify-content: flex-start;
+                    img {
+                        filter: unset;
+                    }
                 }
                 img {
                     max-width: 100%;
@@ -454,6 +463,24 @@ ion-header {
                 }
             }
         }
+        &.white {
+            ion-toolbar {
+                ion-buttons {
+                    ion-menu-button {
+                        img {
+                            filter: brightness(0) invert(0);
+                        }
+                    }
+                }
+                ion-chip {
+                    &.logo {
+                        img {
+                            filter: brightness(0) invert(0);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -484,7 +511,8 @@ ion-header {
     p {
         width: 100%;
         font-size: 14px;
-        line-height: 18px;
+        // line-height: 18px;
+        line-height: 1.5;
         color: var(--white);
         font-family: var(--font-RobotoL);
         padding: 0px;

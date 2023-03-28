@@ -16,24 +16,6 @@ ion-header {
 				}
 			}
 		}
-		&.white {
-			ion-toolbar {
-				ion-buttons {
-					ion-menu-button {
-						img {
-							filter: brightness(0) invert(0);
-						}
-					}
-				}
-				ion-chip {
-					&.logo {
-						img {
-							filter: brightness(0) invert(0);
-						}
-					}
-				}
-			}
-		}
 	}
 }
 ion-content {
@@ -81,6 +63,7 @@ ion-content {
 								max-width: 100%;
 								width: 100%;
 							    height: auto;
+							    max-height: 120px;
 							    aspect-ratio: 1/1;
 								object-fit: contain;
 								filter: brightness(0) invert(1);

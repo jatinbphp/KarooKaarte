@@ -7,7 +7,7 @@ ion-content {
 				margin: 0 0 20px;
 				padding: 14px 10px;
 			    --background: var(--black);
-			    border: 1px solid var(--borderClr1);
+			    border: 0px solid var(--borderClr1);
 			    border-radius: 0;
 				ion-card-header {
 					padding: 0;
@@ -29,9 +29,10 @@ ion-content {
 					}
 				}
 				ion-card-content {
-					padding: 0;
+					padding: 5px 0 0;
 					font-size: 12px;
-				    line-height: 16px;
+				    // line-height: 16px;
+				    line-height: 1.5;
 				    color: var(--white);
 				    font-family: var(--font-RobotoL);
 				    p {

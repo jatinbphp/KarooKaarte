@@ -6,7 +6,7 @@ ion-content {
 			margin: 0 0 20px;
 			padding: 14px 10px;
 		    background: var(--black);
-		    border: 1px solid var(--borderClr1);
+		    border: 0px solid var(--borderClr1);
 		    border-radius: 0;
 		    ul {
 		    	padding: 0 16px;
@@ -18,7 +18,8 @@ ion-content {
 		    		li {
 		    			list-style-type: none;
 		    			font-size: 14px;
-						line-height: 16px;
+						// line-height: 16px;
+						line-height: 1.5;
 						text-transform: uppercase;
 						color: var(--white);
 						// font-family: var(--font-RobotoR);
