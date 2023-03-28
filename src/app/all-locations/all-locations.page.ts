@@ -804,7 +804,7 @@ export class AllLocationsPage implements OnInit
       }
     ];
     this.mapLive = new google.maps.Map(document.getElementById('MAP'), {
-      zoom: 8,
+      zoom: 11,
       //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
       center: new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -814,9 +814,9 @@ export class AllLocationsPage implements OnInit
         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
         position: google.maps.ControlPosition.TOP_CENTER,
       },
-      zoomControl: false,//THIS WILL REMOVE THE ZOOM OPTION +/-
+      zoomControl: true,//THIS WILL REMOVE THE ZOOM OPTION +/-
       zoomControlOptions: {
-        position: google.maps.ControlPosition.LEFT_CENTER,
+        position: google.maps.ControlPosition.RIGHT_BOTTOM,
       },
       scaleControl: false,
       streetViewControl: false,
