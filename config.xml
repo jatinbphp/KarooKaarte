@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="karookaarte.co.za" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="karookaarte.co.za" version="0.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Karoo Kaarte</name>
     <description>The Karoo Kaarte app offers an innovative way to allow locals, KKNK attendees and tourists the opportunity to take self-guided tours (either virtual or in-person) around Oudtshoorn and its surrounds.</description>
     <author email="info@kknk.co.za" href="https://kknk.co.za/en/">Team KarooKaarte</author>
