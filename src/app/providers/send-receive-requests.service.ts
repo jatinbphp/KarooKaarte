@@ -50,6 +50,24 @@ export class SendReceiveRequestsService
     });
   }
 
+  GetLocationsLiveUpdated(Data:any)
+  {
+    return new Promise((resolve, reject) => 
+    {
+      let DataToPost = new HttpParams().set("latitude",Data.latitude).set("longitude",Data.longitude).set("category_id",Data.category_id).set("category_type",Data.category_type);
+      this.http.post(this.ApiUrl + "getLivePOIDataUpdated",  DataToPost , {}).subscribe((res: any) =>       
+      {
+        resolve(res);					
+      },
+      err => 
+      {
+        console.log(err);
+        let errorMessage=this.getErrorMessage(err);
+        reject(errorMessage);
+      });
+    });
+  }
+
   GetLocationsLive(Data:any)
   {
     return new Promise((resolve, reject) => 

@@ -5,7 +5,7 @@ import { Geolocation } from '@awesome-cordova-plugins/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@awesome-cordova-plugins/native-geocoder/ngx';
 import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx';
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
-import { Subject } from 'rxjs';
+import { map, Subject } from 'rxjs';
 import { ActivatedRoute, Router } from "@angular/router";
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 
@@ -46,6 +46,7 @@ export class AllLocationsPage implements OnInit
   ];
   */
   public LocationsJSONLive:any=[];
+  public LocationsMarkersLive:any=[];
   public ResultDataLiveLocationsResponse:any=[];
   public ResultDataLiveLocations:any=[];
   public IDSelected:any=null;
@@ -576,7 +577,8 @@ export class AllLocationsPage implements OnInit
   {
     let WatchOptions = {
       frequency : 30000,
-      timeout : 30000,
+      maximumAge:30000,
+      timeout : 60000,
       enableHighAccuracy: false // may cause errors if true
     };
     this.LocationSubscription = this.Geolocation.watchPosition(WatchOptions);
@@ -587,24 +589,9 @@ export class AllLocationsPage implements OnInit
       this.LocationCordinates.longitude = position.coords.longitude;
       this.LocationCordinates.accuracy = position.coords.accuracy;
       this.LocationCordinates.timestamp = position.timestamp;      
-      this.AddDynamicMarkers();
-      //console.log("Watch",this.LocationCordinates);      
-    });
-    /*
-    this.Geolocation.watchPosition().subscribe(<GeolocationPosition>(position:any) => 
-    {
-      this._Location.next(position);
-      this.LocationCordinates.latitude = position.coords.latitude;
-      this.LocationCordinates.longitude = position.coords.longitude;
-      this.LocationCordinates.accuracy = position.coords.accuracy;
-      this.LocationCordinates.timestamp = position.timestamp;
-      this.AddDynamicMarkers(map);
-      //console.log("Watch",this.LocationCordinates);      
-    },(err) => 
-    {
-      console.log(err);
-    });
-    */
+      //this.AddDynamicMarkers();
+      this.AddDynamicMarkersUpdated();
+    });    
   }
 
   async ShowLiveLocations()
@@ -852,9 +839,141 @@ export class AllLocationsPage implements OnInit
     */
   }
 
+  async AddDynamicMarkersUpdated()
+  {
+    //DYNAMIC MARKER SOUROUNING LOCATION STARTS    
+    let DataLiveLocations = 
+    {
+      latitude:this.LocationCordinates.latitude,
+      longitude:this.LocationCordinates.longitude,
+      category_id:this.CategoryID,
+      category_type:this.CategoryTP
+    }
+    this.ResultDataLiveLocationsResponse = [];
+    this.ResultDataLiveLocations = [];
+    this.LocationsJSONLive = [];
+    await this.SendReceiveRequestsService.GetLocationsLiveUpdated(DataLiveLocations).then((result:any) => 
+    {
+      this.ResultDataLiveLocationsResponse = result;
+      if(this.ResultDataLiveLocationsResponse['status'] == true)
+      {
+        this.ResultDataLiveLocations = this.ResultDataLiveLocationsResponse['data'];
+        this.LocationsJSONLive = this.ResultDataLiveLocations;        
+        this.NumberOfLocations = this.LocationsJSONLive.length;
+        /*
+        SELF CENTER STARTS
+        */        
+        if(this.LocationsJSONLive.length > 0)
+        { 
+          var marker, i;
+          let ClassObj = this;
+          if(this.LocationsMarkersLive.length > 0)          
+          {
+            for (let m = 0; m < this.LocationsMarkersLive.length; m++) 
+            {
+              this.LocationsMarkersLive[m].setMap(null);
+            }
+            this.LocationsMarkersLive=[];
+          }
+          for (i = 0; i < this.LocationsJSONLive.length; i++) 
+          {  
+            let image = 
+            {
+              url: this.LocationsJSONLive[i]['image'], // image is 512 x 512
+              scaledSize: new google.maps.Size(50, 50),
+            };            
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng(this.LocationsJSONLive[i]['lat'], this.LocationsJSONLive[i]['lon']),
+              map: this.mapLive,
+              icon: image,
+              draggable: false,
+            });
+            this.LocationsMarkersLive.push(marker);
+          }
+          if(this.LocationsMarkersLive.length > 0)          
+          {
+            let bounds = new google.maps.LatLngBounds();
+            let infowindow = new google.maps.InfoWindow();
+            var marker, i;
+            let ClassObj = this;
+            for (i = 0; i < this.LocationsMarkersLive.length; i++) 
+            {
+              let marker = this.LocationsMarkersLive[i];
+              bounds.extend(marker.position);
+              if(i > 0)
+              {
+                let InfoWindowContent = '';
+                InfoWindowContent += '<ion-grid>';
+                InfoWindowContent += '<ion-row>';
+                  InfoWindowContent += '<ion-col size="12">';
+                    InfoWindowContent += '<ion-label class="location-name">'+this.LocationsJSONLive[i]['name']+'</ion-label>';
+                  InfoWindowContent += '</ion-col>';        
+                InfoWindowContent += '</ion-row>';
+                InfoWindowContent += '<ion-row>';
+                  InfoWindowContent += '<ion-col size="12">';
+                    InfoWindowContent += '<ion-button color="primary" id="Details-'+i+'" shape="round" size="full">Detail</ion-button>';
+                  InfoWindowContent += '</ion-col>';            
+                InfoWindowContent += '</ion-row>';
+                InfoWindowContent += '</ion-grid>';
+                
+                google.maps.event.addListener(marker, 'click', (function(marker, i) 
+                {
+                  return function() 
+                  {
+                    //infowindow.setContent(ClassObj.LocationsJSONLive[i]['name']);
+                    infowindow.setContent(InfoWindowContent);
+                    infowindow.open(ClassObj.mapLive, marker);
+                  }
+                })(marker, i));
+              
+                google.maps.event.addListener(infowindow, 'domready', (function (i) 
+                {
+                  return function() 
+                  {
+                    const EVPhotos = document.querySelector('#Photos-'+i);
+                    EVPhotos?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Photos"));
+
+                    const EVVideos = document.querySelector('#Videos-'+i);
+                    EVVideos?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Videos"));
+
+                    const EVVoices = document.querySelector('#Voices-'+i);
+                    EVVoices?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Voices"));
+
+                    const EVTexts = document.querySelector('#Texts-'+i);
+                    EVTexts?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Texts"));
+
+                    const EVDetails = document.querySelector('#Details-'+i);
+                    EVDetails?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Details"));
+                  }
+                })(i));
+              }
+            }   
+            this.mapLive.fitBounds(bounds);         
+          }
+        }
+        else 
+        {
+          //this.SendReceiveRequestsService.showMessageToast("No PIN's available.");
+        }
+        /*
+        SELF CENTER ENDS
+        */
+      }
+      else 
+      {
+        this.SendReceiveRequestsService.showMessageToast("No records were found.");
+      }
+    },
+    (error:any) => 
+    {
+      this.SendReceiveRequestsService.showMessageToast(error);
+    });
+    //DYNAMIC MARKER SOUROUNING LOCATION ENDS
+  }
+
   async AddDynamicMarkers()
   {
-    /*THIS IS THE LIVE LOCATION MARKER*/
+    /*THIS IS THE LIVE LOCATION MARKER*/    
     var marker, i;
     let image = 
     {
@@ -874,21 +993,9 @@ export class AllLocationsPage implements OnInit
       let latLng = MarkerCenter.latLng;
       let Latitude = latLng.lat();
       let Longitude = latLng.lng();
-      //console.log(Latitude,Longitude);
-    });
+    });    
     /*THIS IS THE LIVE LOCATION MARKER*/
-    //DYNAMIC MARKER SOUROUNING LOCATION STARTS
-    //LOADER
-		/*
-    const loading = await this.LoadingCtrl.create({
-			spinner: null,
-			message: 'Just a moment please...',
-			translucent: true,
-			cssClass: 'custom-class custom-loading'
-		});
-		await loading.present();
-    */
-		//LOADER
+    //DYNAMIC MARKER SOUROUNING LOCATION STARTS    
     let DataLiveLocations = 
     {
       latitude:this.LocationCordinates.latitude,
@@ -898,7 +1005,6 @@ export class AllLocationsPage implements OnInit
     }
     await this.SendReceiveRequestsService.GetLocationsLive(DataLiveLocations).then((result:any) => 
     {
-		  //loading.dismiss();//DISMISS LOADER
       this.ResultDataLiveLocationsResponse = result;
       if(this.ResultDataLiveLocationsResponse['status'] == true)
       {
@@ -992,7 +1098,6 @@ export class AllLocationsPage implements OnInit
     },
     (error:any) => 
     {
-      //loading.dismiss();//DISMISS LOADER
       this.SendReceiveRequestsService.showMessageToast(error);
     });
     //DYNAMIC MARKER SOUROUNING LOCATION ENDS
