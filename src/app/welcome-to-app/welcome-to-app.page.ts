@@ -41,6 +41,12 @@ export class WelcomeToAppPage implements OnInit
     {
       loading.dismiss();//DISMISS LOADER
       this.ResultDataResponse = result;
+      let ObjDefaultLatLng = 
+      {
+        lat:(this.ResultDataResponse.hasOwnProperty('lat')==true) ? this.ResultDataResponse['lat'] : -33.600733,
+        lng:(this.ResultDataResponse.hasOwnProperty('lon')==true) ? this.ResultDataResponse['lon'] : 22.224845,
+      }
+      localStorage.setItem('all_location_default',JSON.stringify(ObjDefaultLatLng));
       if(this.ResultDataResponse['status']=="true")
       {
         this.ResultData = this.ResultDataResponse['data'];

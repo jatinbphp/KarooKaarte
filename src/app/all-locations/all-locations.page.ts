@@ -19,9 +19,9 @@ declare var google: any;
 export class AllLocationsPage implements OnInit 
 {
   @ViewChild('MAP', { static: false }) mapElement?: ElementRef; 
-  public LocationSubscription:any=null; 
-  public DefaultLatitude: number = -33.6229684;//DEFAULT LOCATION OF Oudtshoorn
-  public DefaultLongitude: number = 22.1545885;//DEFAULT LOCATION OF Oudtshoorn
+  public LocationSubscription:any=null;
+  public DefaultLatitude: number = 0;//DEFAULT LOCATION OF Oudtshoorn:-33.600733
+  public DefaultLongitude: number = 0;//DEFAULT LOCATION OF Oudtshoorn:22.224845
   public DraggedLatitude: number = 0;
   public DraggedLongitude: number = 0;
   /*
@@ -33,6 +33,7 @@ export class AllLocationsPage implements OnInit
     {'name':'Maroubra Beach','lat':-33.950198,'lon':151.259302,'id':1}
   ];
   */
+  public DefaultLatLonForAll:any=[];
   public LocationsJSONAll:any=[];
   public ResultDataAllLocationsResponse:any=[];
   public ResultDataAllLocations:any=[];
@@ -69,6 +70,11 @@ export class AllLocationsPage implements OnInit
   
   async ionViewWillEnter()
   {
+    this.DefaultLatLonForAll=localStorage.getItem('all_location_default');
+    this.DefaultLatLonForAll = JSON.parse(this.DefaultLatLonForAll);
+    this.DefaultLatitude = this.DefaultLatLonForAll['lat'];
+    this.DefaultLongitude = this.DefaultLatLonForAll['lng'];    
+    
     this.StatusBar.backgroundColorByHexString('#000000');
     this.route.queryParams.subscribe(params => 
     {      
@@ -316,7 +322,7 @@ export class AllLocationsPage implements OnInit
           }
         ];    
         let map = new google.maps.Map(document.getElementById('MAP'), {
-          zoom: 8,
+          zoom: 13,
           center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
@@ -339,7 +345,7 @@ export class AllLocationsPage implements OnInit
         });
         if(this.LocationsJSONAll.length > 0)
         {
-          let bounds = new google.maps.LatLngBounds();
+          //let bounds = new google.maps.LatLngBounds();::BEFORE WE USED
           let infowindow = new google.maps.InfoWindow();
           var marker, i;
           let ClassObj = this;
@@ -349,16 +355,13 @@ export class AllLocationsPage implements OnInit
             scaledSize: new google.maps.Size(50, 50),
           };
           for (i = 0; i < this.LocationsJSONAll.length; i++) 
-          {  
-            
+          { 
             marker = new google.maps.Marker({
               position: new google.maps.LatLng(this.LocationsJSONAll[i]['lat'], this.LocationsJSONAll[i]['lon']),
               map: map,
               icon: image
             });
-
-            bounds.extend(marker.position);
-            
+            //bounds.extend(marker.position);::BEFORE WE USED            
             let InfoWindowContent = '';
             InfoWindowContent += '<ion-grid>';
             InfoWindowContent += '<ion-row>';
@@ -422,17 +425,17 @@ export class AllLocationsPage implements OnInit
                 EVDetails?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONAll[i]['id'],"Details"));
               }
             })(i));
-
           }
-
-          map.fitBounds(bounds);
-          
+          /*
+          ::BEFORE WE USED
+          map.fitBounds(bounds);          
           var listener = google.maps.event.addListener(map, "idle", function ()
           {
             map.setZoom(12);
             google.maps.event.removeListener(listener);
           });
-        
+          ::BEFORE WE USED
+          */
           google.maps.event.addListener(map,'dragstart',function()
           {
             map.set('dragging',true);          
@@ -791,7 +794,7 @@ export class AllLocationsPage implements OnInit
       }
     ];
     this.mapLive = new google.maps.Map(document.getElementById('MAP'), {
-      zoom: 11,
+      zoom: 18,
       //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
       center: new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude),
       mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -892,14 +895,14 @@ export class AllLocationsPage implements OnInit
           }
           if(this.LocationsMarkersLive.length > 0)          
           {
-            let bounds = new google.maps.LatLngBounds();
+            //let bounds = new google.maps.LatLngBounds();::BEFORE WE USED
             let infowindow = new google.maps.InfoWindow();
             var marker, i;
             let ClassObj = this;
             for (i = 0; i < this.LocationsMarkersLive.length; i++) 
             {
               let marker = this.LocationsMarkersLive[i];
-              bounds.extend(marker.position);
+              //bounds.extend(marker.position);::BEFORE WE USED
               if(i > 0)
               {
                 let InfoWindowContent = '';
@@ -947,9 +950,13 @@ export class AllLocationsPage implements OnInit
                   }
                 })(i));
               }
-            }   
-            this.mapLive.fitBounds(bounds);         
+            } 
+            //this.mapLive.fitBounds(bounds);::BEFORE WE USED
           }
+          ClassObj.mapLive.setCenter({
+            lat : this.LocationCordinates.latitude,
+            lng : this.LocationCordinates.longitude
+          });
         }
         else 
         {
