@@ -297,3 +297,40 @@
     font-style: normal;
     font-display: swap;
 }
+@font-face {
+    font-family: 'Sora-ExtraBold';
+    src: url('../assets/fonts/Sora-ExtraBold.eot');
+    src: url('../assets/fonts/Sora-ExtraBold.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/Sora-ExtraBold.woff2') format('woff2'),
+        url('../assets/fonts/Sora-ExtraBold.woff') format('woff'),
+        url('../assets/fonts/Sora-ExtraBold.ttf') format('truetype'),
+        url('../assets/fonts/Sora-ExtraBold.svg#Sora-ExtraBold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'OpenSans-Bold';
+    src: url('../assets/fonts/OpenSans-Bold.eot');
+    src: url('../assets/fonts/OpenSans-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/OpenSans-Bold.woff2') format('woff2'),
+        url('../assets/fonts/OpenSans-Bold.woff') format('woff'),
+        url('../assets/fonts/OpenSans-Bold.ttf') format('truetype'),
+        url('../assets/fonts/OpenSans-Bold.svg#OpenSans-Bold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'OpenSans-Regular';
+    src: url('../assets/fonts/OpenSans-Regular.eot');
+    src: url('../assets/fonts/OpenSans-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/OpenSans-Regular.woff2') format('woff2'),
+        url('../assets/fonts/OpenSans-Regular.woff') format('woff'),
+        url('../assets/fonts/OpenSans-Regular.ttf') format('truetype'),
+        url('../assets/fonts/OpenSans-Regular.svg#OpenSans-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}

@@ -2,7 +2,8 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button>
-        <img src="../../assets/images/menu-icon.png">
+        <!-- <img src="../../assets/images/menu-icon.png"> -->
+        <ion-icon name="menu" color="light"></ion-icon>
       </ion-menu-button>      
     </ion-buttons>
     <ion-chip class="logo">
@@ -15,18 +16,18 @@
 <ion-content>
   <div class="mainContent">
     <div class="titleMain">
-      <h2>BROWSE CATEGORIES</h2>
+      <h2>browse categories</h2>
     </div>
     <div class="categoryList" *ngIf="ResultData.length > 0">
       <ul class="mainCate" *ngFor="let Categories of ResultData; let m = index;">
-        <li class="title">
-          <span (click)="SelectedOption('maincategory',Categories.id)">{{Categories.category_name}}</span>
+        <li>
+          <span class="title" (click)="SelectedOption('maincategory',Categories.id)">{{Categories.category_name}}</span>
           <ul *ngIf="Categories.sub_category.length > 0">
             <li *ngFor="let SubCategories of Categories.sub_category; let s = index;">
-              <span (click)="SelectedOption('subcategory',SubCategories.id)">&nbsp;>&nbsp;{{SubCategories.subcategory_name}}</span>
+              <span (click)="SelectedOption('subcategory',SubCategories.id)">{{SubCategories.subcategory_name}}</span>
               <ul *ngIf="SubCategories.sub_sub_category.length > 0">
                 <li *ngFor="let InnerSubCategories of SubCategories.sub_sub_category; let is = index;">
-                  <span (click)="SelectedOption('sub-sub-category',InnerSubCategories.id)">&nbsp;>&nbsp;{{InnerSubCategories.sub_sub_category_name}}</span>
+                  <span (click)="SelectedOption('sub-sub-category',InnerSubCategories.id)">{{InnerSubCategories.sub_sub_category_name}}</span>
                 </li>
               </ul>
             </li>

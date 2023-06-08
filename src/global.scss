@@ -54,10 +54,13 @@
 
 :root {
     --font-SoraSB: 'Sora-SemiBold';
+    --font-SoraEB: 'Sora-ExtraBold';
     --font-RobotoR: 'Roboto-Regular';
     --font-RobotoM: 'Roboto-Medium';
     --font-RobotoL: 'Roboto-Light';
     --font-RobotoB: 'Roboto-Bold';
+    --font-OpenSansR: 'OpenSans-Regular';
+    --font-OpenSansB: 'OpenSans-Bold';
     --white: #ffffff;
     --black: #000000;
     --theme-primary: #7ca358;
@@ -131,6 +134,14 @@ app-contact-us, app-location-in-detail, app-location-in-detail-description {
 app-welcome-to-app {
     background: url(./assets/images/bck-img2-light.png) 0 0/cover no-repeat;
     // background: url(./assets/images/bck-img2-dark.png) 0 0/cover no-repeat;
+}
+
+app-welcome-to-app, app-all-locations {
+    background: #e6e6e6;
+}
+
+app-all-categories {
+    background: var(--black);
 }
 
 ion-modal {
@@ -424,8 +435,8 @@ ion-header {
                     width: 30px;
                 }
                 &.logo {
-                    padding-inline: 20px 0;
-                    justify-content: flex-start;
+                    padding-inline: 20px;
+                    justify-content: center;
                     img {
                         filter: unset;
                     }
@@ -490,10 +501,10 @@ ion-header {
     flex-wrap: wrap;
     margin: 0 0 8px;
     h2 {
-        font-size: 18px;
-        line-height: 20px;
+        font-size: 24px;
+        line-height: 26px;
         color: var(--white);
-        font-family: var(--font-SoraSB);
+        font-family: var(--font-SoraEB);
         text-transform: uppercase;
         padding: 0px 0px 14px;
         margin: 0px 0px 16px;

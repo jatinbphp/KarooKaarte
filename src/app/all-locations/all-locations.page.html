@@ -2,11 +2,12 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button>
-        <img src="../../assets/images/menu-icon.png">
+        <!-- <img src="../../assets/images/menu-icon.png"> -->
+        <ion-icon name="menu" color="dark"></ion-icon>
       </ion-menu-button>      
     </ion-buttons>
     <ion-chip class="logo">
-      <img src="../../assets/images/Karoo-Kaarte-LOGO-WHITE-04.png">
+      <img src="../../assets/images/Karoo-Kaarte-LOGO-BLACK-04.png">
     </ion-chip>
     <ion-button slot="end" id="Trigger-All" fill="clear" class="dotBtn">      
       <ion-icon icon-only name="ellipsis-vertical"></ion-icon>
@@ -31,7 +32,7 @@
 <ion-content>
   <div class="mainContent">
     <div class="titleMain">
-      <h2>SITES OF SIGNIFICANCE</h2>
+      <h2>sites of significance</h2>
       <ion-button fill="clear" *ngIf="CategoryID > 0" (click)="ResetSearch()">
         <ion-icon name="refresh-circle"></ion-icon>
       </ion-button>

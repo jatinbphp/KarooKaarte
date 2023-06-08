@@ -1,11 +1,58 @@
+ion-header {
+	&.most-use-header {
+		ion-toolbar {
+			ion-buttons {
+				ion-menu-button {
+					img {}
+				}
+			}
+			ion-button {
+				&.dotBtn {
+					--color: var(--black);
+				}
+			}
+			ion-chip {
+				&.logo {
+					img {}
+				}
+			}
+		}
+	}
+	&.white {
+        ion-toolbar {
+            ion-buttons {
+                ion-menu-button {
+                    img {
+                        // filter: brightness(0) invert(0);
+                    }
+                }
+            }
+            ion-chip {
+                &.logo {
+                    img {
+                        filter: unset;
+                    }
+                }
+            }
+        }
+    }
+}
 ion-content {
 	--background: transparent;
 	.mainContent {
 		padding: 8px 24px 0px;
 		.titleMain {
-			justify-content: space-between;
+			// justify-content: space-between;
+			justify-content: center;
 			h2 {
 				display: inline-block;
+				color: var(--black);
+				padding: 0px;
+				text-transform: capitalize;
+				&:after {
+					width: 0;
+					height: 0;
+				}
 			}
 			ion-button {
 				--padding-start: 0;

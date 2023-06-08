@@ -2,11 +2,12 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button>
-        <img src="../../assets/images/menu-icon.png">
+        <!-- <img src="../../assets/images/menu-icon.png"> -->
+        <ion-icon name="menu" color="dark"></ion-icon>
       </ion-menu-button>      
     </ion-buttons>
     <ion-chip class="logo">
-      <img src="../../assets/images/Karoo-Kaarte-LOGO-WHITE-04.png">
+      <img src="../../assets/images/Karoo-Kaarte-LOGO-BLACK-04.png">
     </ion-chip>
     <ion-chip slot="end"></ion-chip>
   </ion-toolbar>
@@ -15,7 +16,10 @@
 <ion-content class="white">
   <div class="mainContent">
     <div class="titleMain">
-      <h2>WELCOME</h2>
+      <h2>Welcome</h2>
+    </div>
+    <div class="cntImg">
+      <img src="../../assets/images/jeanette__futuring__final.png">
     </div>
     <div class="contentBox" [innerHTML]="ResultData.content"></div>    
     <ion-slides #WelcomeSlider pager="false" [options]="WelcomeSliderOptions" *ngIf="ResultDataImages.length > 0">
