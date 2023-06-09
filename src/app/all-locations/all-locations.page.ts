@@ -131,6 +131,9 @@ export class AllLocationsPage implements OnInit
 		});
 		await loading.present();
 		//LOADER
+    this.ResultDataAllLocationsResponse = [];
+    this.ResultDataAllLocations = [];
+    this.LocationsJSONAll = [];
     await this.SendReceiveRequestsService.GetLocationsAll(DataAllLocations).then((result:any) => 
     {
       loading.dismiss();//DISMISS LOADER
