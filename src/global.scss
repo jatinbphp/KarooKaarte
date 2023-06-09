@@ -252,6 +252,10 @@ ion-header {
                     height: -o-fit-content;
                     --border-radius: 0px;
                     color: var(--black);
+                    ion-icon {
+                        --color: var(--black) !important;
+                        color: var(--black) !important;
+                    }
                     img {
                         width: auto;
                         max-width: 100%;
@@ -476,6 +480,10 @@ ion-header {
             ion-toolbar {
                 ion-buttons {
                     ion-menu-button {
+                        ion-icon {
+                            --color: var(--black) !important;
+                            color: var(--black) !important;
+                        }
                         img {
                             // filter: brightness(0) invert(0);
                             filter: unset;
