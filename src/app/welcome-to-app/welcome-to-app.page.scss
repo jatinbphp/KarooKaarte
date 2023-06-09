@@ -156,3 +156,8 @@ ion-content {
 		}
 	}
 }
+ion-content.white .mainContent .contentBox p:first-child {
+    font-size: 18px;
+    line-height: 28px;
+    font-family: var(--font-OpenSansB);
+}

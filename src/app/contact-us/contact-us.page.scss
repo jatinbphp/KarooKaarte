@@ -5,8 +5,8 @@ ion-content {
 		ion-grid {
 			&.cntctInfoBox {
 				margin: 0 0 20px;
-				padding: 14px 10px;
-			    background: var(--black);
+				padding: 14px 0px;
+			    background: transparent;
 			    border: 0px solid var(--borderClr1);
 			    border-radius: 0;
 				ion-row {
@@ -17,9 +17,9 @@ ion-content {
 							font-size: 16px;
 							// line-height: 18px;
 							line-height: 1.5;
-							text-transform: uppercase;
-							color: var(--white);
-							font-family: var(--font-RobotoM);
+							text-transform: capitalize;
+							color: var(--black);
+							font-family: var(--font-OpenSansB);
 							margin: 0 0 5px;
 							// &:last-child {
 							// 	margin: 0;
@@ -30,14 +30,15 @@ ion-content {
 							// line-height: 18px;
 							line-height: 1.5;
 							text-transform: unset;
-							color: var(--white);
-							font-family: var(--font-RobotoL);
+							color: var(--black);
+							font-family: var(--font-OpenSansR);
 							margin: 0;
 						}
 						img {
 							width: auto;
 							height: auto;
 							object-fit: contain;
+							filter: brightness(0) invert(0);
 						}
 					}
 				}

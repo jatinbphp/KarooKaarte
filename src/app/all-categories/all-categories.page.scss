@@ -36,10 +36,11 @@ ion-content {
 			max-width: 290px;
 			margin: 0 auto 20px;
 			padding: 14px 10px;
-		    background: var(--black);
+		    background: transparent;
 		    border: 0px solid var(--borderClr1);
 		    border-radius: 0;
 		    ul {
+		    	list-style-type: none;
 		    	padding: 0 16px;
 		    	margin: 0 0 30px;
 		    	&:last-child {
@@ -50,7 +51,7 @@ ion-content {
 		    			.title {
 		    				font-size: 18px;
 		    				line-height: normal;
-		    				color: var(--white);
+		    				color: var(--black);
 		    				font-family: var(--font-SoraEB);
 		    				text-transform: capitalize;
 		    			}
@@ -70,7 +71,7 @@ ion-content {
 					    			font-size: 14px;
 									line-height: 1.5;
 									text-transform: capitalize;
-									color: var(--white);
+									color: var(--black);
 									font-family: var(--font-OpenSansR);
 		    					}
 		    				}

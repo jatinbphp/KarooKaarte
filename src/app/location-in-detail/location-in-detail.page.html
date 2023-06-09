@@ -1,16 +1,17 @@
 <ion-header no-border class="ion-no-border most-use-header">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button>
-        <img src="../../assets/images/menu-icon.png">
-      </ion-menu-button>      
+      <ion-back-button text="" icon="chevron-back-outline" color="dark"></ion-back-button>
     </ion-buttons>
     <ion-chip class="logo">
-      <img src="../../assets/images/Karoo-Kaarte-LOGO-WHITE-04.png">
+      <img src="../../assets/images/Karoo-Kaarte-LOGO-BLACK-04.png">
     </ion-chip>
-    <ion-buttons slot="end">
-			<ion-back-button text="Back" icon=""></ion-back-button>
-		</ion-buttons>    
+     <ion-buttons slot="end">
+      <ion-menu-button>
+        <!-- <img src="../../assets/images/menu-icon.png"> -->
+        <ion-icon name="menu" color="dark"></ion-icon>
+      </ion-menu-button>      
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -43,18 +44,30 @@
     </div>
     <ion-card class="detailBox">
       <ion-card-header>
-        <ion-card-title>{{CategoryNM}} >> {{CategorySNM}}</ion-card-title>
-        <ion-card-subtitle>Summary</ion-card-subtitle>
+        <ion-card-title>{{CategoryNM}} <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.25 5.5L13.75 11L8.25 16.5" stroke="#717171" stroke-linecap="round" stroke-linejoin="round"/></svg> {{CategorySNM}}</ion-card-title>
+        <!-- <ion-card-subtitle>Summary</ion-card-subtitle> -->
       </ion-card-header>  
-      <ion-card-content *ngIf="Language == 'english'" [innerHTML]="ResultDataForEnglish.summary"></ion-card-content>
-      <ion-card-content *ngIf="Language == 'afrikaans'" [innerHTML]="ResultDataForAfrikaans.summary"></ion-card-content>
-      <ion-card-content *ngIf="Language == 'xhosa'" [innerHTML]="ResultDataForXhosa.summary"></ion-card-content>
-      <div class="text-right">
-        <ion-button fill="clear" (click)="ReadMore()">READ MORE >></ion-button>
+      <ion-card-content *ngIf="Language == 'english'">
+        <img src="../../assets/images/Karoo-Kaarte-22_1.png">
+        <h6>Summary</h6>
+        <p [innerHTML]="ResultDataForEnglish.summary"></p>
+      </ion-card-content>
+      <ion-card-content *ngIf="Language == 'afrikaans'">
+        <img src="../../assets/images/Karoo-Kaarte-22_1.png">
+        <h6>Summary</h6>
+        <p [innerHTML]="ResultDataForAfrikaans.summary"></p>
+      </ion-card-content>
+      <ion-card-content *ngIf="Language == 'xhosa'">
+        <img src="../../assets/images/Karoo-Kaarte-22_1.png">
+        <h6>Summary</h6>
+        <p [innerHTML]="ResultDataForXhosa.summary"></p>
+      </ion-card-content>
+      <div class="text-left">
+        <ion-button fill="clear" (click)="ReadMore()">read more <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.25 5.5L13.75 11L8.25 16.5" stroke="#7DA559" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></ion-button>
       </div>
     </ion-card>
     <div class="gallery" *ngIf="ResultDataImages.length > 0">
-      <h5>GALLERY</h5>
+      <h5>Gallery</h5>
       <ion-slides #PhotoSlider pager="false" [options]="PhotoSliderOptions">
         <ion-slide *ngFor="let Images of ResultDataImages; let i = index;" (click)="EnlargePhoto(Images.image_name)">
           <img src="{{Images.image_name}}"/>
@@ -62,7 +75,7 @@
       </ion-slides>
     </div>
     <div class="video" *ngIf="ResultDataVideos != null && ResultDataVideos != undefined && ResultDataVideos != '' && ResultDataVideos.length > 0">
-      <h5>VIDEO</h5>
+      <h5>Video</h5>
       <ion-slides #VideoSlider pager="false" [options]="VideoSliderOptions">
         <ion-slide>
           <iframe [src]="trustedVideoUrl" frameborder="0" allowfullscreen="true"></iframe>
@@ -71,16 +84,21 @@
       </ion-slides>
     </div>
     <div class="audio" *ngIf="ResultDataAudios.length > 0">
-      <h5>AUDIO</h5>
+      <!-- <h5>Audio</h5> -->
       <ion-list lines="none">
         <ion-item *ngFor="let Audios of ResultDataAudios; let i = index;" [disabled]="Audios.disabled">
-          <ion-label>Listen to audio clip</ion-label>
-          <ion-button color="light" class="play-btn" *ngIf="IsAudioPlayed == true" (click)="StopAudio()">
-            <ion-icon name="pause-sharp"></ion-icon>
-          </ion-button>
-          <ion-button color="light" class="play-btn" *ngIf="IsAudioPlayed == false" (click)="PlayAudio(Audios.mp3_name)">
-            <ion-icon name="play-sharp"></ion-icon>
-          </ion-button>
+          <div class="audio-item">
+            <h5>Audio</h5>
+            <ion-label>Listen to audio clip</ion-label>
+            <div class="posBtn">
+              <ion-button color="" shape="round" class="play-btn" *ngIf="IsAudioPlayed == true" (click)="StopAudio()">
+                <ion-icon name="pause-sharp"></ion-icon>
+              </ion-button>
+              <ion-button color="" shape="round" class="play-btn" *ngIf="IsAudioPlayed == false" (click)="PlayAudio(Audios.mp3_name)">
+                <ion-icon name="play-sharp"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
         </ion-item>
       </ion-list>      
     </div>

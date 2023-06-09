@@ -166,7 +166,7 @@ ion-menu {
   ion-content {
     --background: var(--black);
     ion-list {
-      padding: 30px 10px;
+      padding: 30px 10px 0;
       ion-list-header {
         font-size: 20px;
         line-height: normal;
@@ -228,16 +228,35 @@ ion-menu {
         flex-wrap: wrap;
         justify-content: flex-end;
         align-items: center;
-        padding-bottom: 10px;
+        padding: 0px 10px;
         ion-item {
+          width: 100%;
+          text-align: left;
           border-color: transparent;
           border-width: 0;
-          padding: 0 0 0 20px;
-          --min-height: 30px;
+          padding: 5px 0;
+          --min-height: auto;
           ion-button {
+            // width: 100%;
+            // text-align: left;
             margin: 0;
-            width: 30px;
-            height: 30px;
+            text-transform: capitalize;
+            // width: 30px;
+            // height: 30px;
+            height: 40px;
+            --border-radius: 0;
+            --padding-top: 0;
+            --padding-bottom: 0;
+            --padding-start: 0;
+            --padding-end: 0;
+            font-size: 16px;
+            line-height: 20px;
+            letter-spacing: 0px;
+            color: var(--white);
+            font-family: var(--font-OpenSansR);
+            padding: 8px 16px;
+            border-radius: 0px;
+            border: 0;
             ion-icon {
               margin: 0;
               aspect-ratio: 1/1;
@@ -258,7 +277,7 @@ ion-menu {
   flex-flow: column;
   ion-list {
     &.bottomCnt:last-child {
-      margin-top: auto;
+      // margin-top: auto;
     }
   }
 }

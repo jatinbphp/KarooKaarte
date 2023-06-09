@@ -4,37 +4,47 @@ ion-content {
 		padding: 8px 24px 0;		
 		ion-card {
 			&.detailBox {
-				margin: 0 0 20px;
-				padding: 14px 10px;
-			    --background: var(--black);
+				margin: 0 0 27px;
+				// padding: 14px 10px;
+				padding: 0px;
+			    --background: transparent;
+			    box-shadow: none;
 			    border: 0px solid var(--borderClr1);
 			    border-radius: 0;
 				ion-card-header {
 					padding: 0;
 					ion-card-title {
-						font-size: 14px;
-					    line-height: 16px;
-					    text-transform: uppercase;
-					    color: var(--white);
-					    font-family: var(--font-RobotoR);
-					    margin: 0 0 12px;
-					}
-					ion-card-subtitle {
-						margin: 0;
+						display: flex;
+					    justify-content: center;
+					    align-items: center;
+					    gap: 5px;
 						font-size: 14px;
 					    line-height: 16px;
 					    text-transform: capitalize;
-					    color: var(--white);
-					    font-family: var(--font-RobotoM);
+					    // color: var(--theme-gray);
+					    color: var(--black);
+					    font-family: var(--font-OpenSansR);
+					    margin: 0 0 12px;
+					    &:last-child {
+					    	margin: 0;
+					    }
+					}
+					ion-card-subtitle {
+						margin: 0 0 14px;
+						font-size: 14px;
+					    line-height: 16px;
+					    text-transform: capitalize;
+					    color: var(--black);
+					    font-family: var(--font-OpenSansR);
 					}
 				}
 				ion-card-content {
-					padding: 5px 0 0;
+					padding: 5px 0 22px;
 					font-size: 12px;
 				    // line-height: 16px;
 				    line-height: 1.5;
-				    color: var(--white);
-				    font-family: var(--font-RobotoL);
+				    color: var(--black);
+				    font-family: var(--font-OpenSansR);
 				}
 				ion-button {
 					margin: 0 0 0 auto;
@@ -45,8 +55,8 @@ ion-content {
 					height: 16px;
 					font-size: 12px;
 					line-height: 16px;
-					color: var(--white);
-					font-family: var(--font-RobotoL);
+					color: var(--black);
+					font-family: var(--font-OpenSansB);
 					text-transform: uppercase;
 				}
 			}
