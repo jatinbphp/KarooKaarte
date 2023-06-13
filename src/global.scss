@@ -282,9 +282,9 @@ ion-header {
                     --background-hover-opacity: 1!important;
                     --background-focused: transparent !important;
                     --background-focused-opacity: 1 !important;
-                    --color: var(--white) !important;
-                    --color-focused: var(--white) !important;
-                    --color-hover: var(--white) !important;
+                    --color: var(--black) !important;
+                    --color-focused: var(--black) !important;
+                    --color-hover: var(--black) !important;
                     --border-radius: 0!important;
                     --opacity: 1 !important;
                     --padding-start: 0px;
@@ -328,9 +328,9 @@ ion-header {
                 --background-hover-opacity: 1!important;
                 --background-focused: transparent !important;
                 --background-focused-opacity: 1 !important;
-                --color: var(--white) !important;
-                --color-focused: var(--white) !important;
-                --color-hover: var(--white) !important;
+                --color: var(--black) !important;
+                --color-focused: var(--black) !important;
+                --color-hover: var(--black) !important;
                 --border-radius: 0!important;
                 --opacity: 1 !important;
                 --padding-start: 0px;
@@ -389,7 +389,7 @@ ion-header {
                 margin: 0px;
                 padding: 0px;
                 &.dotBtn {
-                    --color: var(--white);
+                    --color: var(--black);
                     height: 38px;
                     aspect-ratio: 1/1;
                 }
@@ -421,7 +421,7 @@ ion-header {
                     }
                 }
                 &.close-icon {
-                    --color: var(--White);
+                    --color: var(--black);
                     font-size: 20px;
                 }
             }
@@ -430,7 +430,7 @@ ion-header {
                 font-size: 16px;
                 line-height: normal;
                 letter-spacing: 1px;
-                color: var(--white);
+                color: var(--black);
                 // font-family: var(--font-RobotoR);
                 font-family: var(--font-SoraSB);
                 text-align: center;
@@ -483,7 +483,7 @@ ion-header {
                         text-align: center;
                         padding: 0px;
                         margin: 12px 0px 0px;
-                        color: var(--White);
+                        color: var(--black);
                         // font-family: var(--font-RobotoM);
                         font-family: var(--font-SoraSB);
                         font-size: 22px;
