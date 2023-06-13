@@ -52,7 +52,9 @@ ion-content {
 		    				font-size: 18px;
 		    				line-height: normal;
 		    				color: var(--black);
-		    				font-family: var(--font-SoraEB);
+		    				// font-family: var(--font-SoraEB);
+		    				font-weight: 700;
+		    				font-family: var(--font-RobotoSerif);
 		    				text-transform: capitalize;
 		    			}
 		    			span {
@@ -72,7 +74,9 @@ ion-content {
 									line-height: 1.5;
 									text-transform: capitalize;
 									color: var(--black);
-									font-family: var(--font-OpenSansR);
+									// font-family: var(--font-OpenSansR);
+									font-weight: 400;
+		    						font-family: var(--font-RobotoSerif);
 		    					}
 		    				}
 		    			}
