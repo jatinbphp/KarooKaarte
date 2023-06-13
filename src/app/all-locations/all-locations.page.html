@@ -1,15 +1,6 @@
 <ion-header no-border class="ion-no-border most-use-header">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button>
-        <!-- <img src="../../assets/images/menu-icon.png"> -->
-        <ion-icon name="menu"></ion-icon>
-      </ion-menu-button>      
-    </ion-buttons>
-    <ion-chip class="logo">
-      <img src="../../assets/images/Karoo-Kaarte-LOGO-BLACK-04.png">
-    </ion-chip>
-    <ion-button slot="end" id="Trigger-All" fill="clear" class="dotBtn">      
+    <ion-button slot="start" id="Trigger-All" fill="clear" class="dotBtn">      
       <ion-icon icon-only name="ellipsis-vertical"></ion-icon>
     </ion-button>
     <ion-popover trigger="Trigger-All" triggerAction="click" [dismissOnSelect]="true">
@@ -26,13 +17,22 @@
         </ion-content>
       </ng-template>
     </ion-popover>
+    <ion-chip class="logo">
+      <img src="../../assets/images/Karoo-Kaarte-LOGO-BLACK-04.png">
+    </ion-chip>
+    <ion-buttons slot="end">
+      <ion-menu-button>
+        <!-- <img src="../../assets/images/menu-icon.png"> -->
+        <ion-icon name="menu"></ion-icon>
+      </ion-menu-button>      
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="mainContent">
     <div class="titleMain">
-      <h2>sites of significance</h2>
+      <h2>Sites of Significance</h2>
       <ion-button class="refresh-location" fill="clear" *ngIf="CategoryID > 0" (click)="ResetSearch()">
         <ion-icon name="refresh-circle"></ion-icon>
       </ion-button>

@@ -9,7 +9,7 @@ ion-content {
 				display: inline-block;
 				padding: 0px;
 				margin: 0 0 8px;
-				text-transform: capitalize;
+				// text-transform: capitalize;
 				color: var(--black);
 				&:after {
 					width: 0;
@@ -58,7 +58,7 @@ ion-content {
 					    gap: 5px;
 						font-size: 14px;
 					    line-height: 16px;
-					    text-transform: capitalize;
+					    // text-transform: capitalize;
 					    // color: var(--theme-gray);
 					    color: var(--black);
 					    font-family: var(--font-SoraSB);
@@ -71,7 +71,7 @@ ion-content {
 						margin: 0;
 						font-size: 14px;
 					    line-height: 16px;
-					    text-transform: capitalize;
+					    // text-transform: capitalize;
 					    color: var(--black);
 					    font-family: var(--font-RobotoSerif);
 					}
