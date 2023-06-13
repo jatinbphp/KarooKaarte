@@ -19,7 +19,8 @@ ion-content {
 							line-height: 1.5;
 							text-transform: capitalize;
 							color: var(--black);
-							font-family: var(--font-OpenSansB);
+							font-weight: 600;
+							font-family: var(--font-RobotoSerif);
 							margin: 0 0 5px;
 							// &:last-child {
 							// 	margin: 0;
@@ -31,7 +32,8 @@ ion-content {
 							line-height: 1.5;
 							text-transform: unset;
 							color: var(--black);
-							font-family: var(--font-OpenSansR);
+							font-weight: 400;
+							font-family: var(--font-RobotoSerif);
 							margin: 0;
 						}
 						img {

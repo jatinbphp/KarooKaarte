@@ -37,7 +37,7 @@ ion-content {
 					    text-transform: capitalize;
 					    // color: var(--theme-gray);
 					    color: var(--black);
-					    font-family: var(--font-OpenSansR);
+					    font-family: var(--font-SoraSB);
 					    margin: 0 0 12px;
 					    &:last-child {
 					    	margin: 0;
@@ -49,7 +49,7 @@ ion-content {
 					    line-height: 16px;
 					    text-transform: capitalize;
 					    color: var(--white);
-					    font-family: var(--font-RobotoM);
+					    font-family: var(--font-RobotoSerif);
 					}
 				}
 				ion-card-content {
@@ -58,7 +58,12 @@ ion-content {
 				    // line-height: 16px;
 				    line-height: 1.5;
 				    color: var(--black);
-				    font-family: var(--font-OpenSansR);
+				    font-weight: 400;
+				    font-family: var(--font-RobotoSerif);
+				    b, strong {
+				    	font-weight: 700 !important;
+				    	font-family: var(--font-RobotoSerif) !important;
+				    }
 				}
 				ion-button {
 					margin: 0 0 0 auto;
@@ -70,7 +75,7 @@ ion-content {
 					font-size: 12px;
 					line-height: 16px;
 					color: var(--black);
-					font-family: var(--font-OpenSansB);
+					font-family: var(--font-SoraSB);
 					text-transform: uppercase;
 				}
 			}
