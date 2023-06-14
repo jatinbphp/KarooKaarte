@@ -49,6 +49,7 @@ ion-content {
 				color: var(--black);
 				padding: 0px;
 				// text-transform: capitalize;
+				text-transform: unset !important;
 				&:after {
 					width: 0;
 					height: 0;
