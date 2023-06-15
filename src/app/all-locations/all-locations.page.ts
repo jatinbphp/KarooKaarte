@@ -74,8 +74,7 @@ export class AllLocationsPage implements OnInit
     this.DefaultLatLonForAll = JSON.parse(this.DefaultLatLonForAll);
     this.DefaultLatitude = this.DefaultLatLonForAll['lat'];
     this.DefaultLongitude = this.DefaultLatLonForAll['lng'];    
-    
-    this.StatusBar.backgroundColorByHexString('#000000');
+    this.StatusBar.backgroundColorByHexString('#e6e6e6');//BEFORE::000000    
     this.route.queryParams.subscribe(params => 
     {      
       if(params.hasOwnProperty('category_id'))

@@ -67,7 +67,7 @@ export class WelcomeToAppPage implements OnInit
 
   ionViewWillEnter()
   {
-    this.StatusBar.backgroundColorByHexString('#F6F4F8');
+    this.StatusBar.backgroundColorByHexString('#e6e6e6');//BEFORE::F6F4F8
   }
 
   EnlargePhoto(URL:any)

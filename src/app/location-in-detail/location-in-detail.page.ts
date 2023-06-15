@@ -61,7 +61,7 @@ export class LocationInDetailPage implements OnInit
 
   async ionViewWillEnter()
   {
-    this.StatusBar.backgroundColorByHexString('#000000');
+    this.StatusBar.backgroundColorByHexString('#e6e6e6');//BEFORE::000000
     this.StorageData = (localStorage.getItem('selected_options')) ? localStorage.getItem('selected_options') : [];
     if(this.StorageData.length > 0)
     {
