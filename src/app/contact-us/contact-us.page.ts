@@ -33,7 +33,7 @@ export class ContactUsPage implements OnInit
 
   ionViewWillEnter()
   {
-    this.StatusBar.backgroundColorByHexString('#e6e6e6');//BEFORE::000000
+    this.StatusBar.backgroundColorByHexString('#FFFFFF');//BEFORE::e6e6e6/BEFORE::000000
   }
 
   RateUs()
