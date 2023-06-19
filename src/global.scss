@@ -127,7 +127,8 @@ ion-button {
 }
 
 ion-app {
-    background-color: rgba(0, 0, 0, 0.9);
+    // background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(255, 255, 255, 1);
 }
 
 // ion-app, 
@@ -135,13 +136,13 @@ app-about-us, app-programme-any, app-all-categories, app-all-locations,
 app-contact-us, app-location-in-detail, app-location-in-detail-description {
     // background: url(./assets/images/bck-img1.svg) 0 0/100% 100% no-repeat;
     // background: url(./assets/images/bck-img1.svg) 0 0/cover no-repeat;
-    background: #e6e6e6;
+    background: var(--white);
 }
 
 app-welcome-to-app {
     background: url(./assets/images/bck-img2-light.png) 0 0/cover no-repeat;
     // background: url(./assets/images/bck-img2-dark.png) 0 0/cover no-repeat;
-    background: #e6e6e6;
+    background: var(--white);
 }
 
 ion-modal {
@@ -188,16 +189,16 @@ ion-accordion-group {
 
 ion-popover {
     ion-content {
-        background: var(--black);
+        background: var(--white);
         border-color: var(--borderClr1);
-        color: var(--white);
+        color: var(--black);
         ion-list {
             padding: 0 !important;
             ion-item {
                 display: block;
                 font-size: 15px;
                 line-height: 17px;
-                color: var(--white);
+                color: var(--black);
                 // font-family: var(--font-RobotoR);
                 font-weight: 400;
                 font-family: var(--font-RobotoSerif);
@@ -578,7 +579,7 @@ ion-header {
         color: var(--black);
         // font-family: var(--font-OpenSansR);
         font-weight: 400;
-        font-family: var(--font-RobotoSerif);
+        font-family: var(--font-SoraSB);
         padding: 0px;
         margin: 0px 0px 16px;
         position: relative;

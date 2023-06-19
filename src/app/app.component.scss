@@ -164,7 +164,8 @@ ion-grid, ion-col {
 
 ion-menu {
   ion-content {
-    --background: #e6e6e6;
+    // --background: #e6e6e6;
+    --background: var(--white);
     ion-list {
       padding: 30px 10px 0;
       ion-list-header {
