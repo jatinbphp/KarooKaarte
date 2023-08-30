@@ -228,7 +228,7 @@ export class AllLocationsPage implements OnInit
             "elementType": "geometry",
             "stylers": [
               {
-                "color": "#ffffff"
+                "color": "#EBEBEB"//BEFORE::#FFFFFF
               }
             ]
           },
@@ -487,9 +487,10 @@ export class AllLocationsPage implements OnInit
         ];    
         */
         let map = new google.maps.Map(document.getElementById('MAP'), {
-          zoom: 13,
+          zoom: 14,
           center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
           mapTypeId: google.maps.MapTypeId.ROADMAP,
+          backgroundColor: 'transparent',
           draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
           mapTypeControl: false,
           mapTypeControlOptions: {
@@ -863,7 +864,7 @@ export class AllLocationsPage implements OnInit
         "elementType": "geometry",
         "stylers": [
           {
-            "color": "#ffffff"
+            "color": "#EBEBEB"//BEFORE::#FFFFFF
           }
         ]
       },
@@ -1124,6 +1125,7 @@ export class AllLocationsPage implements OnInit
       zoom: 18,
       //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
       center: new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude),
+      backgroundColor: 'transparent',
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
       mapTypeControl: false,
