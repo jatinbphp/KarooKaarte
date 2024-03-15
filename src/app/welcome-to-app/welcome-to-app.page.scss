@@ -108,7 +108,12 @@ ion-content {
 				&.sponsorsLogo {
 					ion-row {
 						ion-col {
-							padding: 0 15px 0 0;
+							&:nth-child(odd) {
+								padding: 0 10px 0 0;
+							}
+							&:nth-child(even) {
+								padding: 0 0 0 10px;
+							}
 							img {
 								max-width: 100%;
 								width: 100%;
