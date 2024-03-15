@@ -1211,7 +1211,8 @@ export class AllLocationsPage implements OnInit
           {  
             let image = 
             {
-              url: this.LocationsJSONLive[i]['image'], // image is 512 x 512
+              //url: this.LocationsJSONLive[i]['image'], // image is 512 x 512
+              url: this.LocationsJSONLive[i]['image_new'], // image is 512 x 512
               scaledSize: new google.maps.Size(50, 50),
             };            
             marker = new google.maps.Marker({
