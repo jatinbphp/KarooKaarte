@@ -733,11 +733,13 @@ export class AllLocationsPage implements OnInit
       this.LocationCordinates.longitude = response.coords.longitude;
       this.LocationCordinates.accuracy = response.coords.accuracy;
       this.LocationCordinates.timestamp = response.timestamp;
-      //this.WatchContinuesPosition();
+      this.WatchContinuesPosition();
+      /*
       setInterval(() => 
       {
         this.WatchContinuesPosition(); 
       }, 15000);
+      */
     }).catch((error) => 
     {
       this.SendReceiveRequestsService.showMessageToast("You have disallowed location service.");
@@ -748,6 +750,7 @@ export class AllLocationsPage implements OnInit
 
   async WatchContinuesPosition()
   {
+    /*
     let WatchOptions:GeolocationOptions = 
     {
       maximumAge:30000,
@@ -765,6 +768,30 @@ export class AllLocationsPage implements OnInit
       this.LocationCordinates.timestamp = position.timestamp;      
       this.AddDynamicMarkersUpdated();
     });
+    */
+    setInterval(() => 
+    {
+      let WatchOptions:GeolocationOptions = 
+      {
+        maximumAge:30000,
+        timeout : 60000,
+        enableHighAccuracy: false // may cause errors if true
+      };
+      this.LocationSubscription = this.Geolocation.watchPosition(WatchOptions);
+      this.LocationSubscription.subscribe(<GeolocationPosition>(position:any) => 
+      {
+        console.log("Position",position);
+        //this._Location.next(position);
+        this.zone.run(() => 
+        {
+        this.LocationCordinates.latitude = position.coords.latitude;
+        this.LocationCordinates.longitude = position.coords.longitude;
+        this.LocationCordinates.accuracy = position.coords.accuracy;
+        this.LocationCordinates.timestamp = position.timestamp;      
+        this.AddDynamicMarkersUpdated();
+        });
+      });
+    }, 30000); // 30 seconds
   }
 
   async AddDynamicMarkersUpdated()
@@ -1498,7 +1525,7 @@ export class AllLocationsPage implements OnInit
     });
   }
 
-  ionViewDidLeave()
+  ionViewWillLeave()
   {
     //this._Location.unsubscribe();
   }
