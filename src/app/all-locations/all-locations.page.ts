@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 
 declare var google: any;
+
 @Component({
   selector: 'app-all-locations',
   templateUrl: './all-locations.page.html',
@@ -18,7 +19,8 @@ declare var google: any;
 
 export class AllLocationsPage implements OnInit 
 {
-  @ViewChild('MAP', { static: false }) mapElement?: ElementRef; 
+  @ViewChild('MAP', { static: false }) mapElement?: ElementRef;
+
   public LocationSubscription:any=null;
   public DefaultLatitude: number = 0;//DEFAULT LOCATION OF Oudtshoorn:-33.600733
   public DefaultLongitude: number = 0;//DEFAULT LOCATION OF Oudtshoorn:22.224845
@@ -66,7 +68,9 @@ export class AllLocationsPage implements OnInit
   { }  
 
   ngOnInit()
-  { }
+  { 
+    
+  }
   
   async ionViewWillEnter()
   {
@@ -734,12 +738,6 @@ export class AllLocationsPage implements OnInit
       this.LocationCordinates.accuracy = response.coords.accuracy;
       this.LocationCordinates.timestamp = response.timestamp;
       this.WatchContinuesPosition();
-      /*
-      setInterval(() => 
-      {
-        this.WatchContinuesPosition(); 
-      }, 15000);
-      */
     }).catch((error) => 
     {
       this.SendReceiveRequestsService.showMessageToast("You have disallowed location service.");
@@ -750,9 +748,8 @@ export class AllLocationsPage implements OnInit
 
   async WatchContinuesPosition()
   {
-    /*
-    let WatchOptions:GeolocationOptions = 
-    {
+    let WatchOptions = {
+      frequency : 30000,
       maximumAge:30000,
       timeout : 60000,
       enableHighAccuracy: false // may cause errors if true
@@ -760,38 +757,14 @@ export class AllLocationsPage implements OnInit
     this.LocationSubscription = this.Geolocation.watchPosition(WatchOptions);
     this.LocationSubscription.subscribe(<GeolocationPosition>(position:any) => 
     {
-      console.log("Position",position);
-      //this._Location.next(position);
+      this._Location.next(position);
       this.LocationCordinates.latitude = position.coords.latitude;
       this.LocationCordinates.longitude = position.coords.longitude;
       this.LocationCordinates.accuracy = position.coords.accuracy;
       this.LocationCordinates.timestamp = position.timestamp;      
+      //this.AddDynamicMarkers();
       this.AddDynamicMarkersUpdated();
-    });
-    */
-    setInterval(() => 
-    {
-      let WatchOptions:GeolocationOptions = 
-      {
-        maximumAge:30000,
-        timeout : 60000,
-        enableHighAccuracy: false // may cause errors if true
-      };
-      this.LocationSubscription = this.Geolocation.watchPosition(WatchOptions);
-      this.LocationSubscription.subscribe(<GeolocationPosition>(position:any) => 
-      {
-        console.log("Position",position);
-        //this._Location.next(position);
-        this.zone.run(() => 
-        {
-        this.LocationCordinates.latitude = position.coords.latitude;
-        this.LocationCordinates.longitude = position.coords.longitude;
-        this.LocationCordinates.accuracy = position.coords.accuracy;
-        this.LocationCordinates.timestamp = position.timestamp;      
-        this.AddDynamicMarkersUpdated();
-        });
-      });
-    }, 30000); // 30 seconds
+    }); 
   }
 
   async AddDynamicMarkersUpdated()
@@ -944,6 +917,138 @@ export class AllLocationsPage implements OnInit
     //DYNAMIC MARKER SOUROUNING LOCATION ENDS
   }
 
+  async AddDynamicMarkers()
+  {
+    /*THIS IS THE LIVE LOCATION MARKER*/    
+    var marker, i;
+    let image = 
+    {
+      url: './assets/images/app-pin-live.png', // image is 512 x 512
+      scaledSize: new google.maps.Size(50, 50),
+    };    
+    var LatLng = new google.maps.LatLng(this.LocationCordinates.latitude,this.LocationCordinates.longitude);
+    let MarkerCenter = new google.maps.Marker({
+      position: LatLng,
+      map: this.mapLive,
+      title: 'Drag Me!',
+      draggable: false,
+      icon: image
+    });
+    marker = google.maps.event.addListener(MarkerCenter, 'dragend', function(MarkerCenter:any)
+    {
+      let latLng = MarkerCenter.latLng;
+      let Latitude = latLng.lat();
+      let Longitude = latLng.lng();
+    });    
+    /*THIS IS THE LIVE LOCATION MARKER*/
+    //DYNAMIC MARKER SOUROUNING LOCATION STARTS    
+    let DataLiveLocations = 
+    {
+      latitude:this.LocationCordinates.latitude,
+      longitude:this.LocationCordinates.longitude,
+      category_id:this.CategoryID,
+      category_type:this.CategoryTP
+    }
+    await this.SendReceiveRequestsService.GetLocationsLive(DataLiveLocations).then((result:any) => 
+    {
+      this.ResultDataLiveLocationsResponse = result;
+      if(this.ResultDataLiveLocationsResponse['status'] == true)
+      {
+        this.ResultDataLiveLocations = this.ResultDataLiveLocationsResponse['data'];
+        this.LocationsJSONLive = this.ResultDataLiveLocations;        
+        this.NumberOfLocations = this.LocationsJSONLive.length;
+        /*
+        SELF CENTER STARTS
+        */            
+        if(this.LocationsJSONLive.length > 0)
+        {
+          let bounds = new google.maps.LatLngBounds();
+          let infowindow = new google.maps.InfoWindow();
+          var marker, i;
+          let ClassObj = this;
+          let image = 
+          {
+            url: './assets/images/app-pin.png', // image is 512 x 512
+            scaledSize: new google.maps.Size(50, 50),
+          };
+          for (i = 0; i < this.LocationsJSONLive.length; i++) 
+          {  
+            console.log("HERE");
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng(this.LocationsJSONLive[i]['lat'], this.LocationsJSONLive[i]['lon']),
+              map: this.mapLive,
+              icon: image
+            });
+            
+            bounds.extend(marker.position);
+            
+            let InfoWindowContent = '';
+            InfoWindowContent += '<ion-grid>';
+            InfoWindowContent += '<ion-row>';
+              InfoWindowContent += '<ion-col size="12">';
+                InfoWindowContent += '<ion-label class="location-name">'+this.LocationsJSONLive[i]['name']+'</ion-label>';
+              InfoWindowContent += '</ion-col>';        
+            InfoWindowContent += '</ion-row>';
+            InfoWindowContent += '<ion-row>';
+              InfoWindowContent += '<ion-col size="12">';
+                InfoWindowContent += '<ion-button color="primary" id="Details-'+i+'" shape="round" size="full">Detail</ion-button>';
+              InfoWindowContent += '</ion-col>';            
+            InfoWindowContent += '</ion-row>';
+            InfoWindowContent += '</ion-grid>';
+            
+            google.maps.event.addListener(marker, 'click', (function(marker, i) 
+            {
+              return function() 
+              {
+                //infowindow.setContent(ClassObj.LocationsJSONLive[i]['name']);
+                infowindow.setContent(InfoWindowContent);
+                infowindow.open(ClassObj.mapLive, marker);
+              }
+            })(marker, i));
+            
+            google.maps.event.addListener(infowindow, 'domready', (function (i) 
+            {
+              return function() 
+              {
+                const EVPhotos = document.querySelector('#Photos-'+i);
+                EVPhotos?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Photos"));
+
+                const EVVideos = document.querySelector('#Videos-'+i);
+                EVVideos?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Videos"));
+
+                const EVVoices = document.querySelector('#Voices-'+i);
+                EVVoices?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Voices"));
+
+                const EVTexts = document.querySelector('#Texts-'+i);
+                EVTexts?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Texts"));
+
+                const EVDetails = document.querySelector('#Details-'+i);
+                EVDetails?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Details"));
+              }
+            })(i));
+          }
+          this.mapLive.fitBounds(bounds);
+        }
+        else 
+        {
+          //this.SendReceiveRequestsService.showMessageToast("No PIN's available.");
+        }
+        /*
+        SELF CENTER ENDS
+        */
+      }
+      else 
+      {
+        this.SendReceiveRequestsService.showMessageToast("No records were found.");
+      }
+    },
+    (error:any) => 
+    {
+      this.SendReceiveRequestsService.showMessageToast(error);
+    });
+    //DYNAMIC MARKER SOUROUNING LOCATION ENDS
+  }
+
   async ShowLiveLocations()
   {
     this.Timestamp = Date.now();
@@ -958,7 +1063,7 @@ export class AllLocationsPage implements OnInit
         await this.CurrentLocPosition();
       }
     });
-    //await this.CurrentLocPosition();//COMMENT WHEN LIVE
+    await this.CurrentLocPosition();//COMMENT WHEN LIVE
     let MapToWatch = {'selected_type':'live'}
     localStorage.setItem('map_to_watch',JSON.stringify(MapToWatch));
     this.CurrentMayTypeSelected='live';
@@ -1123,186 +1228,6 @@ export class AllLocationsPage implements OnInit
         ]
       }
     ];
-    /*
-    var stylers = [
-      {
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#212121"
-          }
-        ]
-      },
-      {
-        "elementType": "labels.icon",
-        "stylers": [
-          {
-            "visibility": "off"
-          }
-        ]
-      },
-      {
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#757575"
-          }
-        ]
-      },
-      {
-        "elementType": "labels.text.stroke",
-        "stylers": [
-          {
-            "color": "#212121"
-          }
-        ]
-      },
-      {
-        "featureType": "administrative",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#757575"
-          }
-        ]
-      },
-      {
-        "featureType": "administrative.country",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#9e9e9e"
-          }
-        ]
-      },
-      {
-        "featureType": "administrative.locality",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#bdbdbd"
-          }
-        ]
-      },
-      {
-        "featureType": "poi",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#757575"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.park",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#181818"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.park",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#616161"
-          }
-        ]
-      },
-      {
-        "featureType": "poi.park",
-        "elementType": "labels.text.stroke",
-        "stylers": [
-          {
-            "color": "#1b1b1b"
-          }
-        ]
-      },
-      {
-        "featureType": "road",
-        "elementType": "geometry.fill",
-        "stylers": [
-          {
-            "color": "#2c2c2c"
-          }
-        ]
-      },
-      {
-        "featureType": "road",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#8a8a8a"
-          }
-        ]
-      },
-      {
-        "featureType": "road.arterial",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#373737"
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#3c3c3c"
-          }
-        ]
-      },
-      {
-        "featureType": "road.highway.controlled_access",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#4e4e4e"
-          }
-        ]
-      },
-      {
-        "featureType": "road.local",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#616161"
-          }
-        ]
-      },
-      {
-        "featureType": "transit",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#757575"
-          }
-        ]
-      },
-      {
-        "featureType": "water",
-        "elementType": "geometry",
-        "stylers": [
-          {
-            "color": "#000000"
-          }
-        ]
-      },
-      {
-        "featureType": "water",
-        "elementType": "labels.text.fill",
-        "stylers": [
-          {
-            "color": "#3d3d3d"
-          }
-        ]
-      }
-    ];
-    */
     this.mapLive = new google.maps.Map(document.getElementById('MAP'), {
       zoom: 18,
       center: new google.maps.LatLng(this.LocationCordinates.latitude, this.LocationCordinates.longitude),
@@ -1332,162 +1257,6 @@ export class AllLocationsPage implements OnInit
       this.WatchContinuesPosition();
     });//https://developers.google.com/maps/documentation/javascript/events
     */
-    /* 
-    var map = new google.maps.Map(document.getElementById('MAP'), {
-      zoom: 8,
-      //center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
-      center: new google.maps.LatLng(this.DefaultLatitude, this.DefaultLongitude),
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-      draggable: true,//THIS WILL NOW ALLOW MAP TO DRAG
-      mapTypeControl: false,
-      mapTypeControlOptions: {
-        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        position: google.maps.ControlPosition.TOP_CENTER,
-      },
-      zoomControl: false,//THIS WILL REMOVE THE ZOOM OPTION +/-
-      zoomControlOptions: {
-        position: google.maps.ControlPosition.LEFT_CENTER,
-      },
-      scaleControl: false,
-      streetViewControl: false,
-      streetViewControlOptions: {
-        position: google.maps.ControlPosition.LEFT_TOP,
-      },
-      fullscreenControl: false,
-    });
-    */
-  }
-
-  async AddDynamicMarkers()
-  {
-    /*THIS IS THE LIVE LOCATION MARKER*/    
-    var marker, i;
-    let image = 
-    {
-      url: './assets/images/app-pin-live.png', // image is 512 x 512
-      scaledSize: new google.maps.Size(50, 50),
-    };    
-    var LatLng = new google.maps.LatLng(this.LocationCordinates.latitude,this.LocationCordinates.longitude);
-    let MarkerCenter = new google.maps.Marker({
-      position: LatLng,
-      map: this.mapLive,
-      title: 'Drag Me!',
-      draggable: false,
-      icon: image
-    });
-    marker = google.maps.event.addListener(MarkerCenter, 'dragend', function(MarkerCenter:any)
-    {
-      let latLng = MarkerCenter.latLng;
-      let Latitude = latLng.lat();
-      let Longitude = latLng.lng();
-    });    
-    /*THIS IS THE LIVE LOCATION MARKER*/
-    //DYNAMIC MARKER SOUROUNING LOCATION STARTS    
-    let DataLiveLocations = 
-    {
-      latitude:this.LocationCordinates.latitude,
-      longitude:this.LocationCordinates.longitude,
-      category_id:this.CategoryID,
-      category_type:this.CategoryTP
-    }
-    await this.SendReceiveRequestsService.GetLocationsLive(DataLiveLocations).then((result:any) => 
-    {
-      this.ResultDataLiveLocationsResponse = result;
-      if(this.ResultDataLiveLocationsResponse['status'] == true)
-      {
-        this.ResultDataLiveLocations = this.ResultDataLiveLocationsResponse['data'];
-        this.LocationsJSONLive = this.ResultDataLiveLocations;        
-        this.NumberOfLocations = this.LocationsJSONLive.length;
-        /*
-        SELF CENTER STARTS
-        */            
-        if(this.LocationsJSONLive.length > 0)
-        {
-          let bounds = new google.maps.LatLngBounds();
-          let infowindow = new google.maps.InfoWindow();
-          var marker, i;
-          let ClassObj = this;
-          let image = 
-          {
-            url: './assets/images/app-pin.png', // image is 512 x 512
-            scaledSize: new google.maps.Size(50, 50),
-          };
-          for (i = 0; i < this.LocationsJSONLive.length; i++) 
-          {  
-            console.log("HERE");
-            marker = new google.maps.Marker({
-              position: new google.maps.LatLng(this.LocationsJSONLive[i]['lat'], this.LocationsJSONLive[i]['lon']),
-              map: this.mapLive,
-              icon: image
-            });
-            
-            bounds.extend(marker.position);
-            
-            let InfoWindowContent = '';
-            InfoWindowContent += '<ion-grid>';
-            InfoWindowContent += '<ion-row>';
-              InfoWindowContent += '<ion-col size="12">';
-                InfoWindowContent += '<ion-label class="location-name">'+this.LocationsJSONLive[i]['name']+'</ion-label>';
-              InfoWindowContent += '</ion-col>';        
-            InfoWindowContent += '</ion-row>';
-            InfoWindowContent += '<ion-row>';
-              InfoWindowContent += '<ion-col size="12">';
-                InfoWindowContent += '<ion-button color="primary" id="Details-'+i+'" shape="round" size="full">Detail</ion-button>';
-              InfoWindowContent += '</ion-col>';            
-            InfoWindowContent += '</ion-row>';
-            InfoWindowContent += '</ion-grid>';
-            
-            google.maps.event.addListener(marker, 'click', (function(marker, i) 
-            {
-              return function() 
-              {
-                //infowindow.setContent(ClassObj.LocationsJSONLive[i]['name']);
-                infowindow.setContent(InfoWindowContent);
-                infowindow.open(ClassObj.mapLive, marker);
-              }
-            })(marker, i));
-            
-            google.maps.event.addListener(infowindow, 'domready', (function (i) 
-            {
-              return function() 
-              {
-                const EVPhotos = document.querySelector('#Photos-'+i);
-                EVPhotos?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Photos"));
-
-                const EVVideos = document.querySelector('#Videos-'+i);
-                EVVideos?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Videos"));
-
-                const EVVoices = document.querySelector('#Voices-'+i);
-                EVVoices?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Voices"));
-
-                const EVTexts = document.querySelector('#Texts-'+i);
-                EVTexts?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Texts"));
-
-                const EVDetails = document.querySelector('#Details-'+i);
-                EVDetails?.addEventListener('click', (event) => ClassObj.RedirectTo(ClassObj.LocationsJSONLive[i]['id'],"Details"));
-              }
-            })(i));
-          }
-          this.mapLive.fitBounds(bounds);
-        }
-        else 
-        {
-          //this.SendReceiveRequestsService.showMessageToast("No PIN's available.");
-        }
-        /*
-        SELF CENTER ENDS
-        */
-      }
-      else 
-      {
-        this.SendReceiveRequestsService.showMessageToast("No records were found.");
-      }
-    },
-    (error:any) => 
-    {
-      this.SendReceiveRequestsService.showMessageToast(error);
-    });
-    //DYNAMIC MARKER SOUROUNING LOCATION ENDS
   }
 
   RedirectTo(IDSelected:any,WhatToSee:any)
