@@ -5,7 +5,8 @@ import { Geolocation, GeolocationOptions } from '@awesome-cordova-plugins/geoloc
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@awesome-cordova-plugins/native-geocoder/ngx';
 import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx';
 import { AndroidPermissions } from '@awesome-cordova-plugins/android-permissions/ngx';
-import { debounceTime, map, Subject } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from "@angular/router";
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 
@@ -20,7 +21,7 @@ declare var google: any;
 export class AllLocationsPage implements OnInit 
 {
   @ViewChild('MAP', { static: false }) mapElement?: ElementRef;
-
+  public GeolocationSubscription: Subscription = new Subscription;
   public LocationSubscription:any=null;
   public DefaultLatitude: number = 0;//DEFAULT LOCATION OF Oudtshoorn:-33.600733
   public DefaultLongitude: number = 0;//DEFAULT LOCATION OF Oudtshoorn:22.224845
@@ -57,7 +58,6 @@ export class AllLocationsPage implements OnInit
   public LocationCordinates: any = [];
   public Timestamp: any;  
   public NumberOfLocations: number = 0;
-  private _Location = new Subject<any>();
   public mapLive:any = google.map;
   public MapToWatch:any=[];
   public CategoryID:any=0;
@@ -738,6 +738,7 @@ export class AllLocationsPage implements OnInit
       this.LocationCordinates.accuracy = response.coords.accuracy;
       this.LocationCordinates.timestamp = response.timestamp;
       this.WatchContinuesPosition();
+      //this.WatchContinuesPositionWithRXJS();
     }).catch((error) => 
     {
       this.SendReceiveRequestsService.showMessageToast("You have disallowed location service.");
@@ -757,7 +758,6 @@ export class AllLocationsPage implements OnInit
     this.LocationSubscription = this.Geolocation.watchPosition(WatchOptions);
     this.LocationSubscription.subscribe(<GeolocationPosition>(position:any) => 
     {
-      this._Location.next(position);
       this.LocationCordinates.latitude = position.coords.latitude;
       this.LocationCordinates.longitude = position.coords.longitude;
       this.LocationCordinates.accuracy = position.coords.accuracy;
@@ -765,6 +765,34 @@ export class AllLocationsPage implements OnInit
       //this.AddDynamicMarkers();
       this.AddDynamicMarkersUpdated();
     }); 
+  }
+
+  async WatchContinuesPositionWithRXJS()
+  {
+    const timer$ = interval(30000); // 30 seconds
+    this.GeolocationSubscription = timer$.pipe(switchMap(() => this.Geolocation.getCurrentPosition())).subscribe((position) => 
+    {
+      console.log('New Position:', position);
+      this.LocationCordinates.latitude = position.coords.latitude;
+      this.LocationCordinates.longitude = position.coords.longitude;
+      this.LocationCordinates.accuracy = position.coords.accuracy;
+      this.LocationCordinates.timestamp = position.timestamp;      
+      //this.AddDynamicMarkers();
+      this.AddDynamicMarkersUpdated();
+      // Do something with the position data
+    },
+    (error) => 
+    {
+      console.error('Error fetching geolocation:', error);
+    });
+  }
+
+  StopGeolocationUpdates() 
+  {
+    if(this.GeolocationSubscription) 
+    {
+      this.GeolocationSubscription.unsubscribe();
+    }
   }
 
   async AddDynamicMarkersUpdated()
@@ -1296,6 +1324,6 @@ export class AllLocationsPage implements OnInit
 
   ionViewWillLeave()
   {
-    //this._Location.unsubscribe();
+    this.StopGeolocationUpdates();
   }
 }
