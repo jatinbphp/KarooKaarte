@@ -1063,7 +1063,7 @@ export class AllLocationsPage implements OnInit
         await this.CurrentLocPosition();
       }
     });
-    await this.CurrentLocPosition();//COMMENT WHEN LIVE
+    //await this.CurrentLocPosition();//COMMENT WHEN LIVE
     let MapToWatch = {'selected_type':'live'}
     localStorage.setItem('map_to_watch',JSON.stringify(MapToWatch));
     this.CurrentMayTypeSelected='live';
