@@ -737,34 +737,14 @@ export class AllLocationsPage implements OnInit
       this.LocationCordinates.longitude = response.coords.longitude;
       this.LocationCordinates.accuracy = response.coords.accuracy;
       this.LocationCordinates.timestamp = response.timestamp;
-      this.WatchContinuesPosition();
       //this.WatchContinuesPositionWithRXJS();
+      this.AddDynamicMarkersUpdated();
     }).catch((error) => 
     {
       this.SendReceiveRequestsService.showMessageToast("You have disallowed location service.");
       this.ShowAllLocations();
       //alert('4-Error: ' + error);
     });    
-  }
-
-  async WatchContinuesPosition()
-  {
-    let WatchOptions = {
-      frequency : 30000,
-      maximumAge:30000,
-      timeout : 60000,
-      enableHighAccuracy: false // may cause errors if true
-    };
-    this.LocationSubscription = this.Geolocation.watchPosition(WatchOptions);
-    this.LocationSubscription.subscribe(<GeolocationPosition>(position:any) => 
-    {
-      this.LocationCordinates.latitude = position.coords.latitude;
-      this.LocationCordinates.longitude = position.coords.longitude;
-      this.LocationCordinates.accuracy = position.coords.accuracy;
-      this.LocationCordinates.timestamp = position.timestamp;      
-      //this.AddDynamicMarkers();
-      this.AddDynamicMarkersUpdated();
-    }); 
   }
 
   async WatchContinuesPositionWithRXJS()
@@ -942,6 +922,10 @@ export class AllLocationsPage implements OnInit
     {
       this.SendReceiveRequestsService.showMessageToast(error);
     });
+    if(this.GeolocationSubscription.hasOwnProperty("isStopped") == false) 
+    {
+      this.WatchContinuesPositionWithRXJS();
+    }
     //DYNAMIC MARKER SOUROUNING LOCATION ENDS
   }
 
@@ -1282,7 +1266,7 @@ export class AllLocationsPage implements OnInit
     /*
     this.mapLive.addListener("zoom_changed", () => 
     {
-      this.WatchContinuesPosition();
+      this.WatchContinuesPositionWithRXJS();
     });//https://developers.google.com/maps/documentation/javascript/events
     */
   }
