@@ -526,6 +526,7 @@ export class AllLocationsPage implements OnInit
           };
           for (i = 0; i < this.LocationsJSONAll.length; i++) 
           { 
+            console.log("SUBCATEGORY");//https://developers.google.com/maps/documentation/javascript/markers#:~:text=In%20the%20most%20basic%20case,will%20size%20the%20icon%20automatically.
             marker = new google.maps.Marker({
               position: new google.maps.LatLng(this.LocationsJSONAll[i]['lat'], this.LocationsJSONAll[i]['lon']),
               map: map,
@@ -536,7 +537,7 @@ export class AllLocationsPage implements OnInit
             InfoWindowContent += '<ion-grid>';
             InfoWindowContent += '<ion-row>';
               InfoWindowContent += '<ion-col size="12">';
-                InfoWindowContent += '<ion-label class="location-name">'+this.LocationsJSONAll[i]['name']+'</ion-label>';
+                InfoWindowContent += '<ion-item><ion-label text-wrap class="location-name">'+this.LocationsJSONAll[i]['name']+'</ion-label></ion-item>';
               InfoWindowContent += '</ion-col>';        
             InfoWindowContent += '</ion-row>';
             InfoWindowContent += '<ion-row>';
@@ -856,7 +857,7 @@ export class AllLocationsPage implements OnInit
                 InfoWindowContent += '<ion-grid>';
                 InfoWindowContent += '<ion-row>';
                   InfoWindowContent += '<ion-col size="12">';
-                    InfoWindowContent += '<ion-label class="location-name">'+this.LocationsJSONLive[i]['name']+'</ion-label>';
+                    InfoWindowContent += '<ion-item><ion-label text-wrap class="location-name">'+this.LocationsJSONLive[i]['name']+'</ion-label></ion-item>';
                   InfoWindowContent += '</ion-col>';        
                 InfoWindowContent += '</ion-row>';
                 InfoWindowContent += '<ion-row>';
@@ -998,7 +999,7 @@ export class AllLocationsPage implements OnInit
             InfoWindowContent += '<ion-grid>';
             InfoWindowContent += '<ion-row>';
               InfoWindowContent += '<ion-col size="12">';
-                InfoWindowContent += '<ion-label class="location-name">'+this.LocationsJSONLive[i]['name']+'</ion-label>';
+                InfoWindowContent += '<ion-item><ion-label text-wrap class="location-name">'+this.LocationsJSONLive[i]['name']+'</ion-label></ion-item>';
               InfoWindowContent += '</ion-col>';        
             InfoWindowContent += '</ion-row>';
             InfoWindowContent += '<ion-row>';
