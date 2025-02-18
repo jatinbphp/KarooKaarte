@@ -40,6 +40,13 @@ export class AllLocationsPage implements OnInit
   public LocationsJSONAll:any=[];
   public ResultDataAllLocationsResponse:any=[];
   public ResultDataAllLocations:any=[];
+  public CategoryAndIconAssociation = [
+    {'id':'23','iconimage':'./assets/images/app-pin-gathering-spaces.png'},
+    {'id':'24','iconimage':'./assets/images/app-pin-public-spaces.png'},
+    {'id':'26','iconimage':'./assets/images/app-pin-commercial-spaces.png'},
+    {'id':'29','iconimage':'./assets/images/app-pin-personal-memory.png'},
+    {'id':'31','iconimage':'./assets/images/app-pin-historical-memory.png'}
+  ];
   /*
   public LocationsJSONLive = [
     {'name':'Bondi Beach','lat':-33.890542,'lon':151.274856,'id':4},
@@ -519,11 +526,43 @@ export class AllLocationsPage implements OnInit
           let infowindow = new google.maps.InfoWindow();
           var marker, i;
           let ClassObj = this;
+          /*
+          BEFORE[FEB-18-25] STARTS
           let image = 
           {
             url: './assets/images/app-pin.png', // image is 512 x 512
             scaledSize: new google.maps.Size(50, 50),
           };
+          BEFORE[FEB-18-25] ENDS
+          */
+          /*
+          NEW [FEB-18-25] STARTS
+          */
+          let image = {};
+          if(this.CategoryID > 0)
+          {
+            let resultIcon = this.CategoryAndIconAssociation.find(obj => obj.id === this.CategoryID);
+            if(resultIcon)
+            {
+              image = 
+              {
+                url: resultIcon.iconimage, // image is 512 x 512
+                scaledSize: new google.maps.Size(50, 50),
+              };
+              console.log(resultIcon.iconimage); // Output: Bob
+            }
+          }
+          else
+          {
+            image = 
+            {
+              url: './assets/images/app-pin.png', // image is 512 x 512
+              scaledSize: new google.maps.Size(50, 50),
+            };
+          }
+          /*
+          NEW [FEB-18-25] ENDS
+          */
           for (i = 0; i < this.LocationsJSONAll.length; i++) 
           { 
             console.log("SUBCATEGORY");//https://developers.google.com/maps/documentation/javascript/markers#:~:text=In%20the%20most%20basic%20case,will%20size%20the%20icon%20automatically.
@@ -815,6 +854,7 @@ export class AllLocationsPage implements OnInit
           for (i = 0; i < this.LocationsJSONLive.length; i++) 
           {  
             let image = null;
+            
             if(i == 0)
             {
               image = 
