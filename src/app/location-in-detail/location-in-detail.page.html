@@ -44,8 +44,8 @@
     </div>
     <ion-card class="detailBox">
       <ion-card-header>
-        <ion-card-title>{{CategoryNM}} <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.25 5.5L13.75 11L8.25 16.5" stroke="#717171" stroke-linecap="round" stroke-linejoin="round"/></svg> {{CategorySNM}}</ion-card-title>
-        <!-- <ion-card-subtitle>Summary</ion-card-subtitle> -->
+        <ion-card-title>
+          {{CategoryNM}} <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.25 5.5L13.75 11L8.25 16.5" stroke="#717171" stroke-linecap="round" stroke-linejoin="round"/></svg> {{CategorySNM}}</ion-card-title>
       </ion-card-header>  
       <ion-card-content *ngIf="Language == 'english'">
         <!--<img *ngIf="ResultDataImages.length == 0" src="../../assets/images/Karoo-Kaarte-22_1.png">-->
@@ -63,13 +63,16 @@
         <p [innerHTML]="ResultDataForXhosa.summary"></p>
       </ion-card-content>
       <div class="text-left">
-        <ion-button fill="clear" (click)="ReadMore()">read more <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.25 5.5L13.75 11L8.25 16.5" stroke="#7DA559" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></ion-button>
+        <ion-button fill="clear" (click)="ReadMore()">read more 
+          <ion-icon name="chevron-forward" class="{{DynamicClassToAdd}}"></ion-icon>
+          <!--<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.25 5.5L13.75 11L8.25 16.5" stroke="#7DA559" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>-->
+        </ion-button>
       </div>
     </ion-card>
     <div class="gallery" *ngIf="ResultDataImages.length > 0">
       <h5>Gallery</h5>
       <ion-slides #PhotoSlider pager="false" [options]="PhotoSliderOptions">
-        <ion-slide *ngFor="let Images of ResultDataImages; let i = index;" (click)="EnlargePhoto(Images.image_name)">
+        <ion-slide *ngFor="let Images of ResultDataImages; let i = index;">
           <img src="{{Images.image_name}}"/>
         </ion-slide>        
       </ion-slides>
@@ -83,7 +86,7 @@
         </ion-slide>        
       </ion-slides>
     </div>
-    <div class="audio" *ngIf="ResultDataAudios.length > 0">
+    <div class="audio {{DynamicClassToAdd}}" *ngIf="ResultDataAudios.length > 0">
       <!-- <h5>Audio</h5> -->
       <ion-list lines="none">
         <ion-item *ngFor="let Audios of ResultDataAudios; let i = index;" [disabled]="Audios.disabled">
@@ -91,10 +94,10 @@
             <h5>Audio</h5>
             <ion-label>Listen to audio clip</ion-label>
             <div class="posBtn">
-              <ion-button color="" shape="round" class="play-btn" *ngIf="IsAudioPlayed == true" (click)="StopAudio()">
+              <ion-button color="" shape="round" class="play-btn {{DynamicClassToAdd}}" *ngIf="IsAudioPlayed == true" (click)="StopAudio()">
                 <ion-icon name="pause-sharp"></ion-icon>
               </ion-button>
-              <ion-button color="" shape="round" class="play-btn" *ngIf="IsAudioPlayed == false" (click)="PlayAudio(Audios.mp3_name)">
+              <ion-button color="" shape="round" class="play-btn {{DynamicClassToAdd}}" *ngIf="IsAudioPlayed == false" (click)="PlayAudio(Audios.mp3_name)">
                 <ion-icon name="play-sharp"></ion-icon>
               </ion-button>
             </div>

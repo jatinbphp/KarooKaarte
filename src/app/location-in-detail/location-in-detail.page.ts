@@ -4,7 +4,6 @@ import { SendReceiveRequestsService } from '../providers/send-receive-requests.s
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Media, MediaObject } from '@awesome-cordova-plugins/media/ngx';
 import { LocationInDetailDescriptionPage } from '../location-in-detail-description/location-in-detail-description.page';
-import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 
 @Component({  
@@ -24,6 +23,7 @@ export class LocationInDetailPage implements OnInit
   public IsAudioPlayed:boolean=false;
   public Language:any="english";
   public CategoryNM:any=null;
+  public CategorySID:any=null;
   public CategorySNM:any=null;
   public StorageData:any=[];
 	public ResultDataResponse:any=[];
@@ -53,6 +53,17 @@ export class LocationInDetailPage implements OnInit
     autoplay: false,
     speed: 1000
   };
+  public CategoryAndIconAssociation = 
+  [
+    {id:0,'dynamicClass':'default','colorcode':'#7DA559'},
+    {id:23,'dynamicClass':'app-pin-gathering-spaces','colorcode':'#af5f88'},
+    {id:24,'dynamicClass':'app-pin-public-spaces','colorcode':'#bb7b9a'},
+    {id:26,'dynamicClass':'app-pin-commercial-spaces','colorcode':'#c896ad'},
+    {id:29,'dynamicClass':'app-pin-personal-memory','colorcode':'#5b90a5'},
+    {id:31,'dynamicClass':'app-pin-historical-memory','colorcode':'#7aa0b3'}
+  ];
+  public DynamicClassToAdd="default";
+  public DynamicColorToAdd="#7DA559";
   constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private LoadingCtrl : LoadingController, public  sanitizer:DomSanitizer, private media: Media, public ModalCtrl: ModalController, private StatusBar: StatusBar)
   { }
 
@@ -67,6 +78,7 @@ export class LocationInDetailPage implements OnInit
     {
       this.StorageData = JSON.parse(this.StorageData);
     }
+    
     console.log(this.StorageData);
     //LOADER
 		const loading = await this.LoadingCtrl.create({
@@ -87,6 +99,14 @@ export class LocationInDetailPage implements OnInit
         this.ResultData = this.ResultDataResponse['data'];
         this.CategoryNM = this.ResultData['category']['category_name'];
         this.CategorySNM = this.ResultData['sub_category']['subcategory_name'];
+        this.CategorySID = this.ResultData['sub_category']['id'];
+
+        const resultObject = this.CategoryAndIconAssociation.find(item => item.id === this.CategorySID);
+        if(resultObject)
+        {
+          this.DynamicClassToAdd = resultObject.dynamicClass;
+        }
+        console.log(this.DynamicClassToAdd);
 
         this.ResultDataForEnglish = this.ResultData['english'];
         this.ResultDataForAfrikaans = this.ResultData['Afrikaans'];
@@ -153,19 +173,6 @@ export class LocationInDetailPage implements OnInit
     this.IsAudioPlayed = false;
   }
 
-  EnlargePhoto(URL:any)
-  {
-    let options = 
-    {
-      share:false,
-      closeButton:true,
-      copyToReference:false,
-      headers:"",
-      piccasoOptions:{}
-    }
-    PhotoViewer.show(URL,"",options);
-  }
-  
   ionViewDidLeave()
   {
     this.MediaFile?.release();

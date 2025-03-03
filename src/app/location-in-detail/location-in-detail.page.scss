@@ -128,6 +128,27 @@ ion-content {
 				    width: -moz-fit-content;
 				    width: -ms-fit-content;
 				    width: -o-fit-content;
+					
+				}
+				ion-icon{
+					&.default{
+						color:#7DA559;
+					}
+					&.app-pin-gathering-spaces{
+						color:#af5f88;
+					}
+					&.app-pin-public-spaces{
+						color:#bb7b9a;
+					}
+					&.app-pin-commercial-spaces{
+						color:#c896ad;
+					}
+					&.app-pin-personal-memory{
+						color:#5b90a5;
+					}
+					&.app-pin-historical-memory{
+						color:#7aa0b3;
+					}
 				}
 			}
 		}
@@ -178,6 +199,24 @@ ion-content {
 			background-color: var(--primary-border-clr);
 		    border-radius: 16px;
 		    padding: 20px 14px;
+			&.default{
+				background-color:#7DA559;
+			}
+			&.app-pin-gathering-spaces{
+				background-color:#af5f88;
+			}
+			&.app-pin-public-spaces{
+				background-color:#bb7b9a;
+			}
+			&.app-pin-commercial-spaces{
+				background-color:#c896ad;
+			}
+			&.app-pin-personal-memory{
+				background-color:#5b90a5;
+			}
+			&.app-pin-historical-memory{
+				background-color:#7aa0b3;
+			}
 		}
 		.gallery, .video, .audio {
 			margin: 0 0 20px;
@@ -235,5 +274,23 @@ ion-content .mainContent .audio .posBtn {
     	margin: 0;
     	--background: var(--white);
     	--color: var(--theme-primary);
+		&.default{
+			color:#7DA559;
+		}
+		&.app-pin-gathering-spaces{
+			color:#af5f88;
+		}
+		&.app-pin-public-spaces{
+			color:#bb7b9a;
+		}
+		&.app-pin-commercial-spaces{
+			color:#c896ad;
+		}
+		&.app-pin-personal-memory{
+			color:#5b90a5;
+		}
+		&.app-pin-historical-memory{
+			color:#7aa0b3;
+		}
     }
 }

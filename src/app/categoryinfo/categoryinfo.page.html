@@ -1,0 +1,38 @@
+<ion-header no-border class="ion-no-border most-use-header">
+  <ion-toolbar>
+    <ion-chip slot="start"></ion-chip>
+    <ion-chip class="logo">
+      <img src="../../assets/images/Karoo-Kaarte-LOGO-BLACK-04.png">
+    </ion-chip>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+      </ion-button>      
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="mainContent">
+    <div class="titleMain">
+      <h2>Browse Categories</h2>
+    </div>
+    <div class="categoryList" *ngIf="ResultData.length > 0">
+      <ul class="mainCate" *ngFor="let Categories of ResultData; let m = index;">
+        <li>
+          <span class="title">{{Categories.category_name}}</span>
+          <ul *ngIf="Categories.sub_category.length > 0">
+            <li *ngFor="let SubCategories of Categories.sub_category; let s = index;">
+              <span><ion-img src="{{SubCategories.icon_image}}"></ion-img>{{SubCategories.subcategory_name}}</span>
+              <ul *ngIf="SubCategories.sub_sub_category.length > 0">
+                <li *ngFor="let InnerSubCategories of SubCategories.sub_sub_category; let is = index;">
+                  <span>{{InnerSubCategories.sub_sub_category_name}}</span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>        
+      </ul>
+    </div>
+  </div>
+</ion-content>

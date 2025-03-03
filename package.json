@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
     "@awesome-cordova-plugins/android-permissions": "^6.3.0",
-    "@awesome-cordova-plugins/app-rate": "^6.3.0",
+    "@awesome-cordova-plugins/app-rate": "^6.14.0",
     "@awesome-cordova-plugins/app-version": "^6.3.0",
     "@awesome-cordova-plugins/core": "^6.3.0",
     "@awesome-cordova-plugins/deeplinks": "^6.3.0",
@@ -30,7 +30,6 @@
     "@awesome-cordova-plugins/media": "^6.3.0",
     "@awesome-cordova-plugins/native-geocoder": "^6.3.0",
     "@awesome-cordova-plugins/network": "^6.3.0",
-    "@awesome-cordova-plugins/photo-viewer": "^6.3.0",
     "@awesome-cordova-plugins/status-bar": "^6.3.0",
     "@ionic/angular": "^6.1.9",
     "@ionic/cordova-builders": "^8.0.0",
@@ -55,11 +54,10 @@
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "5.3.0",
     "@typescript-eslint/parser": "5.3.0",
-    "com-sarriaroman-photoviewer": "^1.2.5",
     "cordova-android": "^13.0.0",
     "cordova-plugin-android-permissions": "^1.1.5",
     "cordova-plugin-app-version": "^0.1.14",
-    "cordova-plugin-apprate": "^1.7.2",
+    "cordova-plugin-apprate": "^1.8.0",
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-dialogs": "^2.0.2",
     "cordova-plugin-file": "^7.0.0",
@@ -113,9 +111,10 @@
         "DEEPLINK_HOST": "karookaarte.co.za",
         "ANDROID_PATH_PREFIX": "/"
       },
-      "com-sarriaroman-photoviewer": {},
-      "cordova-plugin-apprate": {},
-      "cordova-plugin-inappbrowser": {}
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-apprate": {
+        "PLAY_REVIEW_VERSION": "2.+"
+      }
     },
     "platforms": [
       "android"

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { IonSlides, LoadingController } from '@ionic/angular';
 import { SendReceiveRequestsService } from '../providers/send-receive-requests.service';
-import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer';
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
 
 @Component({
@@ -70,16 +69,4 @@ export class WelcomeToAppPage implements OnInit
     this.StatusBar.backgroundColorByHexString('#FFFFFF');//BEFORE::e6e6e6/BEFORE::F6F4F8
   }
 
-  EnlargePhoto(URL:any)
-  {
-    let options = 
-    {
-      share:false,
-      closeButton:true,
-      copyToReference:false,
-      headers:"",
-      piccasoOptions:{}
-    }
-    PhotoViewer.show(URL,"",options);
-  }
 }

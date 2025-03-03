@@ -46,6 +46,10 @@ const routes: Routes = [
   {
     path: 'programme-any',
     loadChildren: () => import('./programme-any/programme-any.module').then( m => m.ProgrammeAnyPageModule)
+  },
+  {
+    path: 'categoryinfo',
+    loadChildren: () => import('./categoryinfo/categoryinfo.module').then( m => m.CategoryinfoPageModule)
   }
 ];
 

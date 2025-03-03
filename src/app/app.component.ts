@@ -33,8 +33,8 @@ export class AppComponent {
   {
     this.platform.ready().then(async () => 
     {
-      //this.initializeNetworkEvents();//UNCOMMENT WHEN LIVE
-      this.initializeAPP();//COMMENT WHEN LIVE
+      this.initializeNetworkEvents();//UNCOMMENT WHEN LIVE
+      //this.initializeAPP();//COMMENT WHEN LIVE
       let status =  this.network.type !== 'none' ? ConnectionStatus.Online : ConnectionStatus.Offline;
       this.status.next(status);
       

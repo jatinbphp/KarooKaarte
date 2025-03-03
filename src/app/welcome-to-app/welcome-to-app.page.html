@@ -23,7 +23,7 @@
     </div>
     <div class="contentBox" [innerHTML]="ResultData.content"></div>    
     <ion-slides #WelcomeSlider pager="false" [options]="WelcomeSliderOptions" *ngIf="ResultDataImages.length > 0">
-      <ion-slide *ngFor="let Images of ResultDataImages; let i=index;"  (click)="EnlargePhoto(Images.image_name)">
+      <ion-slide *ngFor="let Images of ResultDataImages; let i=index;">
         <img src="{{Images.image_name}}"/>
       </ion-slide>      
     </ion-slides>

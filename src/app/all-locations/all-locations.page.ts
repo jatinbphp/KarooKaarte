@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { SendReceiveRequestsService } from '../providers/send-receive-requests.service';
-import { Platform, LoadingController } from '@ionic/angular';
+import { Platform, LoadingController, ModalController } from '@ionic/angular';
 import { Geolocation, GeolocationOptions } from '@awesome-cordova-plugins/geolocation/ngx';
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@awesome-cordova-plugins/native-geocoder/ngx';
 import { LocationAccuracy } from '@awesome-cordova-plugins/location-accuracy/ngx';
@@ -9,6 +9,7 @@ import { Subscription, interval } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from "@angular/router";
 import { StatusBar } from '@awesome-cordova-plugins/status-bar/ngx';
+import { CategoryinfoPage } from '../categoryinfo/categoryinfo.page';
 
 declare var google: any;
 
@@ -71,7 +72,7 @@ export class AllLocationsPage implements OnInit
   public CategoryTP:any=null;
   public queryStringData: any=[];
   public CurrentMayTypeSelected: any = 'all';
-  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private zone: NgZone, private AndroidPermissions: AndroidPermissions, private Geolocation: Geolocation, private NativeGeocoder: NativeGeocoder, private Platform: Platform, private LocationAccuracy: LocationAccuracy, private LoadingCtrl : LoadingController, private route: ActivatedRoute, private router: Router, private StatusBar: StatusBar)
+  constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private zone: NgZone, private AndroidPermissions: AndroidPermissions, private Geolocation: Geolocation, private NativeGeocoder: NativeGeocoder, private Platform: Platform, private LocationAccuracy: LocationAccuracy, private LoadingCtrl : LoadingController, private route: ActivatedRoute, private router: Router, private StatusBar: StatusBar, public modalCtrl: ModalController)
   { }  
 
   ngOnInit()
@@ -538,6 +539,7 @@ export class AllLocationsPage implements OnInit
           /*
           NEW [FEB-18-25] STARTS
           */
+          /*
           let image = {};
           if(this.CategoryID > 0)
           {
@@ -560,11 +562,23 @@ export class AllLocationsPage implements OnInit
               scaledSize: new google.maps.Size(50, 50),
             };
           }
+          */
           /*
           NEW [FEB-18-25] ENDS
           */
           for (i = 0; i < this.LocationsJSONAll.length; i++) 
           { 
+            /*
+            NEW [FEB-18-25] STARTS
+            */
+            let image = 
+            {
+              url: this.LocationsJSONAll[i]['icon_image'], // image is 512 x 512
+              scaledSize: new google.maps.Size(50, 50),
+            };
+            /*
+            NEW [FEB-18-25] ENDS
+            */
             console.log("SUBCATEGORY");//https://developers.google.com/maps/documentation/javascript/markers#:~:text=In%20the%20most%20basic%20case,will%20size%20the%20icon%20automatically.
             marker = new google.maps.Marker({
               position: new google.maps.LatLng(this.LocationsJSONAll[i]['lat'], this.LocationsJSONAll[i]['lon']),
@@ -573,6 +587,7 @@ export class AllLocationsPage implements OnInit
             });
             //bounds.extend(marker.position);::BEFORE WE USED            
             let InfoWindowContent = '';
+            InfoWindowContent += '<div style="text-align: center;margin-left:5px;">';
             InfoWindowContent += '<ion-grid>';
             InfoWindowContent += '<ion-row>';
               InfoWindowContent += '<ion-col size="12">';
@@ -585,6 +600,7 @@ export class AllLocationsPage implements OnInit
               InfoWindowContent += '</ion-col>';            
             InfoWindowContent += '</ion-row>';
             InfoWindowContent += '</ion-grid>';
+            InfoWindowContent += '</div>';
             /*
             InfoWindowContent += '<ion-grid>';
             InfoWindowContent += '<ion-row>';
@@ -820,11 +836,11 @@ export class AllLocationsPage implements OnInit
     //DYNAMIC MARKER SOUROUNING LOCATION STARTS    
     let DataLiveLocations = 
     {
-      latitude:this.LocationCordinates.latitude,
-      longitude:this.LocationCordinates.longitude,
+      latitude:this.LocationCordinates.latitude,//"-26.270760"
+      longitude:this.LocationCordinates.longitude,//"28.112268"
       category_id:this.CategoryID,
       category_type:this.CategoryTP
-    }
+    }//WHEN LIVE::CHANGE FIXED LAT,LON WITH DYNAMIC
     this.ResultDataLiveLocationsResponse = [];
     this.ResultDataLiveLocations = [];
     this.LocationsJSONLive = [];
@@ -859,8 +875,8 @@ export class AllLocationsPage implements OnInit
             {
               image = 
               {
-                //url: this.LocationsJSONLive[i]['image'], // image is 512 x 512
-                url: this.LocationsJSONLive[i]['image_new'], // image is 512 x 512
+                //url: this.LocationsJSONLive[i]['image_new'], // image is 512 x 512
+                url: this.LocationsJSONLive[i]['image_new_2025'], // image is 512 x 512
                 scaledSize: new google.maps.Size(50, 50),
               };
             } 
@@ -868,8 +884,8 @@ export class AllLocationsPage implements OnInit
             {
               image = 
               {
-                url: this.LocationsJSONLive[i]['image'], // image is 512 x 512
-                //url: this.LocationsJSONLive[i]['image_new'], // image is 512 x 512
+                //url: this.LocationsJSONLive[i]['image'], // image is 512 x 512
+                url: this.LocationsJSONLive[i]['image_new_2025'], // image is 512 x 512
                 scaledSize: new google.maps.Size(50, 50),
               };
             }           
@@ -894,6 +910,7 @@ export class AllLocationsPage implements OnInit
               if(i > 0)
               {
                 let InfoWindowContent = '';
+                InfoWindowContent += '<div style="text-align: center;margin-left:5px;">';
                 InfoWindowContent += '<ion-grid>';
                 InfoWindowContent += '<ion-row>';
                   InfoWindowContent += '<ion-col size="12">';
@@ -906,6 +923,7 @@ export class AllLocationsPage implements OnInit
                   InfoWindowContent += '</ion-col>';            
                 InfoWindowContent += '</ion-row>';
                 InfoWindowContent += '</ion-grid>';
+                InfoWindowContent += '</div>';
                 
                 google.maps.event.addListener(marker, 'click', (function(marker, i) 
                 {
@@ -942,9 +960,9 @@ export class AllLocationsPage implements OnInit
             //this.mapLive.fitBounds(bounds);::BEFORE WE USED
           }
           ClassObj.mapLive.setCenter({
-            lat : this.LocationCordinates.latitude,
-            lng : this.LocationCordinates.longitude
-          });
+            lat : this.LocationCordinates.latitude,//"-26.270760"this.LocationCordinates.latitude,
+            lng : this.LocationCordinates.longitude,//"28.112268"
+          });//WHEN LIVE::CHANGE FIXED LAT,LON WITH DYNAMIC
         }
         else 
         {
@@ -1019,13 +1037,28 @@ export class AllLocationsPage implements OnInit
           let infowindow = new google.maps.InfoWindow();
           var marker, i;
           let ClassObj = this;
+          /*
+          BEFORE[FEB-18-25] STARTS
           let image = 
           {
             url: './assets/images/app-pin.png', // image is 512 x 512
             scaledSize: new google.maps.Size(50, 50),
           };
+          BEFORE[FEB-18-25] ENDS
+          */
           for (i = 0; i < this.LocationsJSONLive.length; i++) 
           {  
+            /*
+            NEW [FEB-18-25] STARTS
+            */
+            let image = 
+            {
+              url: this.LocationsJSONLive[i]['icon_image'], // image is 512 x 512
+              scaledSize: new google.maps.Size(50, 50),
+            };
+            /*
+            NEW [FEB-18-25] ENDS
+            */
             console.log("HERE");
             marker = new google.maps.Marker({
               position: new google.maps.LatLng(this.LocationsJSONLive[i]['lat'], this.LocationsJSONLive[i]['lon']),
@@ -1036,6 +1069,7 @@ export class AllLocationsPage implements OnInit
             bounds.extend(marker.position);
             
             let InfoWindowContent = '';
+            InfoWindowContent += '<div style="text-align: center;margin-left:5px;">';
             InfoWindowContent += '<ion-grid>';
             InfoWindowContent += '<ion-row>';
               InfoWindowContent += '<ion-col size="12">';
@@ -1048,6 +1082,7 @@ export class AllLocationsPage implements OnInit
               InfoWindowContent += '</ion-col>';            
             InfoWindowContent += '</ion-row>';
             InfoWindowContent += '</ion-grid>';
+            InfoWindowContent += '</div>';
             
             google.maps.event.addListener(marker, 'click', (function(marker, i) 
             {
@@ -1345,6 +1380,20 @@ export class AllLocationsPage implements OnInit
     {
       this.ionViewWillEnter();
     });
+  }
+
+  async openInfoModel()
+  {
+    const modal = await this.modalCtrl.create({
+			component: CategoryinfoPage
+    });
+    
+    modal.onDidDismiss().then((data) => 
+		{
+  			console.log(data);
+		})
+
+		return await modal.present();
   }
 
   ionViewWillLeave()
