@@ -128,11 +128,28 @@ ion-content {
 				    width: -moz-fit-content;
 				    width: -ms-fit-content;
 				    width: -o-fit-content;
-					
+					&.default{
+						color:var(--black);
+					}
+					&.app-pin-gathering-spaces{
+						color:#af5f88;
+					}
+					&.app-pin-public-spaces{
+						color:#bb7b9a;
+					}
+					&.app-pin-commercial-spaces{
+						color:#c896ad;
+					}
+					&.app-pin-personal-memory{
+						color:#5b90a5;
+					}
+					&.app-pin-historical-memory{
+						color:#7aa0b3;
+					}
 				}
 				ion-icon{
 					&.default{
-						color:#7DA559;
+						color:var(--black);
 					}
 					&.app-pin-gathering-spaces{
 						color:#af5f88;
