@@ -1385,7 +1385,8 @@ export class AllLocationsPage implements OnInit
   async openInfoModel()
   {
     const modal = await this.modalCtrl.create({
-			component: CategoryinfoPage
+			component: CategoryinfoPage,
+      cssClass:'categoryinfo'
     });
     
     modal.onDidDismiss().then((data) => 

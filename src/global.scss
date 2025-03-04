@@ -152,6 +152,10 @@ ion-modal {
     background: url(./assets/images/bck-img1.svg) 0 0/cover no-repeat;
     --background: url(./assets/images/bck-img1.svg) 0 0/100% 100% no-repeat;
     --background: url(./assets/images/bck-img1.svg) 0 0/cover no-repeat;
+    &.categoryinfo{
+        background: var(--white);
+        --background: var(--white);
+    }
 }
 
 ion-accordion-group {
