@@ -126,6 +126,24 @@ ion-label {
 
 ion-button {
     --box-shadow: none;
+    &.default{
+        --ion-color-base:#6d8f4d !important;
+    }
+    &.app-pin-gathering-spaces{
+        --ion-color-base:#af5f88 !important;
+    }
+    &.app-pin-public-spaces{
+        --ion-color-base:#bb7b9a !important;
+    }
+    &.app-pin-commercial-spaces{
+        --ion-color-base:#c896ad !important;
+    }
+    &.app-pin-personal-memory{
+        --ion-color-base:#5b90a5 !important;
+    }
+    &.app-pin-historical-memory{
+        --ion-color-base:#7aa0b3 !important;
+    }
 }
 
 ion-app {

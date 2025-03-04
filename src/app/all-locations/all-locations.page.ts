@@ -41,13 +41,6 @@ export class AllLocationsPage implements OnInit
   public LocationsJSONAll:any=[];
   public ResultDataAllLocationsResponse:any=[];
   public ResultDataAllLocations:any=[];
-  public CategoryAndIconAssociation = [
-    {'id':'23','iconimage':'./assets/images/app-pin-gathering-spaces.png'},
-    {'id':'24','iconimage':'./assets/images/app-pin-public-spaces.png'},
-    {'id':'26','iconimage':'./assets/images/app-pin-commercial-spaces.png'},
-    {'id':'29','iconimage':'./assets/images/app-pin-personal-memory.png'},
-    {'id':'31','iconimage':'./assets/images/app-pin-historical-memory.png'}
-  ];
   /*
   public LocationsJSONLive = [
     {'name':'Bondi Beach','lat':-33.890542,'lon':151.274856,'id':4},
@@ -72,6 +65,18 @@ export class AllLocationsPage implements OnInit
   public CategoryTP:any=null;
   public queryStringData: any=[];
   public CurrentMayTypeSelected: any = 'all';
+
+  public CategoryAndIconAssociation = 
+  [
+    {id:0,'dynamicClass':'default','colorcode':'#6d8f4d'},
+    {id:23,'dynamicClass':'app-pin-gathering-spaces','colorcode':'#af5f88'},
+    {id:24,'dynamicClass':'app-pin-public-spaces','colorcode':'#bb7b9a'},
+    {id:26,'dynamicClass':'app-pin-commercial-spaces','colorcode':'#c896ad'},
+    {id:29,'dynamicClass':'app-pin-personal-memory','colorcode':'#5b90a5'},
+    {id:31,'dynamicClass':'app-pin-historical-memory','colorcode':'#7aa0b3'}
+  ];
+  public DynamicClassToAdd="default";
+  public DynamicColorToAdd="#6d8f4d";
   constructor(private SendReceiveRequestsService : SendReceiveRequestsService, private zone: NgZone, private AndroidPermissions: AndroidPermissions, private Geolocation: Geolocation, private NativeGeocoder: NativeGeocoder, private Platform: Platform, private LocationAccuracy: LocationAccuracy, private LoadingCtrl : LoadingController, private route: ActivatedRoute, private router: Router, private StatusBar: StatusBar, public modalCtrl: ModalController)
   { }  
 
@@ -527,58 +532,22 @@ export class AllLocationsPage implements OnInit
           let infowindow = new google.maps.InfoWindow();
           var marker, i;
           let ClassObj = this;
-          /*
-          BEFORE[FEB-18-25] STARTS
-          let image = 
-          {
-            url: './assets/images/app-pin.png', // image is 512 x 512
-            scaledSize: new google.maps.Size(50, 50),
-          };
-          BEFORE[FEB-18-25] ENDS
-          */
-          /*
-          NEW [FEB-18-25] STARTS
-          */
-          /*
-          let image = {};
-          if(this.CategoryID > 0)
-          {
-            let resultIcon = this.CategoryAndIconAssociation.find(obj => obj.id === this.CategoryID);
-            if(resultIcon)
-            {
-              image = 
-              {
-                url: resultIcon.iconimage, // image is 512 x 512
-                scaledSize: new google.maps.Size(50, 50),
-              };
-              console.log(resultIcon.iconimage); // Output: Bob
-            }
-          }
-          else
-          {
-            image = 
-            {
-              url: './assets/images/app-pin.png', // image is 512 x 512
-              scaledSize: new google.maps.Size(50, 50),
-            };
-          }
-          */
-          /*
-          NEW [FEB-18-25] ENDS
-          */
           for (i = 0; i < this.LocationsJSONAll.length; i++) 
           { 
-            /*
-            NEW [FEB-18-25] STARTS
-            */
+            //TO GIVE CLASS BASED ON CATEGORY STARTS
+            var j = i;
+            const resultObject = this.CategoryAndIconAssociation.find(itemCheck => itemCheck.id === this.LocationsJSONAll[j]['sub_category_id']);
+            if(resultObject)
+            {
+              this.DynamicClassToAdd = resultObject.dynamicClass;
+            }
+            //TO GIVE CLASS BASED ON CATEGORY ENDS
             let image = 
             {
               url: this.LocationsJSONAll[i]['icon_image'], // image is 512 x 512
               scaledSize: new google.maps.Size(50, 50),
             };
-            /*
-            NEW [FEB-18-25] ENDS
-            */
+            
             console.log("SUBCATEGORY");//https://developers.google.com/maps/documentation/javascript/markers#:~:text=In%20the%20most%20basic%20case,will%20size%20the%20icon%20automatically.
             marker = new google.maps.Marker({
               position: new google.maps.LatLng(this.LocationsJSONAll[i]['lat'], this.LocationsJSONAll[i]['lon']),
@@ -596,7 +565,7 @@ export class AllLocationsPage implements OnInit
             InfoWindowContent += '</ion-row>';
             InfoWindowContent += '<ion-row>';
               InfoWindowContent += '<ion-col size="12">';
-                InfoWindowContent += '<ion-button color="primary" id="Details-'+i+'" shape="round" size="full">Detail</ion-button>';
+                InfoWindowContent += '<ion-button color="primary" id="Details-'+i+'" shape="round" size="full" class="'+this.DynamicClassToAdd+'">Detail</ion-button>';
               InfoWindowContent += '</ion-col>';            
             InfoWindowContent += '</ion-row>';
             InfoWindowContent += '</ion-grid>';
@@ -907,6 +876,14 @@ export class AllLocationsPage implements OnInit
             {
               let marker = this.LocationsMarkersLive[i];
               //bounds.extend(marker.position);::BEFORE WE USED
+              //TO GIVE CLASS BASED ON CATEGORY STARTS
+              var j = i;
+              const resultObject = this.CategoryAndIconAssociation.find(itemCheck => itemCheck.id === this.LocationsJSONLive[j]['sub_category_id']);
+              if(resultObject)
+              {
+                this.DynamicClassToAdd = resultObject.dynamicClass;
+              }
+              //TO GIVE CLASS BASED ON CATEGORY ENDS
               if(i > 0)
               {
                 let InfoWindowContent = '';
@@ -919,7 +896,7 @@ export class AllLocationsPage implements OnInit
                 InfoWindowContent += '</ion-row>';
                 InfoWindowContent += '<ion-row>';
                   InfoWindowContent += '<ion-col size="12">';
-                    InfoWindowContent += '<ion-button color="primary" id="Details-'+i+'" shape="round" size="full">Detail</ion-button>';
+                    InfoWindowContent += '<ion-button color="primary" id="Details-'+i+'" shape="round" size="full" class="'+this.DynamicClassToAdd+'">Detail</ion-button>';
                   InfoWindowContent += '</ion-col>';            
                 InfoWindowContent += '</ion-row>';
                 InfoWindowContent += '</ion-grid>';
@@ -1037,28 +1014,23 @@ export class AllLocationsPage implements OnInit
           let infowindow = new google.maps.InfoWindow();
           var marker, i;
           let ClassObj = this;
-          /*
-          BEFORE[FEB-18-25] STARTS
-          let image = 
-          {
-            url: './assets/images/app-pin.png', // image is 512 x 512
-            scaledSize: new google.maps.Size(50, 50),
-          };
-          BEFORE[FEB-18-25] ENDS
-          */
           for (i = 0; i < this.LocationsJSONLive.length; i++) 
           {  
-            /*
-            NEW [FEB-18-25] STARTS
-            */
+            //TO GIVE CLASS BASED ON CATEGORY STARTS
+            var j = i;
+            const resultObject = this.CategoryAndIconAssociation.find(itemCheck => itemCheck.id === this.LocationsJSONLive[j]['sub_category_id']);
+            if(resultObject)
+            {
+              this.DynamicClassToAdd = resultObject.dynamicClass;
+            }
+            //TO GIVE CLASS BASED ON CATEGORY ENDS
+
             let image = 
             {
               url: this.LocationsJSONLive[i]['icon_image'], // image is 512 x 512
               scaledSize: new google.maps.Size(50, 50),
             };
-            /*
-            NEW [FEB-18-25] ENDS
-            */
+            
             console.log("HERE");
             marker = new google.maps.Marker({
               position: new google.maps.LatLng(this.LocationsJSONLive[i]['lat'], this.LocationsJSONLive[i]['lon']),
@@ -1078,7 +1050,7 @@ export class AllLocationsPage implements OnInit
             InfoWindowContent += '</ion-row>';
             InfoWindowContent += '<ion-row>';
               InfoWindowContent += '<ion-col size="12">';
-                InfoWindowContent += '<ion-button color="primary" id="Details-'+i+'" shape="round" size="full">Detail</ion-button>';
+                InfoWindowContent += '<ion-button color="primary" id="Details-'+i+'" shape="round" size="full" class="'+this.DynamicClassToAdd+'">Detail</ion-button>';
               InfoWindowContent += '</ion-col>';            
             InfoWindowContent += '</ion-row>';
             InfoWindowContent += '</ion-grid>';
