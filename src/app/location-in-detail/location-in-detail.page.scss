@@ -49,7 +49,7 @@ ion-content {
 			    border: 0px solid var(--borderClr1);
 			    border-radius: 0;
 				ion-card-header {
-					padding: 0 0 18px;
+					padding: 0 0 18px !important;
 					margin: 0 0 14px;
 					border-bottom: 1px solid var(--primary-border-clr);
 					ion-card-title {
