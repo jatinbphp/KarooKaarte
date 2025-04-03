@@ -526,6 +526,7 @@ export class AllLocationsPage implements OnInit
           fullscreenControl: false,
           styles: stylers
         });
+        let bounds = new google.maps.LatLngBounds();
         if(this.LocationsJSONAll.length > 0)
         {
           //let bounds = new google.maps.LatLngBounds();::BEFORE WE USED
@@ -554,6 +555,7 @@ export class AllLocationsPage implements OnInit
               map: map,
               icon: image
             });
+            bounds.extend(marker.getPosition());
             //bounds.extend(marker.position);::BEFORE WE USED            
             let InfoWindowContent = '';
             InfoWindowContent += '<div style="text-align: center;margin-left:5px;">';
@@ -621,16 +623,11 @@ export class AllLocationsPage implements OnInit
               }
             })(i));
           }
-          /*
-          ::BEFORE WE USED
-          map.fitBounds(bounds);          
-          var listener = google.maps.event.addListener(map, "idle", function ()
+          if(this.CategoryID > 0)
           {
-            map.setZoom(12);
-            google.maps.event.removeListener(listener);
-          });
-          ::BEFORE WE USED
-          */
+            map.fitBounds(bounds);
+          }
+          
           google.maps.event.addListener(map,'dragstart',function()
           {
             map.set('dragging',true);          
@@ -805,8 +802,8 @@ export class AllLocationsPage implements OnInit
     //DYNAMIC MARKER SOUROUNING LOCATION STARTS    
     let DataLiveLocations = 
     {
-      latitude:this.LocationCordinates.latitude,//"-26.270760"
-      longitude:this.LocationCordinates.longitude,//"28.112268"
+      latitude:this.LocationCordinates.latitude,//"-33.602868130430998"
+      longitude:this.LocationCordinates.longitude,//"22.219801058171001"
       category_id:this.CategoryID,
       category_type:this.CategoryTP
     }//WHEN LIVE::CHANGE FIXED LAT,LON WITH DYNAMIC
@@ -816,7 +813,7 @@ export class AllLocationsPage implements OnInit
     await this.SendReceiveRequestsService.GetLocationsLiveUpdated(DataLiveLocations).then((result:any) => 
     {
       this.ResultDataLiveLocationsResponse = result;
-      if(this.ResultDataLiveLocationsResponse['status'] == true)
+      if(this.ResultDataLiveLocationsResponse['status'] == "true")
       {
         this.ResultDataLiveLocations = this.ResultDataLiveLocationsResponse['data'];
         this.LocationsJSONLive = this.ResultDataLiveLocations;        
@@ -839,12 +836,10 @@ export class AllLocationsPage implements OnInit
           for (i = 0; i < this.LocationsJSONLive.length; i++) 
           {  
             let image = null;
-            
             if(i == 0)
             {
               image = 
               {
-                //url: this.LocationsJSONLive[i]['image_new'], // image is 512 x 512
                 url: this.LocationsJSONLive[i]['image_new_2025'], // image is 512 x 512
                 scaledSize: new google.maps.Size(50, 50),
               };
@@ -853,8 +848,7 @@ export class AllLocationsPage implements OnInit
             {
               image = 
               {
-                //url: this.LocationsJSONLive[i]['image'], // image is 512 x 512
-                url: this.LocationsJSONLive[i]['image_new_2025'], // image is 512 x 512
+                url: this.LocationsJSONLive[i]['image'], // image is 512 x 512
                 scaledSize: new google.maps.Size(50, 50),
               };
             }           
@@ -936,9 +930,11 @@ export class AllLocationsPage implements OnInit
             } 
             //this.mapLive.fitBounds(bounds);::BEFORE WE USED
           }
+          console.log("latitude",ClassObj.LocationCordinates.latitude);
+          console.log("longitude",ClassObj.LocationCordinates.longitude);
           ClassObj.mapLive.setCenter({
-            lat : this.LocationCordinates.latitude,//"-26.270760"this.LocationCordinates.latitude,
-            lng : this.LocationCordinates.longitude,//"28.112268"
+            lat : ClassObj.LocationCordinates.latitude,//-33.602868130430998
+            lng : ClassObj.LocationCordinates.longitude,//22.219801058171001
           });//WHEN LIVE::CHANGE FIXED LAT,LON WITH DYNAMIC
         }
         else 
@@ -1333,6 +1329,7 @@ export class AllLocationsPage implements OnInit
   {
     if(SelectedOption == "all")
     {
+      this.StopGeolocationUpdates();
       let MapToWatch = {'selected_type':'all'}
       localStorage.setItem('map_to_watch',JSON.stringify(MapToWatch)); 
       this.CurrentMayTypeSelected='all';     
@@ -1363,7 +1360,8 @@ export class AllLocationsPage implements OnInit
     
     modal.onDidDismiss().then((data) => 
 		{
-  			console.log(data);
+      this.ionViewWillEnter();
+  		console.log(data);
 		})
 
 		return await modal.present();

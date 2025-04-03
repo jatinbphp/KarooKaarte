@@ -24,7 +24,8 @@
           <span class="title" (click)="SelectedOption('maincategory',Categories.id)">{{Categories.category_name}}</span>
           <ul *ngIf="Categories.sub_category.length > 0">
             <li *ngFor="let SubCategories of Categories.sub_category; let s = index;">
-              <span (click)="SelectedOption('subcategory',SubCategories.id)">{{SubCategories.subcategory_name}}</span>
+              <span (click)="SelectedOption('subcategory',SubCategories.id)"><ion-img src="{{SubCategories.icon_image}}"></ion-img>{{SubCategories.subcategory_name}}</span>
+              <!--<span (click)="SelectedOption('subcategory',SubCategories.id)">{{SubCategories.subcategory_name}}</span>-->
               <ul *ngIf="SubCategories.sub_sub_category.length > 0">
                 <li *ngFor="let InnerSubCategories of SubCategories.sub_sub_category; let is = index;">
                   <span (click)="SelectedOption('sub-sub-category',InnerSubCategories.id)">{{InnerSubCategories.sub_sub_category_name}}</span>

@@ -51,4 +51,23 @@ export class CategoryinfoPage implements OnInit
 			'dismissed': true				
 		});
   }
+  
+  SelectedOption(CategoryType:any,CategoryID:any)
+  {
+    //console.log(CategoryType,CategoryID);    
+    this.dismissModal();
+    this.queryString = 
+    {
+      category_type:CategoryType,
+      category_id:CategoryID,
+    };
+    let navigationExtras: NavigationExtras = 
+    {
+      queryParams: 
+      {
+        special: JSON.stringify(this.queryString)
+      }
+    };
+    this.SendReceiveRequestsService.router.navigate(['/all-locations'],{queryParams: this.queryString});
+  }
 }

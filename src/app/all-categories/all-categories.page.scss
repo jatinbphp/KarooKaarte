@@ -69,14 +69,30 @@ ion-content {
 		    				margin: 0;
 		    				li {
 		    					span {
+									ion-img{
+										width: 50px;
+										height: 50px;
+									}
+									display: flex;
+									align-items: center;
+									justify-content: left;
 		    						list-style-type: none;
 					    			font-size: 14px;
 									line-height: 1.5;
 									text-transform: capitalize;
 									color: var(--black);
-									// font-family: var(--font-OpenSansR);
 									font-weight: 400;
 		    						font-family: var(--font-RobotoSerif);
+		    						/*
+									BEFORE
+									list-style-type: none;
+					    			font-size: 14px;
+									line-height: 1.5;
+									text-transform: capitalize;
+									color: var(--black);
+									font-weight: 400;
+		    						font-family: var(--font-RobotoSerif);
+									*/
 		    					}
 		    				}
 		    			}
